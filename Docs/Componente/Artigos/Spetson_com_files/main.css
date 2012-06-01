@@ -1,0 +1,54 @@
+BODY {
+	SCROLLBAR-FACE-COLOR: #28384b; FONT-SIZE: 11px; SCROLLBAR-HIGHLIGHT-COLOR: #536e87; SCROLLBAR-SHADOW-COLOR: #000000; COLOR: #ffffff; SCROLLBAR-3DLIGHT-COLOR: #536e87; SCROLLBAR-ARROW-COLOR: #ffffff; SCROLLBAR-TRACK-COLOR: #0f1a25; FONT-FAMILY: verdana, tahoma, arial, helvetica, sans-serif; SCROLLBAR-DARKSHADOW-COLOR: #000000; BACKGROUND-COLOR: #000000
+}
+A:link {
+	COLOR: #6b91bf; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A:hover {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #6b91bf; TEXT-DECORATION: underline
+}
+A:hover {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+.table1 {
+	BORDER-RIGHT: #253548 2px solid; BORDER-TOP: #253548 2px solid; BORDER-LEFT: #253548 2px solid; BORDER-BOTTOM: #253548 2px solid
+}
+TD {
+	FONT-SIZE: 11px; COLOR: #ffffff; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+INPUT {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; FONT-SIZE: 11px; BORDER-LEFT: #000000 1px solid; COLOR: #ffffff; BORDER-BOTTOM: #000000 1px solid; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #3d4c5d
+}
+AREA {
+	BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; COLOR: #ffffff; BORDER-BOTTOM: #000000 1px solid; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #3d4c5d
+}
+SELECT {
+	BORDER-RIGHT: #000000 1px solid; PADDING-RIGHT: 1px; BORDER-TOP: #000000 1px solid; PADDING-LEFT: 1px; FONT-SIZE: 11px; FLOAT: left; PADDING-BOTTOM: 1px; MARGIN: 1px; BORDER-LEFT: #000000 1px solid; WIDTH: auto; COLOR: #ffffff; PADDING-TOP: 1px; BORDER-BOTTOM: #000000 1px solid; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #1a2a3e
+}
+.laterais {
+	BORDER-RIGHT: #253548 1px solid; BORDER-TOP: 0px solid; BORDER-LEFT: #253548 1px solid; BORDER-BOTTOM: 0px solid
+}
+SPAN {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+FONT {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.big {
+	FONT-WEIGHT: bold; FONT-SIZE: 14px; TEXT-TRANSFORM: capitalize; COLOR: #cccccc; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.under {
+	TEXT-DECORATION: underline
+}
+.bg1 {
+	BACKGROUND-COLOR: #1a2a3e
+}
+.bg2 {
+	BACKGROUND-COLOR: #28384b
+}
+.tbheader {
+	BACKGROUND-COLOR: #0f1a25
+}

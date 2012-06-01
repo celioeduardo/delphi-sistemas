@@ -1,0 +1,282 @@
+.kb {
+	MARGIN: 10px
+}
+.kb TD {
+	VERTICAL-ALIGN: top
+}
+.kb H1.title {
+	FONT-SIZE: 120%; MARGIN: 0px 0px 10px
+}
+.kb H2 {
+	FONT-SIZE: 100%; MARGIN: 0px 0px 10px
+}
+.kb .graphic {
+	MARGIN: 2px
+}
+.kb .message {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+.kb .errormsg {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 10px; COLOR: #f00; PADDING-TOP: 10px
+}
+.kb DIV.author {
+	MARGIN: 0px
+}
+.kb DIV.author .label {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%
+}
+.kb .text {
+	FONT-SIZE: 70%
+}
+.kb .list .text TABLE TD {
+	FONT-SIZE: 70%
+}
+.kb DIV.disclaimer {
+	MARGIN: 10px 0px
+}
+.kb DIV.cc {
+	FONT-WEIGHT: bold
+}
+.kb DIV.mt {
+	FONT-WEIGHT: bold
+}
+.kb DIV.disclaimer .label {
+	FONT-SIZE: 70%; MARGIN: 0px 0px 5px
+}
+.kb DIV.securedisclaimer {
+	MARGIN: 5px 0px
+}
+.kb DIV.securedisclaimer HR {
+	BORDER-RIGHT: #ee9922 1px solid; BORDER-TOP: #ee9922 1px solid; BORDER-LEFT: #ee9922 1px solid; BORDER-BOTTOM: #ee9922 1px solid; BACKGROUND-COLOR: #efba43
+}
+.kb DIV.securedisclaimer .label {
+	FONT-WEIGHT: bold; FONT-SIZE: 70%; MARGIN: 0px 10px 5px
+}
+.kb DIV.securedisclaimer .text {
+	MARGIN: 0px 10px
+}
+.kb DIV.notice {
+	FONT-SIZE: 70%; MARGIN: 10px 0px
+}
+.kb .notice H5 {
+	MARGIN: 8px 0px
+}
+.kb DIV.notice DIV.notice {
+	FONT-SIZE: 100%
+}
+.kb DIV.articleProperty {
+	BORDER-RIGHT: #dedede 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: #dedede 1px solid; PADDING-LEFT: 10px; BACKGROUND: #f9f9f9; PADDING-BOTTOM: 10px; MARGIN: 5px; BORDER-LEFT: #dedede 1px solid; WIDTH: 13em; PADDING-TOP: 10px; BORDER-BOTTOM: #dedede 1px solid
+}
+.kb DIV.articleProperty .label {
+	FONT-SIZE: 70%; WHITE-SPACE: nowrap
+}
+.kb DIV.articleProperty .text {
+	WHITE-SPACE: nowrap
+}
+.kb .toc H5 {
+	FONT-SIZE: 90%; MARGIN: 0px 0px 3px
+}
+.kb .toc .wideTable .number {
+	FONT-SIZE: 70%; WHITE-SPACE: nowrap
+}
+.kb .toc .wideTable .spacer {
+	WIDTH: 40px
+}
+.kb .toc .tallTable .text {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; PADDING-BOTTOM: 1px; PADDING-TOP: 1px
+}
+.kb .section .table {
+	MARGIN-TOP: 10px
+}
+.kb .section .table TH {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-WEIGHT: bold; FONT-SIZE: 70%; BACKGROUND: #cecfce; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+}
+.kb .section .table TD {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-SIZE: 65%; BACKGROUND: #f7f7ff; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+}
+.kb .list {
+	MARGIN: 0px
+}
+.kb .list .list {
+	MARGIN: 0px
+}
+.kb .list .bullet {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px
+}
+.kb .list .text {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px
+}
+.kb .subHeader .text {
+	FONT-SIZE: 65%
+}
+.kb .section H2.subTitle {
+	FONT-SIZE: 95%; MARGIN: 15px 0px 5px; COLOR: #000
+}
+.kb .section H3 {
+	FONT-SIZE: 85%; MARGIN: 10px 0px 5px
+}
+.kb .section H4 {
+	FONT-SIZE: 75%; MARGIN: 18px 0px
+}
+.kb .section H5 {
+	FONT-SIZE: 65%; MARGIN: 8px 0px 5px
+}
+.kb .section .sbody H1 {
+	FONT-SIZE: 100%
+}
+.kb .section .sbody H2 {
+	FONT-SIZE: 100%
+}
+.kb .section .sbody H3 {
+	FONT-SIZE: 100%
+}
+.kb .section .sbody H4 {
+	FONT-SIZE: 100%
+}
+.kb .section .sbody H5 {
+	FONT-SIZE: 100%
+}
+.kb .section .sbody H6 {
+	FONT-SIZE: 100%
+}
+.kb HR.divider {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 10px; COLOR: #ddd; BORDER-BOTTOM: medium none; HEIGHT: 2px
+}
+.kb HR {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 10px; COLOR: #ddd; BORDER-BOTTOM: medium none; HEIGHT: 2px
+}
+.kb DIV.indent {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+.kb DIV.sbody {
+	FONT-SIZE: 70%
+}
+.kb DIV.sbody SPAN.abbr {
+	CURSOR: help; BORDER-BOTTOM: #000000 1px dotted
+}
+.kb DIV.sbody ACRONYM {
+	CURSOR: help; BORDER-BOTTOM: #000000 1px dotted
+}
+.kb DIV.sbody .code {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; BACKGROUND: #dedede; PADDING-BOTTOM: 3px; MARGIN: 5px; COLOR: black; PADDING-TOP: 3px
+}
+.kb DIV.sbody DIV.center {
+	TEXT-ALIGN: center
+}
+.kb DIV.sbody FIELDSET {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px
+}
+.kb DIV.sbody H3 {
+	FONT-SIZE: 100%; MARGIN: 15px 0px 10px
+}
+.kb .list {
+	MARGIN: 10px 5px
+}
+.kb .appliesTo .list {
+	MARGIN: 0px 10px
+}
+.kb DIV.sbody .list TD {
+	BACKGROUND: #f7f7ff
+}
+.kb DIV.sbody .list .image {
+	VERTICAL-ALIGN: top; WIDTH: 16px
+}
+.kb .bullet {
+	FONT-SIZE: 75%; VERTICAL-ALIGN: top; WIDTH: 1em; TEXT-ALIGN: center
+}
+.kb DIV.sbody .list .number {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; FONT-SIZE: 65%; PADDING-BOTTOM: 3px; VERTICAL-ALIGN: top; PADDING-TOP: 3px; WHITE-SPACE: nowrap
+}
+.kb DIV.sbody .list .text {
+	PADDING-RIGHT: 8px; PADDING-LEFT: 8px; PADDING-BOTTOM: 3px; PADDING-TOP: 3px
+}
+.kb DIV.sbody .sTable TD {
+	PADDING-RIGHT: 3px; PADDING-LEFT: 3px; FONT-SIZE: 70%; PADDING-BOTTOM: 2px; PADDING-TOP: 2px
+}
+.kb .appliesTo .list .text {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 65%; PADDING-BOTTOM: 3px; PADDING-TOP: 3px
+}
+.kb .appliesTo .list .textSub {
+	FONT-SIZE: 65%
+}
+.kb DIV PRE {
+	PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; PADDING-BOTTOM: 0.5em; MARGIN: 1em; OVERFLOW: auto; WIDTH: 100%; COLOR: maroon; PADDING-TOP: 0.5em; FONT-FAMILY: "courier new", courier, monospace; WHITE-SPACE: normal; BACKGROUND-COLOR: #eeeeee
+}
+.kb PRE.in_text {
+	COLOR: black
+}
+.kb .topOfPage {
+	MARGIN: 5px 0px 10px
+}
+.kb .appliesTo HR {
+	MARGIN-TOP: 20px
+}
+.kb .appliesTo H5 {
+	MARGIN: 5px 0px
+}
+.kb .userInput {
+	FONT-WEIGHT: bold; MARGIN: 10px 0px
+}
+.kb .keywords {
+	MARGIN: 15px 0px 10px
+}
+.kb .keywords TD {
+	VERTICAL-ALIGN: bottom
+}
+.kb .keywords TD.header {
+	VERTICAL-ALIGN: top; WHITE-SPACE: nowrap
+}
+.kb .keywords TD.header H5 {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: 75%; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-TOP: 0px; WHITE-SPACE: nowrap
+}
+.kb .qa .notice {
+	FLOAT: left
+}
+.kb .qa .section .label {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FONT-SIZE: 190%; PADDING-BOTTOM: 0px; VERTICAL-ALIGN: top; COLOR: #0000ff; PADDING-TOP: 0px; POSITION: relative; TOP: -5px
+}
+.kb .qa .bigspace {
+	HEIGHT: 50px
+}
+.kb .qa .smallspace {
+	HEIGHT: 20px
+}
+.kb .tt .section H2.subTitle {
+	COLOR: #000000
+}
+.kb .kbSC .articleProperty {
+	FLOAT: none
+}
+.kb .kbSC .section .blurb {
+	FONT-SIZE: 70%; MARGIN-BOTTOM: 20px
+}
+.kb .kbSC .section .more {
+	MARGIN-TOP: 20px; FONT-SIZE: 70%
+}
+.kb .kbSC .section .textQuestion {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-SIZE: 70%; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+}
+.kb .kbSC .section .textAnswer {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-SIZE: 70%; PADDING-BOTTOM: 5px; PADDING-TOP: 5px
+}
+.kb .kbSC .section .textQuestion {
+	BACKGROUND-COLOR: #fffff6
+}
+.kb .kbSC .section .textAnswer {
+	BACKGROUND-COLOR: #f6f6ff
+}
+.kb .kbSC .section .imgQuestionColumn {
+	VERTICAL-ALIGN: top
+}
+.kb .kbSC .section .imgAnswerColumn {
+	VERTICAL-ALIGN: bottom
+}
+.kb .kbSC .section .qImg {
+	MARGIN: 2px
+}
+.kb .kbSC .section .aImg {
+	MARGIN: 2px
+}
+.kb .si .section .portrait {
+	FLOAT: left; MARGIN: 5px
+}

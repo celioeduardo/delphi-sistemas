@@ -1,0 +1,471 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+  
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2><B>Unidade
+5. O objeto Canvas e o m&eacute;todo Paint: TGradiente</B>&nbsp;</FONT></FONT></FONT></CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice&nbsp;</A></TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<P><IMG SRC="gradient.gif" ALT="blinklbl.gif - .966 K" HEIGHT=26 WIDTH=26 ALIGN=ABSBOTTOM>
+Nesta unidade n&oacute;s criaremos um componente gr&aacute;fico do tipo
+que &eacute; usado como fundo na instala&ccedil;&atilde;o de aplica&ccedil;&otilde;es:
+TGradient. Mas nosso componente ir&aacute; mais adiante ele ter&aacute;
+possibilidades novas para o gr&aacute;fico standard. N&oacute;s aprenderemos
+a utilizar o canvas que prepara todos os componentes gr&aacute;ficos. N&oacute;s
+estudaremos o m&eacute;todo paint, como usar isto em nossos componentes.
+<BR><A NAME="TGradiente-Objetivo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Objetivo do componente</FONT></B>
+
+<P>Nosso prop&oacute;sito &eacute; criar um componente no qual n&oacute;s
+puxaremos um gradient semelhante de cores para qual &eacute; mostrado na
+maioria dos programas de instala&ccedil;&atilde;o de aplica&ccedil;&otilde;es
+(e em outro tipo de programas). Entre as caracter&iacute;sticas adicionais
+que nosso componente deve ter &eacute; necess&aacute;rio&nbsp; destaquar
+que o gradiente de cores n&atilde;o concluir&aacute; na cor preta, mas&nbsp;
+poder&aacute; come&ccedil;ar e terminar em duas cores quaisquer. Tamb&eacute;m,
+o gradiente poder&aacute; estar horizontal ou vertical. Ultimamente, o
+tamanho de nosso desenho (quer dizer, do canvas do componente) ser&aacute;
+vari&aacute;vel, deste modo n&oacute;s podemos combinar dois ou mais componente
+para criar efeitos de cores espetaculares.
+
+<P>Nosso componente derivar&aacute; ent&atilde;o de TGraphicControl do
+que n&oacute;s precisamos que tem Canvas, mas n&atilde;o &eacute; necess&aacute;rio
+que tenha manipulador (o handler). Esta escolha faz isto baseado no que
+foi visto na unidade 2.
+<BR><A NAME="TGradiente-Canvas"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>A base da programa&ccedil;&atilde;o gr&aacute;fica em
+Delphi: o&nbsp; Canvas do objeto.</FONT></B>
+
+<P>Tradicionalmente, a programa&ccedil;&atilde;o gr&aacute;fica em janelas
+foi levada&nbsp; por meio do uso da interface gr&aacute;fica de dispositivo
+(GDI). Esta interface &eacute; uma ferramenta poderosa que permite o desenho
+de gr&aacute;ficos por meio do uso de pinc&eacute;is, escovas, ret&acirc;ngulos,
+elipses, etc.
+
+<P>Mas o GDI tem uma inconveni&ecirc;ncia: a programa&ccedil;&atilde;o
+dele &eacute; muito laboriosa. Quando eles fazem uso da&nbsp; fun&ccedil;&atilde;o
+GDI, &eacute; necess&aacute;ria uma handle, como tamb&eacute;m criar e
+destruir as ferramentas de desenho diversos (recursos) isso &eacute; usado.
+Por &uacute;ltimo , quando concluindo, o contexto de dispositivo deve ser
+restabelecido a seu estado original antes de destruir-lo.
+
+<P>Delphi encapsula o GDI e faz que n&oacute;s n&atilde;o tenhamos que
+nos preocupar sobre contextos de dispositivo nenhum e se n&oacute;s liberamos
+ou n&atilde;o os recursos usados. Deste modo n&oacute;s podemos nos concentrar
+em&nbsp; nosso objetivo principal: puxar os gr&aacute;ficos. De todos os
+modos, se n&oacute;s queremos isto, n&oacute;s podemos continuar usando
+as fun&ccedil;&otilde;es GDI se nos interessa. N&oacute;s temos um grande
+leque de possibilidades, Delphi ou GDI, podemos us&aacute;-los do modo
+que nos convenha.
+
+<P>Como foi mencionado no par&aacute;grafo anterior, o Delphi nos prov&ecirc;
+uma interface gr&aacute;fica completo. O objeto principal desta interface
+&eacute; o objeto <B>Canvas </B>.<B> O objeto Canvas se encarrega de ter
+um contexto de dispositivo v&aacute;lido, como tamb&eacute;m de liberar
+-se quando n&oacute;s n&atilde;o usarmos mais. Tamb&eacute;m, o objeto
+Canvas (ou simplesmente Canvas) tem propriedades diversas que representam
+o l&aacute;pis atual (pen), escova (brush) e fonte (font).</B>
+
+<P><B>O canvas administra todos estes recursos para n&oacute;s, raz&atilde;o
+por que n&oacute;s temos bastante o que informar &agrave; aquela classe
+de caneta e ele se encarrega do resto. Tamb&eacute;m, deixando o Delphi
+fazer o servi&ccedil;o pesado de criar e liberar os recursos gr&aacute;ficos,
+em muitos casos um aumento de velocidade acontecer&aacute; se n&oacute;s
+mesmos administrarmos estes recursos.</B>
+
+<P><B>A tela de objeto encapsula a programa&ccedil;&atilde;o gr&aacute;fica
+a tr&ecirc;s n&iacute;veis de profundidade que &eacute; o seguinte:</B>
+<BR>&nbsp;
+<TABLE BORDER >
+<TR>
+<TD><B>N&iacute;vel</B>&nbsp;</TD>
+
+<TD><B>Opera&ccedil;&atilde;o</B>&nbsp;</TD>
+
+<TD><B>Ferramentas</B>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>Alto&nbsp;</TD>
+
+<TD>Desenho de linhas e formas&nbsp;
+<BR>Visualiza&ccedil;&atilde;o e modifica&ccedil;&atilde;o de texto&nbsp;
+<BR>Recursos de &aacute;reas&nbsp;</TD>
+
+<TD>M&eacute;todos MoveTo, LineTo, Ret&acirc;ngulo, Elipse,&nbsp;
+<BR>M&eacute;todos TextOut, TextHeight, TextWidth, TextRect,&nbsp;
+<BR>M&eacute;todos FillRect, FloodFill,&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>M&eacute;dio&nbsp;</TD>
+
+<TD>Personalizar texto e gr&aacute;ficos&nbsp;
+<BR>Pixels de manipula&ccedil;&atilde;o&nbsp;
+<BR>Copia e uni&atilde;o de imagens&nbsp;</TD>
+
+<TD>Propriedades Pen, Brush e Font&nbsp;
+<BR>Propriedade Pixels&nbsp;
+<BR>Draw, StretchDraw, BrushCopy, CopyRect, CopyMode,&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>Baixo&nbsp;</TD>
+
+<TD>Chamadas para fun&ccedil;&otilde;es GDI&nbsp;</TD>
+
+<TD>Handle de propriedade&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P><B>Agora n&oacute;s n&atilde;o vamos explicar tudo e cada ferramenta
+dispon&iacute;vel para a cria&ccedil;&atilde;o de gr&aacute;ficos, mas
+n&oacute;s faremos isto como nas proximas unidades. De todos os modos,
+uma descri&ccedil;&atilde;o detalhada de cada um deles est&aacute; na ajuda
+on-line do delphi</B>
+
+<P><B>Bem, n&oacute;s j&aacute; sabemos que a tela de objeto nos prov&ecirc;
+uma interface gr&aacute;fica muito poderosa de cria&ccedil;&atilde;o gr&aacute;fica.
+Mas agora as perguntas seguintes podem ser esbo&ccedil;adas: Onde o objeto
+Canvas reside?, todos os componentes t&ecirc;m isto?, e se n&atilde;o &eacute;
+deste modo, como os componentes incorporam isto?</B>
+
+<P><B>A resposta para estas perguntas &eacute; simples: Todos os objetos
+derivados de TGraphicComponent possuem Canvas. Em rela&ccedil;&atilde;o
+a outros componentes, depende. No caso de d&uacute;vida, a coisa mais simples
+&eacute; consultar o Object Browser e verificar se o componente em quest&atilde;o
+possui canvas ou n&atilde;o (se &eacute; declarado em um modo protegido
+ou p&uacute;blico). Deste modo por exemplo, o componente Tlabel, Timage
+e TPanel possuem isto, enquanto tais componentes como TButton ou TRadioButton
+n&atilde;o. Este aspecto determinar&aacute; o ascendente a ser escolhido
+quando n&oacute;s queremos desenvolver um componente que devera ter Canvas.</B>
+
+<P><B>A forma de consentir o canvas de um objeto &eacute; muito simples.
+Vamos supor que n&oacute;s temos um componente (TGradient) derivou da classe
+TGraphicControl. E vamos supor que n&oacute;s queremos tirar no canvas
+uma linha do ponto (0,0) at&eacute; o ponto (20,20). Para esta tarefa n&oacute;s
+dever&iacute;amos escrever a&nbsp; seguinte linha:</B>
+<PRE><B>TGradient.Canvas.MoveTo(0,0);&nbsp;&nbsp;&nbsp;&nbsp;
+TGradient.Canvas.LineTo(20,20);</B></PRE>
+<B>Vamos ver agora as propriedades do Canvasa que n&oacute;s usaremos no
+desenvolvimento de nosso componente. Basicamente TGradient deveria puxar
+uma s&eacute;rie de ret&acirc;ngulos coloridos com uma certa cor. Para
+isso n&oacute;s usaremos o m&eacute;todo FillRect. O m&eacute;todo FillRect
+recebe como par&acirc;metro um objeto do tipo TRect com as coordenadas
+superiores esquerdas e direito inferior para pintar. Deste modo, o c&oacute;digo
+que n&oacute;s usaremos em nosso componente ser&aacute; semelhante ao seguinteo
+(n&oacute;s ainda n&atilde;o nos definimos a cor de preenchimento)</B>
+<PRE><B>Canvas.FillRect(TRect);</B></PRE>
+<B>Para escolher a cor de preenchimento n&oacute;s usaremos a&nbsp; propriedade
+brush do canvas. A propriedade brush determina a cor&nbsp; padr&atilde;o
+que o canvas usa para preencher formas gr&aacute;ficas e fundos. Em nosso
+caso, n&oacute;s usaremos a propriedade color do brush para escolher a
+cor que preencher&aacute; o canvas.</B>
+
+<P><B>N&oacute;s tamb&eacute;m precisaremos usar a&nbsp; propriedade pen
+do canvas. O objeto pen determina a classe de l&aacute;pis que n&oacute;s
+usaremos no canvas para puxar linhas e pontos. Em nosso caso, n&oacute;s
+usaremos a propriedade estilo do pen que determina o tipo de linha para
+puxar (em nosso componente psSolid) e o modo de propriedade que determina
+o modo com que o l&aacute;pis utilizar&aacute; o canvas (em nosso componente
+pmCopy )</B>
+<BR><A NAME="TGradiente-Colores"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B>
+<FONT SIZE=+2>Criando o gradiente de cores.</FONT></B>
+
+<P><B>No Delphi, uma cor &eacute; representada atrav&eacute;s de 4 bytes
+hexadecimais. O byte mais alto &eacute; usado para determinar o ajuste
+que o Windows faz da paleta e n&atilde;o veremos isto com mais detalhe.
+Os outros tr&ecirc;s bytes (os tr&ecirc;s bytes mais baixos) eles representam
+a quantidade de vermelho, verde e azul que forma a cor. Nosso componente
+devera calcular um gradiente de cores de um inicial (FColorDesde no c&oacute;digo
+fonte) at&eacute; outro fim (FColorHasta). O melhor modo para calcular
+este gradiente &eacute; decompondo as cores RGB (Vermelho, Verde e Azul)
+em seu componente. Deste modo, n&oacute;s saberemos a quantidade de cada
+uma destas tr&ecirc;s cores b&aacute;sicas que ir&atilde;o formar uma certa
+cor. Por exemplo a cor vermelha pura &eacute; representada por 255,0,0
+(255 de vermelho, 0 de verde e azul), e um tom cinza tem os tr&ecirc;s
+valores de vermelho, verde e mesmo azul (p.e. 150,150,150).</B>
+
+<P><B>O decomposi&ccedil;&atilde;o de uma cor em seus tr&ecirc;s componentes
+b&aacute;sicos depende de tr&ecirc;s fun&ccedil;&otilde;es: <I>GetRValue,
+GetGValue e GetBValue que </I>pertencem ao API de Windows. Estas fun&ccedil;&otilde;es
+levam como par&acirc;metro a cor da qual n&oacute;s queremos obter o decomposi&ccedil;&atilde;o
+e eles devolvem a " quantidade " respectivamente de vermelho, verde e azul
+que comp&otilde;e a cor.</B>
+
+<P><B>No c&oacute;digo fonte, uma vez decompostas as cores inicial e final
+nas vari&aacute;veis RGBDesde[0 ..2] e RGBHasta[0 ..2] (0 para cor vermelha,
+1 para verde e 2 para azul), o processo de calculo do gradiente &eacute;
+o seguinte:</B>
+<OL>
+<LI>
+<B>Calcular a diferen&ccedil;a em valor absoluto entre RGBDesde e RGBHasta
+para cada uma das cores b&aacute;sicas e manter isto na vari&aacute;vel
+RGBDif[0 ..2]. Adicionalmente, no fator vari&aacute;vel n&oacute;s manteremos&nbsp;
++1 se RGBHasta for maior que RGBDesde (gradiente superior) e&nbsp; -1 caso
+contr&aacute;rio (gradiente descendente). Este processo &eacute; feito
+para cada uma das tr&ecirc;s cores b&aacute;sicas.</B></LI>
+
+<LI>
+<B>Entre&nbsp; 0 a 255 (nosso gradiente consistir&aacute; em 256 cores),
+n&oacute;s calculamos a cor que corresponde a cada requadro a puxar (com
+o m&eacute;todo FillRect) por meio da express&atilde;o:</B></LI>
+
+<PRE><B>Vermelho:=RGBDesde[0]+factor[0]*MulDiv(contador,RGBDif[0],255);</B></PRE>
+<B>(de um modo semelhante para o verde e o azul)</B>
+<BR><B>Nota: MulDiv &eacute; uma fun&ccedil;&atilde;o do Api de Windows
+que multiplica os primeiros dois valores passados como par&acirc;metros
+e o resultado &eacute; dividido pelo terceiro par&acirc;metro que devolve
+o valor desta divis&atilde;o em forma de 16 bits arredondados.</B>
+<LI>
+<B>N&oacute;s colocamos a cor calculada na propriedade color do objeto
+brush:</B></LI>
+
+<PRE><B>Canvas.Brush.Color:=RGB(Vermelho,Verde,Azul);</B></PRE>
+<B>Como &eacute; f&aacute;cil supor, a fun&ccedil;&atilde;o RGB leva tr&ecirc;s
+valores de vermelho, verde e azul, e forma a cor que corresponde a estas
+cores b&aacute;sicas.</B>
+<LI>
+<B>O requadro &eacute; tirado:</B></LI>
+
+<PRE><B>Canvas.FillRect(Banda);</B></PRE>
+<B>Banda &eacute; um tipo de vari&aacute;vel TRect que mant&eacute;m as
+coordenadas do requadro para puxar.</B></OL>
+<B>Ultimo detalhe: como foi mencionado, nosso gradiente consistir&aacute;
+em 256 cores. Por&eacute;m, dependendo do modo gr&aacute;fico que n&oacute;s
+configurarmos o Windows e da exist&ecirc;ncia de outros objetos com as
+pr&oacute;prias cores , o Windows ajustar&aacute; as cores dispon&iacute;veis
+de forma que o resultado final sera a mais proxima poss&iacute;vel.</B>
+<BR><A NAME="TGradiente-Paint"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B>
+<FONT SIZE=+2>Quando desenhar no Canvas. A mensagem WM_PAINT e o m&eacute;todo
+Paint.</FONT></B>
+
+<P><B>Quando n&oacute;s queremos utilizar o canvas, n&oacute;s devemos
+colocar o c&oacute;digo correspondente dentro do m&eacute;todo paint que
+pertence ao objeto TGraphicControl (o objeto TCustomControl tamb&eacute;m
+tem este m&eacute;todo). Isto &eacute; deste modo porque quando nosso componente
+deveria ser puxado (p.e. o gradiente de cores), bem porque &eacute; a primeira
+vez em que ou em resposta para uma aplica&ccedil;&atilde;o de Windows,
+o Windows enviar&aacute;&nbsp; uma mensagem do tipo WM_PAINT para nosso
+componente. O componente, de um modo autom&aacute;tico (heran&ccedil;a),
+faz uma liga&ccedil;&atilde;o ao m&eacute;todo paint para desenhar o componente
+(em nosso caso, o gradiente).</B>
+
+<P><B>Em geral n&oacute;s n&atilde;o teremos a necessidade de investigar
+mais a mensagem WM_PAINT. Como n&oacute;s h&aacute; pouco explicamos, a
+&uacute;nica coisa que nos interessa dele (pelo menos para nosso componente),
+&eacute; que quando esta mensagem &eacute; recebida, o Delphi executar&aacute;
+o m&eacute;todo paint associado ao componente. E &eacute; dentro deste
+m&eacute;todo que n&oacute;s devemos adicionar o c&oacute;digo necess&aacute;rio
+para puxar o gradiente.</B>
+
+<P><B>Ent&atilde;o, os passos&nbsp; que n&oacute;s vimos anteriormente
+que s&atilde;o necess&aacute;rios puxar o gradiente, eles ser&atilde;o
+localizados dentro do m&eacute;todo TGradiente.Paint que ser&aacute; declarado
+como nula.O m&eacute;todo paint declarar&aacute; isto no tipo protegido,
+desde que n&atilde;o se possa us&aacute;-lo fora de nosso componente.</B>
+
+<P><A NAME="TGradiente-Otros"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B>
+<FONT SIZE=+2>Outros detalhes no desenvolvimento do componente. Publicando
+propriedades herdadas.</FONT></B>
+<DL>
+<DL>
+<DT>
+<IMG SRC="Bamar.gif" ALT="Bamar.gif - .326 K" HEIGHT=14 WIDTH=14><B> Um
+dos detalhes que n&oacute;s veremos agora &eacute; o alinhamento do componente.
+O objeto TGraphicControl possui a propriedade Align (ent&atilde;o nosso
+componente herdar&aacute; isto), mas ser&aacute; declarado como p&uacute;blico.
+Para n&oacute;s &eacute; interessante declarar isto como published de forma
+que ela apareca no Object Inspector em design-time. Para isto n&oacute;s
+devemos redeclarar a propriedade align na se&ccedil;&atilde;o published:</B></DT>
+
+<PRE><B>published&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; property align</B></PRE>
+<B>&Eacute; importante fazer uma advert&ecirc;ncia em dois aspectos: o
+primeiro &eacute; que uma redeclara&ccedil;&atilde;o pode serr s&oacute;
+menos restritivo o acesso para uma propriedade (p.e protected a public),
+mas n&atilde;o mais restritivo (public a protected).</B>
+<BR><B>O segundo aspecto &eacute; ao redeclarar, n&atilde;o &eacute; necess&aacute;rio
+especificar o tipo da propriedade, apenas indicar seu nome. O Que&nbsp;
+n&oacute;s podemos fazer no momento do redeclara&ccedil;&atilde;o &eacute;
+definir um valor novo por padr&atilde;o para esta propriedade.</B>
+<DT>
+<IMG SRC="Bamar.gif" ALT="Bamar.gif - .326 K" HEIGHT=14 WIDTH=14><B>O resto
+dos detalhes do codigo fonte n&atilde;o precisa de mais detalhes. S&atilde;o
+declarados as propriedades Dire&ccedil;&atilde;o, ColorDesde e ColorHasta
+e s&atilde;o escritos os valores correspondentes...</B></DT>
+</DL>
+</DL>
+
+<H2>
+<A NAME="TGradiente-Código"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B>
+O C&oacute;digo Fonte do Componente</B></H2>
+
+<PRE><B>&nbsp;&nbsp;&nbsp;&nbsp;
+unit Gradient;
+
+interface
+
+uses
+&nbsp; Classes, Controls, Graphics, WinTypes, WinProcs;
+
+type
+&nbsp; TDireccion = (dHorizontal, dVertical);&nbsp; {Tipo de direcci&oacute;n del gradiente}
+&nbsp; TGradiente = class(TGraphicControl)
+&nbsp; private
+&nbsp;&nbsp;&nbsp; FDireccion : TDireccion;&nbsp;&nbsp; {Direcci&oacute;n del gradiente}
+&nbsp;&nbsp;&nbsp; FColorDesde, FColorHasta : TColor;&nbsp;&nbsp;&nbsp;&nbsp; {Color del gradiente}
+&nbsp;&nbsp;&nbsp; procedure SetDireccion(valor : TDireccion);
+&nbsp;&nbsp;&nbsp; procedure SetColorDesde(valor : TColor);
+&nbsp;&nbsp;&nbsp; procedure SetColorHasta(valor : TColor);
+&nbsp; protected
+&nbsp;&nbsp;&nbsp; procedure Paint; override;
+&nbsp; public
+&nbsp;&nbsp;&nbsp; constructor Create(AOwner : TComponent); override;
+&nbsp; published
+&nbsp;&nbsp;&nbsp; property Direccion : TDireccion read FDireccion write SetDireccion default dHorizontal;
+&nbsp;&nbsp;&nbsp; property ColorDesde : TColor read FColorDesde write SetColorDesde default clBlue;
+&nbsp;&nbsp;&nbsp; property ColorHasta : TColor read FColorHasta write SetColorHasta default clBlack;
+&nbsp;&nbsp;&nbsp; property Align;&nbsp;&nbsp;&nbsp;&nbsp; {Redeclara&ccedil;&atilde;o da propriedade como publicada}
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+constructor TGradiente.Create(AOwner : TComponent);
+begin
+&nbsp; inherited Create(AOwner);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Sempre a primeira coisa a fazer}
+&nbsp; FDireccion:=dHorizontal;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Valores padr&otilde;es}
+&nbsp; FColorDesde:=clBlue;
+&nbsp; FColorHasta:=clBlack;
+&nbsp; Width:=100;
+&nbsp; Height:=100;
+end;
+
+procedure TGradiente.SetDireccion(Valor : TDireccion);
+begin
+&nbsp; if FDireccion &lt;> valor then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; FDireccion := Valor;
+&nbsp;&nbsp;&nbsp; Repaint;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {For&ccedil;a o desenho do gradiente}
+&nbsp; end;
+end;
+
+procedure TGradiente.SetColorDesde(Valor : TColor);
+begin
+&nbsp; if FColorDesde &lt;> Valor then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; FColorDesde := Valor;
+&nbsp;&nbsp;&nbsp; Repaint;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; end;
+end;
+
+procedure TGradiente.SetColorHasta(Valor : TColor);
+begin
+&nbsp; if FColorHasta &lt;> Valor then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; FColorHasta := Valor;
+&nbsp;&nbsp;&nbsp; Repaint;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; end;
+end;
+
+procedure TGradiente.Paint;
+var
+&nbsp; RGBDesde, RGBHasta, RGBDif : array[0..2] of byte;&nbsp; {Cores inicial e final - diferen&ccedil;a de cores}
+&nbsp; contador, Vermelho, Verde, Azul : integer;
+&nbsp; Banda : TRect;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Coordenadas do requadro a pintar}
+&nbsp; Factor : array[0..2] of shortint;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {+1 se gradiente &eacute; crescente e -1 caso decrescente}
+begin
+&nbsp; RGBDesde[0]:=GetRValue(ColorToRGB(FColorDesde));
+&nbsp; RGBDesde[1]:=GetGValue(ColorToRGB(FColorDesde));
+&nbsp; RGBDesde[2]:=GetBValue(ColorToRGB(FColorDesde));</B></PRE>
+
+<PRE><B>&nbsp; RGBHasta[0]:=GetRValue(ColorToRGB(FColorHasta));
+&nbsp; RGBHasta[1]:=GetGValue(ColorToRGB(FColorHasta));
+&nbsp; RGBHasta[2]:=GetBValue(ColorToRGB(FColorHasta));
+&nbsp; for contador:=0 to 2 do&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Calculo de RGBDif[] e factor[]}
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; RGBDif[contador]:=Abs(RGBHasta[contador]-RGBDesde[contador]);
+&nbsp;&nbsp;&nbsp; If RGBHasta[contador]>RGBDesde[contador] then factor[contador]:=1 else factor[contador]:=-1;
+&nbsp; end;
+&nbsp; Canvas.Pen.Style:=psSolid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; Canvas.Pen.Mode:=pmCopy;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; if FDireccion = dHorizontal then&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; Banda.Left:=0;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Banda.Right:=Width;
+&nbsp;&nbsp;&nbsp; for contador:=0 to 255 do
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Banda.Top:=MulDiv(contador,height,256);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Banda.Bottom:=MulDIv(contador+1,height,256);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vermelho:=RGBDesde[0]+factor[0]*MulDiv(contador,RGBDif[0],255);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verde:=RGBDesde[1]+factor[1]*MulDiv(contador,RGBDif[1],255);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Azul:=RGBDesde[2]+factor[2]*MulDiv(contador,RGBDif[2],255);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Canvas.Brush.Color:=RGB(Vermelho,Verde,Azul);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Canvas.FillRect(Banda);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; end;
+&nbsp; end;
+&nbsp; if FDireccion = dVertical then&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; Banda.Top:=0;
+&nbsp;&nbsp;&nbsp; Banda.Bottom:=Height;
+&nbsp;&nbsp;&nbsp; for contador:=0 to 255 do
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Banda.Left:=MulDiv(contador,width,256);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Banda.Right:=MulDIv(contador+1,width,256);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Vermelho:=RGBDesde[0]+factor[0]*MulDiv(contador,RGBDif[0],255);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Verde:=RGBDesde[1]+factor[1]*MulDiv(contador,RGBDif[1],255);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Azul:=RGBDesde[2]+factor[2]*MulDiv(contador,RGBDif[2],255);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Canvas.Brush.Color:=RGB(Vermelho,Verde,Azul);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Canvas.FillRect(Banda);
+&nbsp;&nbsp;&nbsp; end;
+&nbsp; end;
+end;
+
+procedure Register;
+begin
+&nbsp; RegisterComponents('Curso', [TGradiente]);
+end;
+
+end.</B></PRE>
+
+<HR>
+<ADDRESS>
+<B>Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></B></ADDRESS>
+
+<BR><B>Ultima modificaci&oacute;n 20.12.1996</B>
+</BODY>
+</HTML>

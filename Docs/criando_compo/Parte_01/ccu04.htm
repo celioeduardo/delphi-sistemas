@@ -1,0 +1,315 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+  
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+4. Adicionando recursos a um componente existente: TBlinkLabel&nbsp;</FONT></FONT></FONT></B></CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice&nbsp;</A></TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<P><IMG SRC="blinklbl.gif" ALT="blinklbl.gif - .966 K" HEIGHT=26 WIDTH=26 ALIGN=ABSBOTTOM>
+Nesta unidade n&oacute;s aprenderemos como j&aacute; adicionar recursos
+e possibilidades para um componente Delphi existente. N&oacute;s aprenderemos
+a usar objetos (componentes) em nosso pr&oacute;prio componente, o que
+eles s&atilde;o e como se declaram os constructors e os destructors.
+
+<P>Tudo isso,claro &eacute;, baseado em um exemplo concreto: TBlinkLabel.
+<BR><A NAME="TBlinkLbl-Objetivo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Objetivo do componente</FONT></B>
+
+<P>Nosso prop&oacute;sito &eacute; criar um componente id&ecirc;ntico ao
+o tipo TLabel , mas com uma capacidade a mais: o de piscar. Quer dizer,
+nosso componente deveria nos mostrar a mensagem introduzida na de propriedade
+que pisca com uma certa freq&uuml;&ecirc;ncia. Tamb&eacute;m, se o valor
+introduzido freq&uuml;&ecirc;ncia &eacute; nulo, a mensagem dever&aacute;
+permanecer fixa na tela (emulando o que acontece a um Tlabel normal).
+<BR><A NAME="TBlinkLbl-Utilizando"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Usando um componente existente em nosso pr&oacute;prio
+componente. Cron&ocirc;metros.</FONT></B>
+
+<P>Como n&oacute;s h&aacute; pouco dissemos, nosso componente deveria piscar
+com uma certa freq&uuml;&ecirc;ncia. Porque n&oacute;s precisamos ser poss&iacute;veis
+medir o tempo que devera piscar a mensagem. Afortunadamente, o Delphi nos
+prov&ecirc; um objeto que molda perfeitamente a nossas exig&ecirc;ncias
+de medi&ccedil;&atilde;o de tempo: TTimer.
+
+<P>Embora n&atilde;o &eacute; este o lugar de explicar as caracter&iacute;sticas
+do Cron&ocirc;metro de objeto (a informa&ccedil;&atilde;o b&aacute;sica
+deste componente pode estar na pr&oacute;pria ajuda on-line do Delphi),
+ele serve para parar um momento na propriedade do cron&ocirc;metro que
+n&oacute;s usaremos: o <I>intervalo da </I>propriedade.<I> Esta propriedade
+nos permite especificar o intervalo de tempo que n&oacute;s queremos medir
+(em milisegundos). Quando o valor estabelecido &eacute; alcan&ccedil;ado
+o m&eacute;todo que esta especificado no evento OnTimer &eacute; executado.</I>
+
+<P><I>O m&eacute;todo que n&oacute;s especificaremos para o evento OnTimer
+fara com que a mensagem apareca e desapare&ccedil;a.</I>
+
+<P><I>A teoria &eacute; muito simples, mas... como n&oacute;s adicionamos
+o objeto cron&ocirc;metro para nosso componente? Em design-time &eacute;
+simples. &Eacute; s&oacute; selecionar o cron&ocirc;metro na paleta de
+componentes e coloc&aacute;-lo em nossa forma.</I>
+
+<P><I>Mas quando estamos escrevendo um componente n&oacute;s n&atilde;o
+podemos usar este sistema, se n&oacute;s n&atilde;o vamos isto &agrave;
+m&atilde;o. Os passos gerais que devem ser seguidos:</I>
+<UL>
+<LI>
+<I>Adicionar a unidade que o componente &eacute; definido na cla&uacute;sula
+uses de nossa unidade. Como o objeto cron&ocirc;metro &eacute; declarado
+na unidade ExtCtrls , &eacute; esta unidade que o que n&oacute;s dever&iacute;amos
+somar ao cla&uacute;sula uses.</I></LI>
+
+<LI>
+<I>Adicionar o m&eacute;todo necess&aacute;rio para construir o objeto
+(em nosso caso, o cron&ocirc;metro).</I></LI>
+
+<LI>
+<I>Escrever o c&oacute;digo necess&aacute;rio para destruir o objeto no
+m&eacute;todo destructor de nosso componente.</I></LI>
+</UL>
+<I>Na se&ccedil;&atilde;o seguinte n&oacute;s aprofundaremos nestes dois
+passos.</I>
+<BR><A NAME="TBlinkLbl-Constructores"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B><FONT SIZE=+2>Construtores
+e Destruidores.</FONT></B>
+<DL>
+<DL>
+<DT>
+<IMG SRC="Bamar.gif" ALT="Bamar.gif - .326 K" HEIGHT=14 WIDTH=14> <I>Construtores</I></DT>
+
+
+<P>Os objetos que n&oacute;s declaramos em um componente n&atilde;o existem
+em mem&oacute;ria at&eacute; que objeto &eacute; criado (tamb&eacute;m
+&eacute; dito que uma inst&acirc;ncia do objeto &eacute; criada) para uma
+chamada para o m&eacute;todo de constru&ccedil;&atilde;o do objeto.
+
+<P>Um Construtor n&atilde;o &eacute; mais que um m&eacute;todo que prov&ecirc;
+mem&oacute;ria para o objeto e aponta (por meio de um ponteiro) para ele.
+Chamando ao m&eacute;todo <B>create</B>, o construtor nomeia a inst&acirc;ncia
+do objeto para uma vari&aacute;vel.
+
+<P>Ele serve para fazer advert&ecirc;ncia que todos os componentes herdam
+um m&eacute;todo denominado create que se encarrega de criar o componente
+em mem&oacute;ria. De um modo adicional, no m&eacute;todo create os valores
+de certos campos do componente podem ser inicializados (comumente lhes
+nomear um valor por padr&atilde;o)
+
+<P>No m&eacute;todo create do componente n&oacute;s podemos criar objetos
+adicionais que ele precisa para nosso componente. Em nosso caso, no m&eacute;todo
+create de TBlinkLbl n&oacute;s criaremos o cron&ocirc;metro.
+<DT>
+<IMG SRC="Bamar.gif" ALT="Bamar.gif - .326 K" HEIGHT=14 WIDTH=14><I>Destruidores</I></DT>
+
+
+<P>Quando n&oacute;s terminamos de usar um objeto, n&oacute;s dever&iacute;amos
+destruir isto, quer dizer, liberar a mem&oacute;ria que ocupou o objeto.
+Esta opera&ccedil;&atilde;o &eacute; feita atraves do m&eacute;todo <B>destroy
+</B>que todos os componentes herdam de TComponent.
+
+<P>Se n&oacute;s criamos algum objeto adicional, n&oacute;s dever&iacute;amos
+destruir tamb&eacute;m escrevendo isto noo&nbsp; m&eacute;todo destroy.</DL>
+Delphi cria e destr&oacute;i nosso componente automaticamente quando &eacute;
+necess&aacute;rio, como ja foi dito, os m&eacute;todos create e destroy
+s&atilde;o herdados do TComponent.
+
+<P>Mas se n&oacute;s queremos usar algum objeto em nosso componente, o
+Delphi n&atilde;o cria e destroi automaticamente, n&oacute;s devemos fazer
+isto manualmente. Este processo &eacute; feito para adicionar o c&oacute;digo
+necess&aacute;rio para os m&eacute;todos&nbsp; create e destroy. &Eacute;
+importante dizer que n&oacute;s escreveremos o mesmo c&oacute;digo novamente
+no componente, e podem sobrecarregar o c&oacute;digo novo.
+
+<P>De um modo geral isto &eacute; feito do seguinte modo: (um exemplo mais
+concreto; isto tem na pr&oacute;prio c&oacute;digo fonte do componente)
+<UL>
+<LI>
+Na parte p&uacute;blica de nosso componente n&oacute;s declaramos os m&eacute;todos
+o create e destroy seguido pela palavra chave overrride:</LI>
+
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; public
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; constructor create(AOwner : TComponent); override;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; destructor&nbsp;&nbsp; destroy; override;</PRE>
+
+<LI>
+Escrever o c&oacute;digo adicional do construtor e do destruidor na se&ccedil;&atilde;o
+de implementa&ccedil;&atilde;o.</LI>
+
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; constructor TComponent.Create(AOwner : TComponent);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inherited Create(AOwner);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; destructor TComponent.Destroy;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inherited destroy;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end;</PRE>
+A coisa mais importante para se lembrar de &eacute; que quando sobrecarregamos
+um construtor, a primeira coisa que deveria ser feita &eacute; uma liga&ccedil;&atilde;o
+ao construtor original (linha herdada o create). Pr&oacute;ximo a pessoa
+pode somar o c&oacute;digo necess&aacute;rio para criar o objeto.
+
+<P>Da mesma maneira, quando sobrecarregamos um destruidor, os objetos criados
+antes deveriam ser liberados e a &uacute;ltima linha deveria ser uma chamada
+ao destruidor original.</UL>
+</DL>
+<A NAME="TBlinkLbl-Implementando"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Implemementando o piscador.</FONT></B>
+
+<P>Em design-time do componente n&oacute;s deixamos ainda um passo importante:
+como fazer as piscadas de mensagem. N&oacute;s dissemos que quando o evento
+acontece OnTimer o m&eacute;todo ser&aacute; executado e mostrar&aacute;
+e ocultara a mensagem dando uma sensa&ccedil;&atilde;o de "pisca-pisca"
+
+<P>A solu&ccedil;&atilde;o &eacute; muito simples, desde que nosso componente,
+descendendo de um TLabel uma propriedade que determina se o componente
+deveria ser vis&iacute;vel ou n&atilde;o. Esta propriedade &eacute; denominada
+<B>visible.</B>
+
+<P><B>Deste modo, nosso m&eacute;todo pisca alternar&aacute; o valor da
+propriedade booleana visible quando o evento OnTimer acontece. S&atilde;o
+mostrados os detalhes concretos de implementa&ccedil;&atilde;o no e c&oacute;digo
+fonte.</B>
+<BR><A NAME="TBlinkLbl-Retoques"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Outros detalhes na cria&ccedil;&atilde;o do componente.
+Valores padr&atilde;o.</FONT></B>
+
+<P>Desta forma,&nbsp; n&oacute;s concluimos dois aspectos na cria&ccedil;&atilde;o
+do componente:
+<UL>
+<LI>
+N&oacute;s comentamos que se o valor introduzido na propriedade&nbsp; freq&uuml;&ecirc;ncia
+for nulo, a mensagem deveria permanecer fixa em tela. Isto &eacute; alcan&ccedil;ado
+ativando e incapacitando o componente quando &eacute; introduzido o valor
+da velocidade de propriedade no Object Inspector (ver o procedimento SetVelocidad
+no c&oacute;digo fonte).</LI>
+
+<BR>Deste modo, se &eacute; introduzido 0 como valor da velocidade, o cron&ocirc;metro
+&eacute; simplesmente inv&aacute;lido e ele usa o valor da propriedade
+vis&iacute;vel para True. Se o valor introduzido &eacute; diferente de
+zero, o cron&ocirc;metro &eacute; habilitado e, por conseguinte, o pisca
+- pisca.
+<LI>
+Um &uacute;ltimo detalhe &eacute; dar um valor padr&atilde;o para a propriedade
+que define a velocidade. Isto &eacute; adquirido em dois passos: primeiramente
+na declara&ccedil;&atilde;o da propriedade velocidade a palavra chave <B>Default
+</B>seguida pelo valor &eacute; somada por padr&atilde;o (400 em nosso
+caso). Logo que o construtor &eacute; inicializado o campo associado com
+a propriedade (FVelocidad:=400). Os <B>dois passos s&atilde;o necess&aacute;rios
+e n&atilde;o </B>s&atilde;o poss&iacute;veis n&atilde;o obviar nenhum de
+ambos.</LI>
+
+<BR>Este detalhe de nomear valores padr&atilde;o &eacute; mais importante
+para evitarmos erros de inicializa&ccedil;&atilde;o e temos certeza de
+que a propriedade sempre ter&aacute; um valor v&aacute;lido. O Delphi s&oacute;
+manter&aacute; o valor da propriedade se ele for diferente ao valor padr&atilde;o.</UL>
+<A NAME="TBlinkLbl-Código"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O C&oacute;digo Fonte do componente</FONT></B>
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+unit Blinklbl;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { (c)1996 by Luis Roche }
+
+interface
+
+uses
+&nbsp; Classes, StdCtrls, ExtCtrls;&nbsp;&nbsp;&nbsp;&nbsp;
+type
+&nbsp; TBlinkLabel = class(TLabel)</PRE>
+
+<PRE>&nbsp; private
+&nbsp;&nbsp;&nbsp; FVelocidad : integer;</PRE>
+
+<PRE>&nbsp;&nbsp;&nbsp; FTimer : TTimer;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; procedure SetVelocidad(valor : integer);&nbsp;&nbsp;
+&nbsp; protected
+&nbsp;&nbsp;&nbsp; procedure parpadea(Sender : TObject);
+&nbsp; public
+&nbsp;&nbsp;&nbsp; constructor Create(AOwner : TComponent); override;&nbsp;&nbsp;&nbsp; {Constructor}
+&nbsp;&nbsp;&nbsp; destructor Destroy; override;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Destructor}
+&nbsp; published
+&nbsp;&nbsp;&nbsp; property Velocidad : integer read FVelocidad write SetVelocidad default 400;
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+constructor TBlinkLabel.Create(AOwner : TComponent);
+begin
+&nbsp; inherited Create(AOwner);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Chama o constructor original (herdado)}
+&nbsp; FTimer := TTimer.Create(Self);&nbsp; {Criamos o timer}
+&nbsp; FVelocidad := 400;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Freq&uuml;&ecirc;ncia (velocidade) padr&atilde;o}
+&nbsp; FTimer.Enabled:=True;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Ativamos o timer}
+&nbsp; FTimer.OnTimer:=parpadea;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Pegamos o m&eacute;todo parpadea (Pisca-Pisca)}
+&nbsp; FTimer.Interval:=FVelocidad;&nbsp;&nbsp;&nbsp; {Pegamos o intervalo do timer = freq&uuml;&ecirc;ncia parpadeo}
+end;
+
+destructor TBlinkLabel.Destroy;
+begin
+&nbsp; FTimer.Free;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Liberamos o timer}
+&nbsp; inherited destroy;&nbsp;&nbsp;&nbsp; {Chamamos o destructor original (herdado)}
+end;
+
+procedure TBlinkLabel.SetVelocidad (valor : integer);
+begin
+&nbsp; If FVelocidad &lt;> valor then&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {S&oacute; se o valor introduzido &eacute; diferente do padr&atilde;o}
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; if valor &lt; 0 then FVelocidad:=0;
+&nbsp;&nbsp;&nbsp; FVelocidad:=Valor;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Aceita a velocidade}
+&nbsp;&nbsp;&nbsp; if FVelocidad=0 then FTimer.Enabled:=False else FTimer.Enabled:=True;
+&nbsp;&nbsp;&nbsp; {Se Fvelocidad=0 a menssagem deve estar sempre visible}
+&nbsp;&nbsp;&nbsp; FTimer.Interval:=FVelocidad;
+&nbsp;&nbsp;&nbsp; Visible:=True;
+&nbsp; end;
+end;
+
+procedure TBlinkLabel.parpadea(Sender : TObject);
+begin
+&nbsp; if FTimer.Enabled then Visible := not(Visible);&nbsp; {Alternativamente mostra e oculta a menssagem se o timer esta activado}
+end;
+
+procedure Register;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {Registro do componente}
+begin
+&nbsp; RegisterComponents('Curso', [TBlinkLabel]);
+end;
+
+end.</PRE>
+
+<HR>
+<ADDRESS>
+Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 9.12.1996
+</BODY>
+</HTML>

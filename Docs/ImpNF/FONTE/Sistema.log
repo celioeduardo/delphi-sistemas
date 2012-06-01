@@ -1,0 +1,21 @@
+EStringListError 17/09/2004 12:54:38 : List index out of bounds (-1)Tela: frmCadPublico - Cadastro de Público
+EStringListError 17/09/2004 12:55:38 : List index out of bounds (-1)Tela: frmCadPublico - Cadastro de Público
+EStringListError 17/09/2004 12:55:39 : List index out of bounds (-1)Tela: frmCadPublico - Cadastro de Público
+EStringListError 17/09/2004 12:56:12 : List index out of bounds (-1)Tela: frmCadPublico - Cadastro de Público
+Exception 17/09/2004 13:14:44 : Column unknown
+COD_EMPRESA
+At line 1, column 52Tela: frmCAD_LAYOUT_NF - Configurações do Layout da N.F.
+Exception 17/09/2004 13:19:01 : Table unknown
+CAD_LAYOUT
+At line 1, column 46Tela: frmPesquisa - Pesquisa
+EAccessViolation 17/09/2004 13:32:05 : Access violation at address 00000000. Read of address 00000000Tela: frmCAD_LAY_NF_CAMPO - Configurações dos Campos do Layout
+EAccessViolation 17/09/2004 13:32:27 : Access violation at address 00000000. Read of address 00000000Tela: frmCAD_LAY_NF_CAMPO - Configurações dos Campos do Layout
+EAccessViolation 17/09/2004 13:33:35 : Access violation at address 00000000. Read of address 00000000Tela: frmCAD_LAY_NF_CAMPO - Configurações dos Campos do Layout
+EAccessViolation 20/09/2004 21:38:53 : Access violation at address 0048513F in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EAccessViolation 20/09/2004 21:39:24 : Access violation at address 0048513F in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EAccessViolation 20/09/2004 21:39:29 : Access violation at address 0048513F in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EAccessViolation 20/09/2004 21:41:02 : Access violation at address 0048513F in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EAccessViolation 20/09/2004 21:43:32 : Access violation at address 0048513F in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EAccessViolation 20/09/2004 22:08:34 : Access violation at address 0048531B in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EAccessViolation 20/09/2004 22:08:50 : Access violation at address 0048531B in module 'Sistema.exe'. Read of address 00000030Tela: frmNotaFiscal - Emissão de Notas Fiscais
+EDBEditError 20/09/2004 22:16:31 : Invalid input value.  Use escape key to abandon changesTela: frmNotaFiscal - Emissão de Notas Fiscais

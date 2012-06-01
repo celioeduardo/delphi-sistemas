@@ -1,0 +1,45 @@
+TD.mainheadcell {
+	FONT-SIZE: 11px; COLOR: #ffffff; BACKGROUND-COLOR: #233141
+}
+TD.mainheadcell A:link {
+	COLOR: #ffffff
+}
+TD.mainheadcell A:visited {
+	COLOR: #ffffff
+}
+TD.mainheadcell A:hover {
+	COLOR: #ffffff
+}
+TD.maincella {
+	FONT-SIZE: 11px; COLOR: #536e87; BACKGROUND-COLOR: #1a2a3e
+}
+TD.maincellb {
+	FONT-SIZE: 11px; COLOR: #cccccc; BACKGROUND-COLOR: #28384b
+}
+TD.mainkeytitlebg {
+	BACKGROUND-COLOR: #233141
+}
+.replymessagebody {
+	FONT-SIZE: 11px
+}
+.replymessagebody A:link {
+	COLOR: #0f0f0f; TEXT-DECORATION: underline
+}
+.replymessagebody A:visited {
+	COLOR: #0f0f0f; TEXT-DECORATION: underline
+}
+.replymessagebody A:hover {
+	COLOR: #0f0f0f
+}
+.mainpagetitle {
+	FONT-WEIGHT: bold; FONT-SIZE: 13px; COLOR: #ffffff
+}
+.mainpagetitle A:link {
+	COLOR: #ffffff
+}
+.mainpagetitle A:visited {
+	COLOR: #ffffff
+}
+.mainpagetitle A:hover {
+	COLOR: #ffffff
+}

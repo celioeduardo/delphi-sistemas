@@ -1,0 +1,652 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+
+  
+
+
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+7. TDBViewer: Um visualizador r&aacute;pido de bancos de dados.&nbsp;</FONT></FONT></FONT></B></CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice&nbsp;</A></TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<P><IMG SRC="dbviewer.gif" ALT="dbviewer.gif" HEIGHT=27 WIDTH=27 ALIGN=ABSBOTTOM>
+Nesta unidade n&oacute;s transformaremos uma forma em um componente. Em
+resumo, n&oacute;s criaremos uma forma para visualizar bancos de dados
+rapidamente e n&oacute;s integraremos isto dentro de um componente. Deste
+modo em nossos projetos, quando queremos visualizar um banco de dados rapidamente,
+chamamos um m&eacute;todo de nosso componente para realiza-lo.
+
+<P>Esta convers&atilde;o de caixas de di&aacute;logo em componentes &eacute;
+uma op&ccedil;&atilde;o muito poderosa que nos permite reutilizar o c&oacute;digo
+de nossos projetos diversos de um modo r&aacute;pido e simples. Sem d&uacute;vida
+assim que n&oacute;s saibamos a t&eacute;cnica para alcan&ccedil;ar-lo
+n&oacute;s teremos possibilidades infinitas para converter form's das que
+n&oacute;s usamos freq&uuml;entemente em componentes. Seria bastante dizer
+que eu tenho um componente que encapsula uma aplica&ccedil;&atilde;o inteira
+de 10 ou 12 janelas!.
+
+<P>&Eacute; necessario dizer que algumas fun&ccedil;&otilde;es que usaremos
+aqui n&atilde;o existem no Delphi 1; se voc&ecirc; for usar o Delphi 1
+entao &eacute; melhor procurar na ajuda on-line algo semelhante ao que
+nos vamos usar.
+
+<P><A NAME="TDBViewer-Objetivo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Objetivo do componente</FONT></B>
+
+<P>Nosso objetivo &eacute; criar um componente que mostrara uma janela
+ao usu&aacute;rio atrav&eacute;s da defini&ccedil;&atilde;o de propriedades
+e chamadas de m&eacute;todos em design-time para que seja ativado em run-time.
+
+<P>A forma que n&oacute;s vamos integrar no componente &eacute; visualizador
+/ editor de&nbsp; bancos de dados. Logo o componente &eacute; mostrado
+em run-time e suas fun&ccedil;&otilde;es principais &eacute; comentado.
+<BR><IMG SRC="dbvrun.gif" BORDER=0 HEIGHT=353 WIDTH=458>
+<UL>
+<LI>
+Por meio dos dois combo boxes o usu&aacute;rio define o alias e o nome
+da tabela a ser visualizado.</LI>
+
+<LI>
+Um dbgrid &eacute; mostrado para a consulta e edi&ccedil;&atilde;o dos
+dados.</LI>
+
+<LI>
+Em um painel adicional ele podera fazer consultas e buscas por palavras
+em qualquer campo de um banco de dados.</LI>
+
+<BR>O grid tem um menu&nbsp; popup que permite ou n&atilde;o o filtro de
+registros.
+
+<P>Cria&ccedil;&atilde;o do Componente</UL>
+
+<UL>
+<LI>
+Primeiro, n&oacute;s criaremos o forma de nosso componente.</LI>
+
+<LI>
+Depois criaremos o componente, inclusive propriedades, m&eacute;todos,
+etc.</LI>
+
+<LI>
+Por ultimo n&oacute;s faremos a conex&atilde;o entre o componente e a forma.</LI>
+</UL>
+<A NAME="TDBViewer-Form"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>&nbsp;<B><FONT SIZE=+2>
+O projeto da forma</FONT></B>
+
+<P>A cria&ccedil;&atilde;o da forma sera feita do modo tradicional, quer
+dizer, no Delphi, n&oacute;s faremos isso em&nbsp; File|New e escolhemos
+a forma em branco.
+
+<P>A se&ccedil;&atilde;o de interface da forma &eacute; a seguinte:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+unit frmView;
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+&nbsp; StdCtrls, DB, DBTables, Grids, DBGrids, ExtCtrls, Buttons, Menus;
+
+type
+&nbsp; TfrmVisor = class(TForm)
+&nbsp;&nbsp;&nbsp; tTable: TTable;
+&nbsp;&nbsp;&nbsp; dsDataSource: TDataSource;
+&nbsp;&nbsp;&nbsp; dbGrid: TDBGrid;
+&nbsp;&nbsp;&nbsp; pTop: TPanel;
+&nbsp;&nbsp;&nbsp; pSelectTable: TPanel;
+&nbsp;&nbsp;&nbsp; pBusca: TPanel;
+&nbsp;&nbsp;&nbsp; gbTables: TGroupBox;
+&nbsp;&nbsp;&nbsp; Alias: TLabel;
+&nbsp;&nbsp;&nbsp; Table: TLabel;
+&nbsp;&nbsp;&nbsp; cbAlias: TComboBox;
+&nbsp;&nbsp;&nbsp; cbTables: TComboBox;
+&nbsp;&nbsp;&nbsp; gbBusca: TGroupBox;
+&nbsp;&nbsp;&nbsp; cbFields: TComboBox;
+&nbsp;&nbsp;&nbsp; eSearch: TEdit;
+&nbsp;&nbsp;&nbsp; Buscar: TSpeedButton;
+&nbsp;&nbsp;&nbsp; BuscarSeguinte: TSpeedButton;
+&nbsp;&nbsp;&nbsp; PopupMenu1: TPopupMenu;
+&nbsp;&nbsp;&nbsp; Igual1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Distinto1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Menor1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Maior1: TMenuItem;
+&nbsp;&nbsp;&nbsp; N1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Ativar1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Eliminar1: TMenuItem;
+&nbsp;&nbsp;&nbsp; procedure FormCreate(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure FillcbFields;
+&nbsp;&nbsp;&nbsp; procedure Inicializar;
+&nbsp;&nbsp;&nbsp; procedure cbAliasChange(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure cbTablesChange(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure BuscarClick(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure BuscarSeguinteClick(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure dbGridColEnter(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure PopupMenu1Popup(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Ativar1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Eliminar1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Igual1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Distinto1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Menor1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Maior1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; private
+&nbsp; public
+&nbsp;&nbsp;&nbsp; FReadOnly, FFiltrar, FBuscar : boolean;
+&nbsp; end;
+
+procedure PascalStr(var s : string);
+procedure ComaStr(var s : string);
+function Condicao(AField : TField; AOp : string) : string;
+procedure AddFilter(AField : TField; AOp : string);
+
+var
+&nbsp; frmVisor: TfrmVisor;</PRE>
+Se&ccedil;&atilde;o Pubic:<B> Nela n&oacute;s definimos tr&ecirc;s vari&aacute;veis
+de tipo boolean: FReadOnly, FFiltrar e FBuscar. Estas tr&ecirc;s vari&aacute;veis
+formam a interface entre a forma e o componente. Deste modo, &agrave; propriedade
+ReadOnly que n&oacute;s implementaremos no componente a vari&aacute;vel
+FReadOnly&nbsp; da forma&nbsp; correspondente e, de um modo semelhante
+acontece com as propriedades (AllowSearch) e (AllowFilter) do componente.
+Ser&aacute; o componente, e n&atilde;o a forma que executar&aacute; os
+m&eacute;todos.</B>
+
+<P><B>O m&eacute;todo&nbsp; de Inicializar &eacute; o que se encarrega
+de ajustar a visualiza&ccedil;&atilde;o da forma de acordo com a vari&aacute;vel
+FReadOnly , FFiltrar e FBuscar. Este m&eacute;todo ser&aacute; chamado
+uma vez pelo pr&oacute;prio componente uma vez que o valor das vari&aacute;veis
+forem incluidas:</B>
+<UL>
+<LI>
+<B>Ajusta a propriedade ReadOnly do grid de acordo com o valor de FReadOnly.</B></LI>
+
+<LI>
+<B>Mostra ou n&atilde;o o painel de procura de acordo com o valor de FBuscar.</B></LI>
+
+<LI>
+<B>Coloca ou n&atilde;o o menu popup para o grid de acordo com o valor
+de FFiltrar.</B></LI>
+</UL>
+<B>Veremos agora como &eacute; feita a visualiza&ccedil;&atilde;o . No
+evento OnCreate da forma voc&ecirc; come&ccedil;a a encher o combobox cbAlias
+com todos os aliases possiveis. Depois voc&ecirc; tera que encher o Combobox&nbsp;
+cbTables com todas as tabelas existentes no alias com o m&eacute;todo (cbAliasChange).
+Este metodo for&ccedil;a a chamada para o m&eacute;todo cbTablesChange
+, o qual se encarrega de ativar o quadro (ele tamb&eacute;m enche o ComboBox
+cbFields com os campos da tabela selecionada). Deste modo, o grid que j&aacute;
+&eacute; conectado ao datasource e a tabela correspondente. Mais tarde
+se o usu&aacute;rio selecionar outro alias ou tabela, o processo se&nbsp;
+repete e a nova tabela selecionada &eacute; mostrada.</B>
+
+<P><B>Um tratamento de erros na abertura das tabelas &eacute; recomend&aacute;vel,
+porem este n&atilde;o &eacute; o objetivo desta li&ccedil;&atilde;o. Mas
+voc&ecirc; poderia colocar no m&iacute;nimo um bloco Try... Except.</B>
+
+<P><B>N&oacute;s veremos agora como fazer as buscas de registros. Para
+isto n&oacute;s usaremos o m&eacute;todo BuscarClick que procurar&aacute;
+a string do Edit eSearch no campo definido pelo combobox cbFields.. A procura
+&eacute; feita atrav&eacute;s dos m&eacute;todos do objeto TTable: FindFirst
+e FindNext que eu suponho que voc&ecirc; saiba mais do que o suficiente.
+Em todo caso, voc&ecirc; achar&aacute; informa&ccedil;&atilde;o sobre o
+mesmo na ajuda on-line de Delphi.</B>
+
+<P><B>Agora implementaremos o filtro de registros. H&aacute; diversas formas
+de fazer isto, e optei por usar um menu popoup que permite ativar, desativar
+e adicionar condi&ccedil;&otilde;es novas para o filtro. Sendo mais claro
+o menu tem as seguintes op&ccedil;&otilde;es: Adicionar uma condi&ccedil;&atilde;o
+do tipo Campo = valor, Campo > Valor, Campo &lt; valor e Campo &lt;> Valor,
+ativar o filtro e eliminar o filtro. As condi&ccedil;&otilde;es diversas
+do filtro se unem&nbsp; um ao outro por meio do operador AND.</B>
+
+<P><B>O m&eacute;todo Activar1Click e Eliminar1Click n&atilde;o precisam
+de muita explica&ccedil;&atilde;o desde que eles s&atilde;o limitados para
+p&ocirc;r a propriedade Filtered do objeto TTable True ou False como corresponde.</B>
+
+<P><B>Os m&eacute;todos restantes do menu (Igual1Click...) eles adicionam
+uma nova condi&ccedil;&atilde;o para o filtro. Para isto, o procedimento
+AddFilter &eacute; usado e&nbsp; recebe como par&acirc;metros o campo onde
+vai ser colocado o filtro e sua condi&ccedil;&atilde;o do valor (isso &eacute;
+a coluna ativa do dbgrid quando &eacute; apertado o bot&atilde;o direito
+do mouse) e o operador (=, &lt;,> ou &lt;> ). Este m&eacute;todo, depois
+de formatado corretamente, a string &eacute; colocada no filtro do objeto
+TTable, que faz um refresh na Tabela e &eacute; ativado o Filtro.</B>
+
+<P><B>E com isto n&oacute;s terminamos a parte que corresponde ao desenvolvimento
+da forma. F&aacute;cil, n&atilde;o &eacute;? De qualquer maneira, se voc&ecirc;
+tem alguma d&uacute;vida, o codigo fonte esta logo abaixo.&nbsp;<A NAME="TDBViewer-Componente"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14></B>
+<B><FONT SIZE=+2>Cria&ccedil;&atilde;o do componente</FONT></B>
+
+<P>Vamos trabalhar agora com a cria&ccedil;&atilde;o do componente, o que
+&eacute; muito simples. Consiste em tr&ecirc;s propriedades e dois m&eacute;todos,
+que a esta altura do curso j&aacute; n&atilde;o devem ser problema para
+voc&ecirc;.
+<UL>
+<LI>
+A <B>propriedade&nbsp; ReadOnly </B>determinar&aacute; se o grid da forma
+ser&atilde;o editaveis ou n&atilde;o. Para ele o valor padr&atilde;o &eacute;
+false, quer dizer, editavel. Os m&eacute;todos read e write se limitam
+a ler e escrever no campo FReadOnly do componente (n&atilde;o confundir
+com o FReadOnly da forma visto na se&ccedil;&atilde;o anterior).</LI>
+
+<LI>
+A <B>propriedade&nbsp; AllowSearch </B>determina se o painel de procura
+deve aparecer na forma. Por padr&atilde;o o valor dele deve ser True. Os
+m&eacute;todos deles s&atilde;o lidos e escritos diretamente no campo FAllowSearch.</LI>
+
+<LI>
+A <B>propriedade AllowFilter </B>determina se &eacute; permitido ou n&atilde;o
+o filtro de registros na forma. Por padr&atilde;o o valor dele &eacute;
+true. Os m&eacute;todos s&atilde;o iguais ao anterior! ;)</LI>
+
+<LI>
+O <B>contrutor &eacute; </B>limitado a chamar o contrutor herdado e nomear
+os valores padr&otilde;es&nbsp; para as propriedades.</LI>
+
+<LI>
+O <B>m&eacute;todo Execute </B>executara o componente nos mostrando a forma.</LI>
+</UL>
+E isso &eacute; tudo. Simples ou n&atilde;o? Esta simplicidade ser&aacute;
+em geral sempre que voc&ecirc;&nbsp; transformar uma forma em componente.
+Basta criar as propriedades que agir&atilde;o na forma e definir um m&eacute;todo
+que chama a forma e acabou.
+
+<P>Ah! que voc&ecirc; n&atilde;o pode esquecer de colocar o nome da sua
+unidade da forma na clausula uses do componente (na se&ccedil;&atilde;o
+de implementa&ccedil;&atilde;o) a unidade da forma. Em nosso caso:
+<PRE>...
+implementation
+
+uses frmView;
+...</PRE>
+<A NAME="TDBViewer-Conexion"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>A conex&atilde;o entre o componente e a forma</FONT></B>
+
+<P>Como n&oacute;s h&aacute; pouco dissemos, a execu&ccedil;&atilde;o da
+forma &eacute; levada atrav&eacute;s do m&eacute;todo Execute do componente:
+<PRE>procedure TDBViewer.Execute;
+begin
+&nbsp; {Cria&ccedil;ao do Form}
+&nbsp; frmVisor:=TFrmVisor.Create(Application);
+&nbsp; try
+&nbsp;&nbsp;&nbsp; {Colocar os valores das propriedades do componente nas variaveis&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp; correspondentes do form}
+&nbsp;&nbsp;&nbsp; frmVisor.FReadOnly:=FReadOnly;
+&nbsp;&nbsp;&nbsp; frmVisor.FBuscar:=FAllowSearch;
+&nbsp;&nbsp;&nbsp; frmVisor.FFiltrar:=FAllowFilter;
+&nbsp;&nbsp;&nbsp; {Inicializar o form}
+&nbsp;&nbsp;&nbsp; frmVisor.Initialize;
+&nbsp;&nbsp;&nbsp; {Mostrar a form em modal}
+&nbsp;&nbsp;&nbsp; frmVisor.ShowModal;
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; {Liberar o form}
+&nbsp;&nbsp;&nbsp; frmVisor.Free;
+&nbsp; end;
+end;</PRE>
+O m&eacute;todo come&ccedil;a a criar a forma cujo o propriet&aacute;rio
+ser&aacute; a aplica&ccedil;&atilde;o. Depois ele &eacute; levado a conex&atilde;o
+entre a forma e o componente. Porque eles partem dos valores colocados
+para as vari&aacute;veis&nbsp; FReadOnly , FBuscar e FFiltrar da forma&nbsp;
+correspondendo ao componente. Uma vez feita esta tarefa, n&oacute;s deveremos
+fazer com que a forma seja visualizada corretamente baseado nestes valores
+(lembre-se que a forma foi criada, mas n&atilde;o foi mostrado ainda).
+Isto que chama ao m&eacute;todo para Inicializar da forma &eacute; adquirido
+(voc&ecirc; viu este m&eacute;todo no desenvolvimento da forma).
+
+<P>N&oacute;s s&oacute; deixamos mostrar a forma de um modo modal e esperar
+que o usu&aacute;rio se feche esta forma; momento no o qual n&oacute;s
+destruiremos a forma por meio da chamada para o m&eacute;todo Free.
+
+<P>Como &uacute;ltimo aspecto a destacar temos que avis&aacute;-lo que
+o bloco try... finally nos assegura que os processo foi feito corretamente
+e que a mem&oacute;ria ocupada sera liberada.
+<BR><A NAME="TDBViewer-Uso"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B>
+<FONT SIZE=+2>Instru&ccedil;&otilde;es de uso do componente e conclus&otilde;es</FONT></B>
+
+<P>Uma vez registrado o componente na paleta do modo habitual, o uso dele
+&eacute; muito simples. Quando n&oacute;s queremos usar isto em um projeto,
+basta colocar o componente DBViewer onde n&oacute;s quisermos, colocar
+os valores nas propriedades e chamar o m&eacute;todo Execute.
+
+<P>Como conclus&atilde;o, n&oacute;s pudemos ver que &eacute; mais simples
+do que parece transformar nossas formas em componentes e chama-los pelo
+m&eacute;todo execute. Este componente que n&oacute;s fizemos foi bem simplificado;
+espero que voc&ecirc; coloque novas fun&ccedil;&otilde;es nela ao longo
+do tempo. Aqui vao algumas id&eacute;ias que podem ser colocados depois
+OnOpenTable, OnTableError, op&ccedil;&atilde;o de impressao dos dados,
+etc. Use sua imagina&ccedil;&atilde;o conforme sua necessidade.
+<BR><A NAME="TDBViewer-Codigo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Codigo Fonte&nbsp; do componente.</FONT></B>
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+unit DBView;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { (c) 1997 by Luis Roche }
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs;
+
+type
+&nbsp; TDBViewer = class(TComponent)
+&nbsp; private
+&nbsp;&nbsp;&nbsp; FReadOnly : boolean;
+&nbsp;&nbsp;&nbsp; FAllowSearch : boolean;
+&nbsp;&nbsp;&nbsp; FAllowFilter : boolean;
+&nbsp; protected
+&nbsp; public
+&nbsp;&nbsp;&nbsp; constructor Create(AOwner : TComponent); override;
+&nbsp;&nbsp;&nbsp; procedure Execute;
+&nbsp; published
+&nbsp;&nbsp;&nbsp; property ReadOnly : boolean read FReadOnly write FReadOnly default False;
+&nbsp;&nbsp;&nbsp; property AllowSearch : boolean read FAllowSearch write FAllowSearch default True;
+&nbsp;&nbsp;&nbsp; property AllowFilter : boolean read FAllowFilter write FAllowFilter default True;
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+uses frmView;
+
+constructor TDBViewer.Create(AOwner : TComponent);
+begin
+&nbsp; inherited Create(AOwner);
+&nbsp; FReadOnly:=False;
+&nbsp; FAllowSearch:=True;
+&nbsp; FAllowFilter:=True;
+end;
+
+procedure TDBViewer.Execute;
+begin
+&nbsp; frmVisor:=TFrmVisor.Create(Application);
+&nbsp; try
+&nbsp;&nbsp;&nbsp; frmVisor.FReadOnly:=FReadOnly;
+&nbsp;&nbsp;&nbsp; frmVisor.FBuscar:=FAllowSearch;
+&nbsp;&nbsp;&nbsp; frmVisor.FFiltrar:=FAllowFilter;
+&nbsp;&nbsp;&nbsp; frmVisor.Inicializar;
+&nbsp;&nbsp;&nbsp; frmVisor.ShowModal;
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; frmVisor.Free;
+&nbsp; end;
+end;
+
+procedure Register;
+begin
+&nbsp; RegisterComponents('Curso', [TDBViewer]);
+end;
+
+end.</PRE>
+<A NAME="TDBViewer-CodigoForm"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Codigo fonte da forma.</FONT></B>
+<PRE>unit frmView;
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+&nbsp; StdCtrls, DB, DBTables, Grids, DBGrids, ExtCtrls, Buttons, Menus;
+
+type
+
+&nbsp;TfrmVisor = class(TForm)
+&nbsp;&nbsp;&nbsp; tTable: TTable;
+&nbsp;&nbsp;&nbsp; dsDataSource: TDataSource;
+&nbsp;&nbsp;&nbsp; dbGrid: TDBGrid;
+&nbsp;&nbsp;&nbsp; pTop: TPanel;
+&nbsp;&nbsp;&nbsp; pSelectTable: TPanel;
+&nbsp;&nbsp;&nbsp; pBusca: TPanel;
+&nbsp;&nbsp;&nbsp; gbTables: TGroupBox;
+&nbsp;&nbsp;&nbsp; Alias: TLabel;
+&nbsp;&nbsp;&nbsp; Table: TLabel;
+&nbsp;&nbsp;&nbsp; cbAlias: TComboBox;
+&nbsp;&nbsp;&nbsp; cbTables: TComboBox;
+&nbsp;&nbsp;&nbsp; gbBusca: TGroupBox;
+&nbsp;&nbsp;&nbsp; cbFields: TComboBox;
+&nbsp;&nbsp;&nbsp; eSearch: TEdit;
+&nbsp;&nbsp;&nbsp; Buscar: TSpeedButton;
+&nbsp;&nbsp;&nbsp; BuscarSeguinte: TSpeedButton;
+&nbsp;&nbsp;&nbsp; PopupMenu1: TPopupMenu;
+&nbsp;&nbsp;&nbsp; Igual1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Distinto1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Menor1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Maior1: TMenuItem;
+&nbsp;&nbsp;&nbsp; N1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Ativar1: TMenuItem;
+&nbsp;&nbsp;&nbsp; Eliminar1: TMenuItem;
+&nbsp;&nbsp;&nbsp; procedure FormCreate(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure FillcbFields;
+&nbsp;&nbsp;&nbsp; procedure Inicializar;
+&nbsp;&nbsp;&nbsp; procedure cbAliasChange(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure cbTablesChange(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure BuscarClick(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure BuscarSeguinteClick(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure dbGridColEnter(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure PopupMenu1Popup(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Ativar1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Eliminar1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Igual1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Distinto1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Menor1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; procedure Maior1Click(Sender: TObject);
+&nbsp;&nbsp;&nbsp; private
+&nbsp; public
+&nbsp;&nbsp;&nbsp; FReadOnly, FFiltrar, FBuscar : boolean;
+&nbsp; end;
+
+procedure PascalStr(var s : string);
+procedure ComaStr(var s : string);
+function Condicao(AField : TField; AOp : string) : string;
+procedure AddFilter(AField : TField; AOp : string);
+
+var
+&nbsp; frmVisor: TfrmVisor;&nbsp;&nbsp;
+
+implementation
+
+{$R *.DFM}
+
+procedure TfrmVisor.FormCreate(Sender: TObject);
+begin
+&nbsp; Session.GetAliasNames(cbAlias.Items);
+&nbsp; cbAlias.ItemIndex:=0;
+&nbsp; cbAliasChange(Sender);
+&nbsp; BuscarSeguinte.Enabled:=False;
+end;
+
+procedure TfrmVisor.Inicializar;
+begin</PRE>
+
+<PRE>&nbsp; dbGrid.ReadOnly:=FReadOnly;
+&nbsp; pBuscar.Visible:=FBuscar;
+&nbsp; if FFiltrar then
+&nbsp;&nbsp;&nbsp; dbGrid.PopupMenu:=PopupMenu1
+&nbsp; else
+&nbsp;&nbsp;&nbsp; dbGrid.PopupMenu:=nil;
+end;
+
+procedure TfrmVisor.cbAliasChange(Sender: TObject);
+begin
+&nbsp; Session.GetTableNames(cbAlias.Items[cbAlias.ItemIndex],'*.*',True,True,cbTables.Items);
+&nbsp; cbTables.ItemIndex:=0;
+&nbsp; cbTablesChange(Sender);
+end;
+
+procedure TfrmVisor.cbTablesChange(Sender: TObject);
+begin
+&nbsp; tTable.Active:=False;
+&nbsp; tTable.DatabaseName:=cbAlias.Text;
+&nbsp; tTable.TableName:=cbTables.Text;
+&nbsp; tTable.Active:=True;
+&nbsp; FillcbFields;
+end;
+
+procedure TfrmVisor.FillcbFields;
+
+Var
+&nbsp; i : integer;
+begin
+&nbsp; cbFields.Items.Clear;
+&nbsp; cbFields.Text:='';
+&nbsp; for i:=0 to tTable.FieldCount-1 do
+&nbsp;&nbsp;&nbsp; cbFields.Items.Add(tTable.Fields[i].DisplayLabel);
+end;
+
+procedure TfrmVisor.BuscarClick(Sender: TObject);
+Var
+&nbsp; F : TField;
+&nbsp; s : string;
+begin
+&nbsp; if cbFields.ItemIndex=-1 then
+&nbsp;&nbsp;&nbsp; exit;
+&nbsp; with tTable do
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; s:=eSearch.Text;
+&nbsp;&nbsp;&nbsp; F:=Fields[cbFields.ItemIndex];
+&nbsp;&nbsp;&nbsp; case F.DataType of
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FtString, FtDate, FtTime, FtDateTime : PascalStr(s);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FtFloat : ComaStr(s);
+&nbsp;&nbsp;&nbsp; end;
+&nbsp;&nbsp;&nbsp; Filter:='['+F.FieldName+']='+s;
+&nbsp;&nbsp;&nbsp; FindFirst;
+
+&nbsp;&nbsp;&nbsp; BuscarSeguinte.Enabled:=Found;
+&nbsp; end;
+end;
+
+procedure TfrmVisor.BuscarSeguinteClick(Sender: TObject);
+begin
+&nbsp; tTable.FindNext;
+&nbsp; BuscarSeguinte.Enabled:=tTable.Found;
+end;
+
+procedure PascalStr(var s : string);
+Var
+&nbsp; i : integer;
+begin
+&nbsp; for i:=Length(s) downto 1 do
+&nbsp;&nbsp;&nbsp; if s[i]='''' then Insert('''',s,i);
+&nbsp; s:=''''+s+'''';
+end;
+
+procedure ComaStr(var s : string);
+Var
+&nbsp; i : integer;
+begin
+&nbsp; for i:=Length(s) downto 1 do
+&nbsp;&nbsp;&nbsp; if s[i]=',' then s[i]:='.';
+end;
+
+procedure TfrmVisor.dbGridColEnter(Sender: TObject);
+begin
+
+&nbsp; cbFields.ItemIndex:=dbGrid.SelectedField.Index;
+end;
+
+procedure TfrmVisor.PopupMenu1Popup(Sender: TObject);
+begin
+&nbsp; with tTable do
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; Ativar1.Checked:=Filtered;
+&nbsp;&nbsp;&nbsp; Ativar1.Enabled:=Filter&lt;>'';
+&nbsp;&nbsp;&nbsp; Eliminar1.Enabled:=Filter&lt;>'';
+&nbsp; end;
+end;
+
+procedure TfrmVisor.Ativar1Click(Sender: TObject);
+begin
+&nbsp; tTable.Filtered:=not tTable.Filtered;
+&nbsp; tTable.Refresh;
+end;
+
+procedure TfrmVisor.Eliminar1Click(Sender: TObject);
+begin
+&nbsp; tTable.Filtered:=False;
+&nbsp; tTable.Filter:='';
+&nbsp; tTable.Refresh;
+end;
+
+procedure TfrmVisor.Igual1Click(Sender: TObject);
+begin
+&nbsp; AddFilter(dbGrid.SelectedField,'=');
+end;
+
+procedure TfrmVisor.Distinto1Click(Sender: TObject);
+begin
+&nbsp; AddFilter(dbGrid.SelectedField,'&lt;>');
+end;
+
+procedure TfrmVisor.Menor1Click(Sender: TObject);
+begin
+&nbsp; AddFilter(dbGrid.SelectedField,'&lt;=');
+end;
+
+procedure TfrmVisor.Maior1Click(Sender: TObject);
+begin
+&nbsp; AddFilter(dbGrid.SelectedField,'>=');
+end;
+
+procedure AddFilter(AField : TField; AOp : string);
+Var
+&nbsp; s : string;
+begin
+&nbsp; s:=Condicao(AField,AOp);
+&nbsp; with AField.DataSet do
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; if Filter='' then Filter:=s
+&nbsp;&nbsp;&nbsp; else Filter:=Filter+' AND ' + s;
+&nbsp;&nbsp;&nbsp; Filtered:=True;
+&nbsp;&nbsp;&nbsp; Refresh;
+&nbsp; end;
+end;
+
+function Condicao(AField : TField; AOp : string) : string;
+Var
+&nbsp; Valor : string;
+begin
+&nbsp; Valor:=AField.AsString;
+&nbsp; case AField.DataType of
+&nbsp;&nbsp;&nbsp; FtString, FtDate, FtTime, FtDateTime : PascalStr(Valor);
+&nbsp;&nbsp;&nbsp; FtFloat : ComaStr(Valor);
+&nbsp; end;
+&nbsp; Condicao:=Format('([%s] %s %s)',[AField.FieldName,AOp,Valor]);
+end;
+
+end.</PRE>
+
+<HR>
+<ADDRESS>
+Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 15.05.1997
+</BODY>
+</HTML>

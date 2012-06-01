@@ -1,0 +1,621 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+
+  
+
+
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+6. TMultiGrid: cores, alinhamento e linhas m&uacute;ltiplas em um TStringGrid.&nbsp;</FONT></FONT></FONT></B></CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice&nbsp;</A></TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<P><IMG SRC="multigrid.gif" ALT="blinklbl.gif - .966 K" HEIGHT=26 WIDTH=26 ALIGN=ABSBOTTOM>
+Nesta unidade n&oacute;s criaremos&nbsp; um componente melhorado do&nbsp;
+tipo StringGrid. N&oacute;s aprenderemos a criar eventos que nos permitir&atilde;o
+dotar de possibilidades novas e potentes a nossos componentes. Tamb&eacute;m,
+n&oacute;s estudaremos o m&eacute;todo que OnDrawCell e&nbsp; j&aacute;
+nos aprofundaremos nos tratados de t&oacute;picos relacionando unidades
+pr&eacute;vias para os objetos Canvas e Brush.
+<BR><A NAME="TMultiGrid-Objetivo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Objetivo do componente</FONT></B>
+
+<P>Como n&oacute;s h&aacute; pouco mencionamos, nosso prop&oacute;sito
+&eacute; criar um componente do tipo StringGrid mas com funcionalidades
+novas. De forma que a primeira coisa que n&oacute;s deveremos saber &eacute;
+o que o componente TStrinGrid padr&atilde;o nos permite fazer e o que n&atilde;o
+nos permite. Assim se voc&ecirc; ainda n&atilde;o conhece este objeto,
+n&oacute;s faremos uma pequena pausa&nbsp; para vc parar e olhar na ajuda
+online do Delphi.&nbsp; J&aacute; est&aacute;? Bem, porque agora as caracter&iacute;sticas
+novas que n&oacute;s implementaremos a nosso componente: a cor e o alinhamento
+das celulas ao n&iacute;vel que n&oacute;s queremos (coluna, linhas e at&eacute;
+mesmo celulas individuais, incluindo alinhamento vertical) como tamb&eacute;m
+uma propriedade nova denominada multilinha que nos permitir&aacute; mostrar
+mais que uma linha de texto em cada celula do grid .
+
+<P>A figura que abaixo mostra um exemplo do componente em opera&ccedil;&atilde;o:
+<BR><IMG SRC="mgej1.gif" ALT="mgej1.gif - 4679,0 K" HEIGHT=173 WIDTH=338>
+
+<P><A NAME="TMultiGrid-Alineacion"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Implementando o alinhamento de celulas. Criando nossos
+pr&oacute;prios eventos.</FONT></B>
+
+<P>N&oacute;s come&ccedil;aremos com a propriedade de alinhamento. A primeira
+coisa que n&oacute;s deveremos decidir &eacute; como n&oacute;s implantaremos
+isto. Fundamentalmente, h&aacute; tr&ecirc;s possibilidades:
+<UL>Definindo o alinhamento de um modo global. Se voc&ecirc; optar por
+esta&nbsp; implementa&ccedil;&atilde;o, voc&ecirc; apenas teria que definir
+uma propriedade (denominada, logicamente, Alignment) isso controlaria o
+alinhamento de todas as celulas do grid. Isto seria muito simples, mas
+muito n&atilde;o muito pr&aacute;tico, desde que o que queremos ter s&atilde;o:
+as celulas de cabe&ccedil;alho centralizadas, textos alinhados &agrave;
+esquerda, ou&nbsp; n&uacute;meros &agrave; direita, etc.
+
+<P>Uma solu&ccedil;&atilde;o um pouco melhor: definir o alinhamento a n&iacute;vel
+de colunas. Deste modo cada coluna pode ser alinhada com independ&ecirc;nte
+da outra, mas mesmo assim todas as linhas desta coluna ter&aacute; o mesmo
+alinhamento (cabe&ccedil;alho e dados). Se vc optar por esta solu&ccedil;&atilde;o
+voc&ecirc; ter&aacute; um problema na sua implementa&ccedil;&atilde;o pois
+dever&iacute;amos criar um editor de propriedades, e n&oacute;s ainda n&atilde;o
+sabemos como fazer isto (paci&ecirc;ncia, que ser&aacute; visto nas pr&oacute;ximas
+unidades). Este &eacute; o caso do editor de colunas que Delphi 2 incorpora.
+
+<P>A terceira possibilidade nos oferece um controle total: defini&ccedil;&atilde;o
+do alinhamento de cada celula a n&iacute;vel individual. Deste modo cada
+celula ter&aacute; seu pr&oacute;prio alinhamento com independente do outro.O
+problema &eacute; que isto requer um pouco mais que esfor&ccedil;o por
+parte do usu&aacute;rio do componente.</UL>
+Como voc&ecirc; v&ecirc; , cada uma das tr&ecirc;s op&ccedil;&otilde;es
+acima tem suas vantagens e desvantagens. Por isso em nosso componente n&oacute;s
+implementaremos uma combina&ccedil;&atilde;o do primeiro e terceiro m&eacute;todo.
+Deste modo, n&oacute;s definiremos uma propriedade de Alinhamento espec&iacute;fica
+para o alinhamento individual por celula e outro padrao para alinhamento
+total da grade.
+
+<P>A implementa&ccedil;&atilde;o do alinhamento horizontal a n&iacute;vel
+global n&atilde;o tem nenhum mist&eacute;rio: Basta definir o propriedade
+Alignment do tipo TAlignment (j&aacute; incluida no Delphi). O campo que
+ela manter&aacute; o valor desta propriedade ter&aacute; o nome: FAlignment.
+Para escrevermos o valor na propriedade, usaremos o m&eacute;todo SetAlignment,
+e a leitura sera feita diretamente no campo FAlignment. Deste modo n&oacute;s
+definimos a interface da propriedade Alignment perfeitamente. N&oacute;s
+definiremos as propriedades para o alinhamento individual por celula quando
+estudarmos o evento OnDrawCell.
+
+<P>O alinhamento vertical &eacute; desenvolvido de um modo semelhante.
+O &uacute;nico aspecto diferencial &eacute; que o Delphi n&atilde;o incorpora
+a propriedade do tipo TVerticalAlignment, de forma que n&oacute;s deveremos
+cria-lo:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp; TVerticalAlignment = (vaTop, vaCenter, vaBottom);</PRE>
+N&oacute;s veremos agora como implementar a interface do alinhamento das
+celulas a n&iacute;vel individual. Para isso n&oacute;s criaremos um novo
+<B>evento</B>, que ao ser ativado saberemos o alinhamento de uma celula
+qualquer.
+
+<P>Como j&aacute; voc&ecirc; viu na unidade 2, um evento &eacute; um mecanismo
+que v&iacute;ncula uma a&ccedil;&atilde;o para certo c&oacute;digo. Mais
+concretamente, um evento &eacute; um ponteiro ao m&eacute;todo.
+
+<P>A implementa&ccedil;&atilde;o do evento &eacute; feito por meio de propriedades,
+quer dizer, os eventos s&atilde;o propriedades. Ao contr&aacute;rio das
+propriedades padr&otilde;es, os eventos n&atilde;o usam m&eacute;todos
+para implementar as partes lidas e escritas. No lugar delas, as propriedades
+de evento utilizam um campo privado.
+
+<P>Mas j&aacute; temos bastante de teoria, vamos trabalhar!. Como j&aacute;
+foi mencionado, n&oacute;s criaremos um evento novo que dever&aacute; ser
+ativado toda vez que precisarmos obter o valor do alinhamento de uma celula
+espec&iacute;fica. A primeira coisa que n&oacute;s devemos fazer ent&atilde;o,
+&eacute; definir nosso tipo de evento. Isto se faz&nbsp; por meio seguinte
+linha:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; TMultiGridAlignmentEvent=procedure(Sender:TObject; ARow,ACol:LongInt;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp; var HorAlignment: TAlignment; var VerAlignment: TVerticalAlignment) of object;</PRE>
+Os par&acirc;metros do evento TMultiGridAlignmentEvent:
+<UL>
+<LI>
+Sender: Identifica o objeto que faz a liga&ccedil;&atilde;o.</LI>
+
+<LI>
+ARow e ACol: Identificam as coordenadas de Linha(ARow) e Coluna (ACol)
+para o alinhamento.</LI>
+
+<BR>var HorAlignment e var VerAlignment: Par&acirc;metros para alinhamento
+horizontal (HorAlignment) e vertical (VerAlignment).
+<BR>&nbsp;</UL>
+N&oacute;s j&aacute; definimos o tipo de evento. Agora n&oacute;s deveremos
+criar um campo que contenha o estado da propriedade OnGetCellAlignment.
+Isto devera ser feito na parte Private:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; private&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp; ...&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp; FOnGetCellAlignment: TMultiGridAlignmentEvent;</PRE>
+Finalmente, n&oacute;s definiremos a propriedade na parte Published:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp; property OnGetCellAlignment: TMultiGridAlignmentEvent read FOnGetCellAlignment write FOnGetCellAlignment;</PRE>
+N&oacute;s s&oacute; ativaremos o evento quando precisarmos, embora um
+pouco mais tarde faremos com mais detalhes em nosso componente, a linha
+abaixo nos mostra um&nbsp; mecanismo geral:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; if Assigned(FOnGetCellAlignment) then&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp; FOnGetCellAlignment(Self,ARow,ACol,HorAlignment,VerAlignment);</PRE>
+<B>Importante:</B> Antes de ativar um evento, &eacute; conveniente olhar
+primeiro se este evento tem um gerenciador de evento nomeado, como o usu&aacute;rio
+do componente n&atilde;o tem porque ter escrito este gerenciador. De l&aacute;
+a compara&ccedil;&atilde;o&nbsp;<I> if Assigned: </I>se h&aacute; um gerenciador
+evento, ele &eacute; chamado, mas se n&atilde;o h&aacute; nada &eacute;
+feito.
+<BR><A NAME="TMultiGrid-Colores"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B><FONT SIZE=+2>
+Implementando a fonte, estilo e cor de celulas.</FONT></B>
+
+<P>Se voc&ecirc; entendeu a se&ccedil;&atilde;o anterior, n&atilde;o haver&aacute;
+nenhum problema para entender esta, como a forma de implementar a cor e
+a atribui&ccedil;&atilde;o de fonte em uma certa celula ser&aacute; feita
+de um modo semelhante.
+
+<P>Defininimos um novo evento que ser&aacute; ativado quando &eacute; necess&aacute;rio
+determinar os atributos da celula. Para isto, n&oacute;s criaremos o tipo
+do evento, o campo privado armazenar&aacute; isto e a propriedade associada
+a este evento:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; TMultiGridColorEvent=procedure(Sender: TObject; ARow,Acol: LongInt;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp; AState: TGridDrawState; Abrush: TBrush; AFont:TFont) of object;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; ...&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; FOnGetCellColor: TMultiGridColorEvent;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; ...&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; property OnGetCellColor: TMultiGridColorEvent read FOnGetCellColor write FOnGetCellColor;</PRE>
+A diferen&ccedil;a principal entre este evento e o correspondente ao alinhamento
+esta determinado pelos par&acirc;metros ABruh e AFont. O usu&aacute;rio
+do componente devera retornar o brush e a Fonte a celula correspondente
+nas coordenadas ARow e ACol. O par&acirc;metro AState nos informa do estado
+da cela (selected, focus, fixo...)
+<BR><A NAME="TMultiGrid-MultiLinea"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Celulas Multi-linhas.</FONT></B>
+
+<P>Vamos passar agora para a implementa&ccedil;&atilde;o das celulas multi-linhas.
+
+<P>Em primeiro lugar n&oacute;s definiremos a interface. Para isto, n&oacute;s
+criaremos uma propriedade nova chamada&nbsp; MultiLinha . Esta propriedade
+ser&aacute; armazenada no campo FMultiLinha que ser&aacute; do tipo boolean.
+Se FMultiLinha &eacute; false, nosso componente se comportar&aacute; como
+o StringGrid normal, enquanto se for true, se tornar&aacute; um StringGrid
+Multi-Linhas.
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; private&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp; FMultiLinha: Boolean;&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp; ...&nbsp;&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp; property MultiLinha: Boolean read FMultiLinha write SetMultiLinha default False;</PRE>
+Ele serve para fazer uma chamada ao m&eacute;todo SetMultiLinha, se um
+valor novo &eacute; colocada para FMultiLinha o componente &eacute; redesenhado
+por meio da instru&ccedil;&atilde;o o Invalidate. Esta mesma t&eacute;cnica
+&eacute; usada nos m&eacute;todos SetAlignment, SetVerticalAlignment e
+SetColor.
+
+<P><A NAME="TMultiGrid-DrawCell"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B><FONT SIZE=+2>
+O cora&ccedil;&atilde;o do componente: o m&eacute;todo DrawCell.</FONT></B>
+
+<P>At&eacute; agora, n&oacute;s nos concentramos na interface de nosso
+componente; chegou o momento de definir o implementa&ccedil;&atilde;o.
+O processo inteiro de desenho de uma celula &eacute; feita atrav&eacute;s
+do m&eacute;todo DrawCell. Este m&eacute;todo &eacute; o verdadeiro cora&ccedil;&atilde;o
+de nosso componente, visto que &eacute; nele que deve ser escrito todo
+o c&oacute;digo de calculo e desenho do texto correspondente em uma determinada
+celula. O evento&nbsp; OnDrawCell passa os seguintes par&acirc;metros ao
+m&eacute;todo DrawCell:
+<UL>
+<LI>
+ACol e ARow: Coordenadas da celula.</LI>
+
+<LI>
+ARect: Estrutura de tipo retangular que identifica o canto superior esquerdo
+e o direito inferior (em pixels) da celula desejada.</LI>
+
+<LI>
+AState: &Eacute; o estado atual da celula (selecionda, enfocada ou fixa).
+Em princ&iacute;pio n&oacute;s n&atilde;o usaremos o &uacute;ltimo valor
+neste par&acirc;metro.</LI>
+</UL>
+N&oacute;s j&aacute; sabemos onde. Agora falta ver como &eacute;. A princ&iacute;pio
+voc&ecirc; pode ficar assustado com tudo aquilo n&oacute;s temos que fazer:
+calcular o alinhamento horizontal e vertical, ativar os eventos de alinhamento
+e colorir, fragmenar o texto de uma celula em v&aacute;rias linhas... Mas
+n&atilde;o h&aacute; nenhuma raz&atilde;o: o Delphi e as API do Windows
+nos ajudam a diminuir tudo isso para 20 ou 30 linhas compreensiveis. Logo
+o c&oacute;digo que corresponde ao m&eacute;todo DrawCell mostrado:
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+procedure TMultiGrid.DrawCell(ACol,ARow : LongInt; ARect : TRect; AState : TGridDrawState);
+Const
+&nbsp; TextAlignments : Array[TAlignment] of Word = (dt_Left, dt_Right, dt_Center);
+Var
+&nbsp; HorAlignment : TAlignment;
+&nbsp; VerAlignment : TVerticalAlignment;
+&nbsp; Texto : string;
+&nbsp; Altura : integer;
+&nbsp; CRect : TRect;
+&nbsp; options : integer;
+begin
+&nbsp; Texto:=Cells[ARow,Acol];
+&nbsp; HorAlignment:=FAlignment;
+&nbsp; VerAlignment:=FVerticalAlignment;
+&nbsp; if Assigned(FOnGetCellAlignment) then FOnGetCellAlignment(Self,ARow,ACol,HorAlineacion,VerAlignment);
+&nbsp; if Assigned(FOnGetCellColor) then
+&nbsp;&nbsp;&nbsp; FOnGetCellColor(Self,ARow,ACol,AState,Canvas.Brush,Canvas.Font);
+&nbsp; Canvas.FillRect(ARect);
+
+&nbsp; Inc(ARect.Left,2);
+&nbsp; Dec(ARect.Right,2);
+&nbsp; CRect:=Arect;
+&nbsp; options:=TextAlignments[HorAlignment] or dt_VCenter;
+&nbsp; if Multilinha then options:=options or dt_WordBreak;
+&nbsp; if not DefaultDrawing then
+&nbsp;&nbsp;&nbsp; inherited DrawCell(ACol,ARow,ARect,AState)
+&nbsp; else
+&nbsp;&nbsp;&nbsp; with ARect,Canvas do
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Altura:=DrawText(Handle,PChar(Texto),-1,CRect,options or dt_CalcRect);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if FVerticalAlignment = vaCenter then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if Altura &lt; Bottom-Top+1 then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Top:=(Bottom+Top-Altura) shr 1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bottom:=Top+Altura;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if FVerticalAlignment = vaBottom then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if Altura &lt; Bottom-Top+1 then Top:=Bottom-Altura;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DrawText(Handle,PChar(Texto),-1,ARect,options)
+&nbsp;&nbsp;&nbsp; end;
+end;</PRE>
+A primeira coisa que n&oacute;s faremos &eacute; manter o conte&uacute;do
+da celula para chamar a vari&aacute;vel Texto . Logo os valores s&atilde;o
+determinados por padr&atilde;o para as vari&aacute;veis HorAlignment&nbsp;
+e VerAlignment porque se o usu&aacute;rio n&atilde;o introduziu um alinhamento
+particular para a celula em quest&atilde;o estes alinhamentos padr&otilde;es
+ser&atilde;o aplicados.
+
+<P>Agora vem uma das chaves : a chamada para os eventos. Se o usu&aacute;rio
+escreveu um gerenciador para o evento de alinhamento, ele o chama. A mesma
+coisa acontece para o evento de Cor. Deste modo n&oacute;s j&aacute; temos
+o tratamento espec&iacute;fico da celula.
+
+<P>O proximo passo &eacute; desenhar o fundo da celula por meio do m&eacute;todo
+FillRect para o qual n&oacute;s passamos o requadro de desenho desta celula
+(ARect).
+
+<P>N&oacute;s&nbsp; faremos uma pausa agora para explicar agora como n&oacute;s
+colocaremos o texto.
+
+<P>Em princ&iacute;pio veja, a coisa l&oacute;gica seria usar o m&eacute;todo
+TextOut do objeto Canvas. Este m&eacute;todo precisa como par&acirc;metros
+as coordenadas (x ,y) onde colocar a string com o texto. Mas para nossos
+prop&oacute;sitos &eacute; ruim, pois teriamos que calcular a posi&ccedil;&atilde;o
+correta nas coordenadas (x,y). N&oacute;s tamb&eacute;m ter&iacute;amos
+que calcular as divis&otilde;es de palavras necess&aacute;rias para as
+celulas multi-linhas, etc. Em resumo, &eacute; um rolo!! Mas n&oacute;s
+podemos evitar todo este trabalho gra&ccedil;as a uma fun&ccedil;&atilde;o
+API do Windows: DrawText
+<BR>DrawText precisa dos seguintes par&acirc;metros:
+<UL>
+<LI>
+Um Handle para o objeto que n&oacute;s queremos desenhar (o Canvas do grid).</LI>
+
+<LI>
+Uma tipo de cadeia terminada em nulo com o texto a desenhar (Pchar(Texto))</LI>
+
+<LI>
+Um n&uacute;mero que indica o n&uacute;mero de caractere a desenhar (-1
+para tudo)</LI>
+
+<LI>
+O ret&acirc;ngulo no qual o texto vai se enquadrar (TRect)</LI>
+
+<LI>
+Uma s&eacute;rie de op&ccedil;&otilde;es de formata&ccedil;&atilde;o de
+texto. N&oacute;s usaremos os controles de alinhamento de texto (dt_Left,
+dt_Center, dt_Right, dt_VCenter),&nbsp; (dt_WordBreak) e o de c&aacute;lculo
+de altura (dt_CalcRect)</LI>
+</UL>
+H&aacute; mais op&ccedil;&otilde;es para o DrawText, se voc&ecirc; quiser
+mais informa&ccedil;&otilde;es leia na ajuda on-line.
+
+<P>N&oacute;s voltamos agora ao fluxo do programa. Depois de encher o fundo
+da celula com o FillRect, n&oacute;s copiamos na vari&aacute;vel CRect
+o ret&acirc;ngulo original (ARect) e eles preparam as op&ccedil;&otilde;es
+com que n&oacute;s chamaremos o DrawText. Aqui surge um pequeno problema:
+o HorAlignment &eacute; do tipo TAlignment (ta_LeftJustify...) e DrawText
+n&atilde;o entende este tipo, por isso &eacute; necess&aacute;ria uma convers&atilde;o
+entre este tipo e o do DrawText . Esta convers&atilde;o &eacute; feita
+atrav&eacute;s de uma matriz constante denominado TextAlignments. Logo,
+se a propriedade Multilinha &eacute; true, dt_WordBreak &eacute; adicionado
+&agrave;s op&ccedil;&otilde;es do DrawText.
+
+<P>O&nbsp; &eacute; feito depois &eacute; verificar se o usu&aacute;rio
+trocou o valor da propriedade DefaultDrawing. Se o valor desta propriedade
+&eacute; false indica que o usu&aacute;rio se encarrega de todo o processo,
+caso contrario o componente se encarrega do desenho.
+
+<P>Se o componente &eacute; encarregado de tudo, n&oacute;s fazemos a primeira
+chamada ao DrawText para obter a altura exigida do ret&acirc;ngulo da celula.
+Com esta altura,&nbsp; sempre que poss&iacute;vel (o multilinha ajusta
+o texto inteiro na celula), ele centraliza o texto na celula (ou no topo/rodap&eacute;).
+Uma vez feito isto, n&oacute;s chamamos novamente o DrawText de forma que
+ele pega o lugar, e &eacute; colocado o texto no canvas do componente.
+Veja que para isso usamos ARect como ret&acirc;ngulo nesta ocasi&atilde;o.
+
+<P>Estas s&atilde;o as grandes caracteristicas com a opera&ccedil;&atilde;o
+do m&eacute;todo DrawCell.
+<BR><A NAME="TMultiGrid-Detalles"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Outros detalhes.</FONT></B>
+<BR>Por ultimo, quero mencionar alguns detalhes pequenos:
+<UL>
+<LI>
+As propriedades de Op&ccedil;&otilde;es do StringGrid padr&atilde;o s&atilde;o
+redefinidas por padr&atilde;o para true e as op&ccedil;&otilde;es goRowSizing
+e goColSizing para multilinhas do nosso componente true por padr&atilde;o.</LI>
+
+<LI>
+Como sempre, no construtor n&oacute;s declaramos os valores padr&otilde;es
+defeito para as propriedades diferentes que n&oacute;s definimos (alinhamento,
+cor, multilinha).</LI>
+
+<LI>
+Depois no codigo fonte &eacute; mostrado um exemplo dos eventos de alinhamento,
+cores e multilinha.</LI>
+</UL>
+<A NAME="TMultiGrid-Codigo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Codigo Fonte do Componente.</FONT></B>
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+
+unit MultiGrid;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { (c) 1997 by Luis Roche }
+
+interface
+
+uses
+&nbsp; SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
+&nbsp; Forms, Dialogs, Grids;
+
+type
+&nbsp; TVerticalAlignment = (vaTop, vaCenter, vaBottom);
+&nbsp; TMultiGridAlignmentEvent=procedure(Sender:TObject;ARow,ACol:LongInt;var HorAlignment:TAlignment;var VerAlignment:TVerticalAlignment) of object;
+&nbsp; TMultiGridColorEvent=procedure(Sender:TObject;ARow,Acol:LongInt;AState:TGridDrawState;ABrush:TBrush;AFont:TFont) of object;
+&nbsp; TMultiGrid = class(TStringGrid)
+&nbsp; private
+&nbsp;&nbsp;&nbsp; FAlignment : TAlignment;
+&nbsp;&nbsp;&nbsp; FVerticalAlignment : TVerticalAlignment;
+&nbsp;&nbsp;&nbsp; FMultiLinha : Boolean;
+&nbsp;&nbsp;&nbsp; FOnGetCellAlignment : TMultiGridAlignmentEvent;
+&nbsp;&nbsp;&nbsp; FOnGetCellColor : TMultiGridColorEvent;
+&nbsp;&nbsp;&nbsp; procedure SetAlignment(Valor : TAlignment);
+&nbsp;&nbsp;&nbsp; procedure SetVerticalAlignment(Valor : TVerticalAlignment);
+&nbsp;&nbsp;&nbsp; procedure SetMultiLinha(Valor : Boolean);
+&nbsp; protected
+&nbsp;&nbsp;&nbsp; procedure DrawCell(ACol,ARow : LongInt; ARect : TRect; AState : TGridDrawState); override;
+&nbsp; public
+&nbsp;&nbsp;&nbsp; constructor Create(AOwner : TComponent); override;
+&nbsp; published
+&nbsp;&nbsp;&nbsp; property Alignment : TAlignment read FAlignment write SetAlignment default taLeftJustify;
+&nbsp;&nbsp;&nbsp; property VerticalAlignment : TVerticalAlignment read FVerticalAlignment write SetVerticalAlignment default vaCenter;
+&nbsp;&nbsp;&nbsp; property MultiLinha : Boolean read FMultiLinha write SetMultiLinha default False;
+&nbsp;&nbsp;&nbsp; property OnGetCellAlignment : TMultiGridAlignmentEvent read FOnGetCellAlignment write FOnGetCellAlignment;
+&nbsp;&nbsp;&nbsp; property OnGetCellColor : TMultiGridColorEvent read FOnGetCellColor write FOnGetCellColor;
+&nbsp;&nbsp;&nbsp; property Options default [goFixedVertLine,goFixedHorzLine,goVertLine,goHorzLine,goRangeSelect,goRowSizing,goColSizing];
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+constructor TMultiGrid.Create(AOwner : TComponent);
+begin
+&nbsp; inherited Create(AOwner);
+&nbsp; FAlignment:=taLeftJustify;
+&nbsp; FVerticalAlignment:=vaCenter;
+&nbsp; {FColor:=clWindowText;}
+&nbsp; FMultiLinha:=False;
+&nbsp; Options:=[goFixedVertLine,goFixedHorzLine,goVertLine,goHorzLine,goRangeSelect,goRowSizing,goColSizing];
+end;
+
+procedure TMultiGrid.SetAlignment(Valor : TAlignment);
+begin
+&nbsp; if valor &lt;> FAlignment then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; FAlignment:=Valor;
+&nbsp;&nbsp;&nbsp; Invalidate;
+&nbsp; end;
+end;
+
+procedure TMultiGrid.SetVerticalAlignment(Valor : TVerticalAlignment);
+begin
+&nbsp; if valor &lt;> FVerticalAlignment then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; FVerticalAlignment:=Valor;
+&nbsp;&nbsp;&nbsp; Invalidate;
+&nbsp; end;
+end;
+
+procedure TMultiGrid.SetMultiLinha(Valor : Boolean);
+begin
+&nbsp; if valor &lt;> FMultiLinha then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; FMultiLinha:=Valor;
+&nbsp;&nbsp;&nbsp; Invalidate;
+&nbsp; end;
+end;
+
+procedure TMultiGrid.DrawCell(ACol,ARow : LongInt; ARect : TRect; AState : TGridDrawState);
+Const
+&nbsp; TextAlignments : Array[TAlignment] of Word = (dt_Left, dt_Right, dt_Center);
+Var
+&nbsp; HorAlignment : TAlignment;
+&nbsp; VerAlignment : TVerticalAlignment;
+&nbsp; Texto : string;
+&nbsp; Altura : integer;
+&nbsp; CRect : TRect;
+&nbsp; Options : integer;
+begin
+&nbsp; Texto:=Cells[ARow,Acol];
+&nbsp; HorAlignment:=FAlignment;
+&nbsp; VerAlignment:=FVerticalAlignment;
+&nbsp; if Assigned(FOnGetCellAlignment) then FOnGetCellAlignment(Self,ARow,ACol,HorAlignment,VerAlignment);
+&nbsp; if Assigned(FOnGetCellColor) then
+&nbsp;&nbsp;&nbsp; FOnGetCellColor(Self,ARow,ACol,AState,Canvas.Brush,Canvas.Font);
+&nbsp; Canvas.FillRect(ARect);
+&nbsp; Inc(ARect.Left,2);
+&nbsp; Dec(ARect.Right,2);
+&nbsp; CRect:=Arect;
+&nbsp; Options:=TextAlignments[HorAlignment] or dt_VCenter;
+&nbsp; if Multilinha then Options:=Options or dt_WordBreak;
+&nbsp; if not DefaultDrawing then
+&nbsp;&nbsp;&nbsp; inherited DrawCell(ACol,ARow,ARect,AState)
+&nbsp; else
+&nbsp;&nbsp;&nbsp; with ARect,Canvas do
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Altura:=DrawText(Handle,PChar(Texto),-1,CRect, options or dt_CalcRect);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if FVerticalAlignment = vaCenter then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if Altura &lt; Bottom-Top+1 then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Top:=(Bottom+Top-Altura) shr 1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bottom:=Top+Altura;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; end
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if FVerticalAlignment = vaBottom then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if Altura &lt; Bottom-Top+1 then Top:=Bottom-Altura;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DrawText(Handle,PChar(Texto),-1,ARect,options)
+&nbsp;&nbsp;&nbsp; end;
+end;
+
+procedure Register;
+begin
+&nbsp; RegisterComponents('Curso', [TMultiGrid]);
+end;
+
+end.</PRE>
+<A NAME="TMultiGrid-Ejemplo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>&nbsp;<B><FONT SIZE=+2>
+Exemplo de utiliza&ccedil;&atilde;o.</FONT></B>
+<BR>&nbsp;
+<PRE>Logo um exemplo de utiliza&ccedil;&atilde;o do nosso componente novo:</PRE>
+
+<PRE>procedure TForm1.FormCreate(Sender: TObject);
+begin
+&nbsp; MultiGrid1.Cells[0,1]:='Janeiro';
+&nbsp; MultiGrid1.Cells[0,2]:='Fevereiro';
+&nbsp; MultiGrid1.Cells[0,3]:='Total Ano';
+&nbsp; MultiGrid1.Cells[0,4]:='Notas';
+&nbsp; MultiGrid1.Cells[1,0]:='&Aacute;rea A';
+&nbsp; MultiGrid1.Cells[2,0]:='&Aacute;rea B';
+&nbsp; MultiGrid1.Cells[3,0]:='Outras Areas';
+&nbsp; MultiGrid1.Cells[4,0]:='TOTAL';
+&nbsp; MultiGrid1.Cells[1,1]:='1.000.000';
+&nbsp; MultiGrid1.Cells[1,2]:='1.250.000';
+&nbsp; MultiGrid1.Cells[1,3]:='9.150.000';
+&nbsp; MultiGrid1.Cells[1,4]:='Incremento sobre ano anterior';
+&nbsp; MultiGrid1.Cells[2,1]:='1.450.000';
+&nbsp; MultiGrid1.Cells[2,2]:='&nbsp; 950.000';
+&nbsp; MultiGrid1.Cells[2,3]:='4.150.000';
+&nbsp; MultiGrid1.Cells[2,4]:='Decremento';
+&nbsp; MultiGrid1.Cells[3,1]:='4.000.000';
+&nbsp; MultiGrid1.Cells[3,2]:='3.250.000';
+&nbsp; MultiGrid1.Cells[3,3]:='17.250.000';
+&nbsp; MultiGrid1.Cells[3,4]:='Incremento sobre ano anterior';
+&nbsp; MultiGrid1.Cells[4,1]:='6.450.000';
+&nbsp; MultiGrid1.Cells[4,2]:='5.450.000';
+&nbsp; MultiGrid1.Cells[4,3]:='30.550.000';
+&nbsp; MultiGrid1.Cells[4,4]:='';
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+&nbsp; MultiGrid1.Color:=clRed;
+end;
+
+procedure TForm1.MultiGrid1GetCellAlignment(Sender: TObject; ARow,
+&nbsp; ACol: Longint; var HorAlignment: TAlignment;
+&nbsp; var VerAlignment: TVerticalAlignment);
+begin
+&nbsp; if (ACol in [1..3]) and (ARow in [1..4]) then
+&nbsp;&nbsp;&nbsp; HorAlignment:=taRightJustify
+&nbsp; else HorAlignment:=taCenter;
+end;
+
+procedure TForm1.MultiGrid1GetCellColor(Sender: TObject; ARow,
+&nbsp; Acol: Longint; AState: TGridDrawState; Abrush: TBrush; AFont: TFont);
+begin
+&nbsp; if (ARow=0) then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; ABrush.Color:=clMaroon;
+&nbsp;&nbsp;&nbsp; AFont.Color:=clWhite;
+&nbsp;&nbsp;&nbsp; AFont.Style:=[fsBold];
+&nbsp; end
+&nbsp; else if (ACol=0) then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; AFont.Color:=clBlack;
+&nbsp;&nbsp;&nbsp; AFont.Style:=[fsBold];
+&nbsp;&nbsp;&nbsp; ABrush.Color:=clYellow;
+&nbsp; end
+&nbsp; else
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; AFont.Color:=clBlack;
+&nbsp;&nbsp;&nbsp; ABrush.Color:=clYellow;
+&nbsp; end;
+end;</PRE>
+
+<HR>
+<ADDRESS>
+Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 20.12.1996
+</BODY>
+</HTML>

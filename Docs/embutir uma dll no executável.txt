@@ -1,0 +1,209 @@
+ Basicamente a técnica consiste em transformar o arquivo DLL (pode ser qualquer arquivo: imagem, som, etc) em um arquivo de recursos e adicioná-lo ao pacote do executável (extensão .res). Quando houver a necessidade do seu uso, ele pode ser extraído e salvo temporariamente (ou definitivamente).
+
+
+TRANSFORMANDO O ARQUIVO DLL em RES 
+
+
+Neste pequeno roteiro irei demonstrar como incorporar o arquivo MIDAS.DLL ao seu 
+arquivo EXE e sua extração automática quando o programa for executado. 
+
+Primeiro precisamos transformar o arquivo MIDAS.DLL em um arquivo de recursos, 
+o qual chamaremos de MIDAS.RES. 
+
+Vá ao prompt do DOS e crie um arquivo qualquer no formato texto com a extensão .rc (para manter uma coerência, chamarei-o de MIDAS.RC). 
+Esse arquivo deverá possuir uma linha para cada arquivo a ser transformado em recurso. Nesse exemplo conterá apenas uma linha, pois trabalharei apenas com o MIDAS.DLL. Sua estrutura deverá ser: 
+
+MIDASDLL DLLFILE C:\WINDOWS\SYSTEM\MIDAS.DLL 
+
+O primeiro parâmetro é o label a ser atribuido ao arquivo (Será utilizado pelo delphi pra achar o recurso). 
+
+O segundo é apenas um identificador do tipo de arquivo. 
+
+O terceiro é o path onde o compilador de recursos irá buscar o arquivo para 
+transformar em .RES. 
+
+Execute o compilador de recursos que acompanha o delphi: Está na pasta BIN e se chama BRCC32.EXE. Este é um programa do DOS, portanto se você não estiver na pasta BIN do delphi, tenha a certeza que sua váriavel PATH esteja apontando para lá. ( Se quiser configurar na mão digite no DOS: 
+SET PATH=%PATH%;diretorio_delphi\bin) 
+Para transformar o arquivo .RC em .RES digite: 
+
+BRCC32 MIDAS.RC 
+
+Dê um comando DIR e verifique a existência do arquivo MIDAS.RES (Se não 
+encontrar, revise os procedimentos). 
+
+CRIANDO UM PROGRAMA QUE LEVA A DLL EMBUTIDA 
+
+
+Veja agora como criar um programa que embute a DLL no seu executável: 
+
+Crie um projeto com um form e coloque um TButton. 
+No código fonte da Unit você encontrará o seguinte include: {$R *.DFM} 
+Logo abaixo dele inclua o seu arquivo de recurso da seguinte maneira: 
+{$R MIDAS.RES} 
+Ficará assim: 
+
+{$R *.DFM} 
+{$R MIDAS.RES} 
+
+Obs: Você pode colocar sua include em qualquer parte do programa (o linker o achará), contudo o ideal é nesta seção para facilitar a localização visual dos recursos utilizados pela sua aplicação. 
+
+Nesse momento se você compilar seu projeto, o arquivo MIDAS.DLL já estará incorporado ao executável da aplicação. 
+
+Veja como extrair a DLL em tempo de código. 
+
+Uma veja incorporado ao executável um recurso, será necessário extrai-lo antes do seu uso (Depois mostrarei uma técnica de autoextração). 
+
+O Delphi possui uma Classe que permite a manipulação de recursos, é a TResourceStream. A rotina abaixo extrai o arquivo MIDAS.DLL e salva no diretorio da aplicação: 
+
+Procedure SaveMidas; 
+Var PathToSave : String; 
+Res : TResourceStream; 
+Begin 
+PathToSave := ExtractFilePath(Application.ExeName)+'\MIDAS.DLL'; 
+If not FileExists(PathToSave) Then Begin 
+Res := TResourceStream.Create(Hinstance, 'MIDASDLL', 'DLLFILE'); 
+Try 
+Res.SavetoFile(PathToSave); 
+Finally 
+Res.Free; 
+End; 
+End; 
+End; 
+
+Para executá-la, no OnClick do botão escreva: SaveMidas; 
+
+Veja o código completo: 
+
+uses 
+Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, 
+StdCtrls; 
+
+type 
+TForm1 = class(TForm) 
+Button1: TButton; 
+procedure Button1Click(Sender: TObject); 
+private 
+{ Private declarations } 
+public 
+{ Public declarations } 
+end; 
+
+var 
+Form1: TForm1; 
+
+implementation 
+{$R *.DFM} 
+{$R MIDAS.RES} 
+
+Procedure SaveMIDASDLL; 
+Var PathToSave:String; 
+Res : TResourceStream; 
+Begin 
+PathToSave := ExtractFilePath(Application.ExeName)+'\MIDAS.DLL'; 
+If not FileExists(PathToSave) Then Begin 
+Res := TResourceStream.Create(Hinstance, 'MIDASDLL', 'DLLFILE'); 
+Try 
+Res.SavetoFile(PathToSave); 
+Finally 
+Res.Free; 
+End; 
+End; 
+End; 
+
+procedure TForm1.Button1Click(Sender: TObject); 
+begin 
+SaveMidasDLL; 
+end; 
+
+end. 
+
+
+Se você quiser salvar no diretório System do Windows, a procedure abaixo facilitará sua vida: 
+Function ExtractSystemDir : String; 
+Var Buffer : Array[0..255] of Char; 
+Begin 
+GetSystemDirectory(Buffer,144); 
+Result := StrPas(Buffer); 
+End; 
+
+end. 
+
+AUTO-EXTRAINDO A DLL 
+
+
+Uma técnica interessante é a auto-extração da DLL no momento da inicialização de sua aplicação sem a necessidade da chamada explicita à procedure SaveMidasDLL. 
+Vamos utilizar o recurso de auto-inicialização das Units implementado pelo Delphi. 
+
+Para quem não conhece, o Delphi quando carrega uma Unit ele executa automaticamente o código dentro do bloco INITIALIZATION antes mesmo da aplicação ser totalmente inicializada, é um excelente gancho para se colocar rotinas de inicialização. O mais espertos já perceberam que o Bloco FINALIZATION faz o mesmo efeito, porém ao finalizar a execução da aplicação. 
+
+Para ver a auto-extração, acrescente o bloco de código abaixo ao final da Unit do Form: 
+
+Initialization 
+Begin 
+ShowMessage('Gerando o arquivo MIDAS.DLL'); 
+SaveMidasDLL; 
+End; 
+End. 
+
+Veja que agora, quando o form é criado (e a unit acionada), a procedure SaveMidasDLL é executada automaticamente. 
+
+PROBLEMAS 
+
+Dependendo da forma como sua aplicação foi criada você pode se deparar com um problema: Uma parte do código pode estar chamando um arquivo que ainda não foi extraido (situação muito comum com aplicações que chamam DLL's na sua inicialização). 
+
+Uma boa técnica é acrescentar o código de extração no arquivo .DPR, assim ele será acionado antes de qualquer outra rotina da aplicação. 
+
+Eu particularmente prefiro outra técnica: Colocar as rotinas de auto-extração em uma unit exclusiva e chamá-la primeiramente na minha aplicação, o código fica mais limpo, e todas as vezes que você precisar usar o recurso basta apenas acrescentá-la à sua cláusula Uses. 
+
+Veja o código pronto: 
+
+unit AutoMidas; 
+
+interface 
+
+Uses Windows, Classes, Sysutils, Forms,Dialogs; 
+
+Function ExtractSystemDir : String; 
+Procedure SaveMIDASDLL; 
+
+implementation 
+
+{$R MIDAS.RES} 
+
+Procedure SaveMIDASDLL; 
+Var PathToSave:String; 
+Res : TResourceStream; 
+Begin 
+PathToSave := ExtractFilePath(Application.ExeName)+'\MIDAS.DLL'; 
+If not FileExists(PathToSave) Then Begin 
+Res := TResourceStream.Create(Hinstance, 'MIDASDLL', 'DLLFILE'); 
+Try 
+Res.SavetoFile(PathToSave); 
+Finally 
+Res.Free; 
+End; 
+End; 
+End; 
+
+Function ExtractSystemDir : String; 
+Var Buffer : Array[0..255] of Char; 
+Begin 
+GetSystemDirectory(Buffer,144); 
+Result := StrPas(Buffer); 
+End; 
+
+
+Initialization 
+Begin 
+ShowMessage('Gerando o arquivo MIDAS.DLL'); 
+SaveMidasDLL; 
+End; 
+
+end. 
+Importante: Para evitar o problema mencionado acima, onde a aplicação chama o arquivo antes de sua extração, coloque sempre a sua Unit na primeira posição da lista da cláusula Uses, assim ela será a primeira a ser executada. 
+
+PS: uso da MIDAS.DLL foi apenas para fins didáticos, o delphi permite o uso das units MidasLib+Crtl para distribuição desse arquivo de forma mais simples. 
+
+Adenilton Rodrigues tem formação superior em Análise de Sistemas. É Consultor em Tecnologias de Desenvolvimento Internet e atualmente responde pelo Departamento de Tecnologia da SOL - Serviços Online (http://www.solnet.com.br/), onde implanta soluções em Delphi, Java e .NET. 
+
+

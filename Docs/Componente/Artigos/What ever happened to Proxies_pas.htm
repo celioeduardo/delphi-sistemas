@@ -1,0 +1,491 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0057)http://community.borland.com/article/0,1410,27717,00.html -->
+<!-- Vignette StoryServer 4 Thu Mar 18 22:55:59 2004 --><!-- Vignette StoryServer 4 Sat Mar 20 21:36:08 2004 --><HTML><HEAD><TITLE>What ever happened to Proxies.pas?</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+<META content="" name=KEYWORDS>
+<META 
+content="This article illustrates a scheme for properly segregating runtime code from design-time code in Delphi. By Jeff Overcash." 
+name=DESCRIPTION><LINK title=Default 
+href="What ever happened to Proxies_pas_files/0,1748,,00.css" type=text/css 
+rel=stylesheet><!--Site Level a-->
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<BODY bgColor=#ffffff leftMargin=0 topMargin=0><A name=top></A><!-- Vignette StoryServer 4 Tue Feb 01 16:16:14 2000 --><A 
+name=top></A><!-- Vignette StoryServer 4 Sun Mar 21 09:35:29 2004 --><!-- Site level is a -->
+<TABLE cellSpacing=0 cellPadding=0 width=670 align=center bgColor=#ffffff 
+border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top align=left rowSpan=2><A 
+      href="http://community.borland.com/index.html"><IMG alt="" 
+      src="What ever happened to Proxies_pas_files/bdnetwork2.gif" 
+      border=0></A><BR><IMG height=20 alt="" 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=2 
+      border=0></TD>
+    <TD vAlign=top align=right><A 
+      href="https://bdn.borland.com/cgi-bin/login/"><SPAN class=bigBlack><!-- Vignette StoryServer 4 Wed May 22 12:08:43 2002 --><A 
+      class=bigBlack 
+      href="https://bdn.borland.com/cgi-bin/login/">Login</A></SPAN></TD></TR>
+  <TR>
+    <TD vAlign=bottom align=right><A 
+      href="http://www.borland.com/">http://www.borland.com/</A></TD></TR></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 width=670 align=center bgColor=#ffffff 
+border=0><!-- # communities 1 {comm_community {AppServer /appserver 6}} {comm_community {C# /csharp 13}} {comm_community {C++ /cpp 2}} {comm_community {CORBA /corba 5}} {comm_community {CaliberRM /caliberrm 11}} {comm_community {Delphi /delphi 1}} {comm_community {InterBase /interbase 7}} {comm_community {JDataStore /jdatastore 9}} {comm_community {Java /java 3}} {comm_community {StarTeam /starteam 10}} {comm_community {Together /together 12}} -->
+  <TBODY>
+  <TR>
+    <TD class=divider colSpan=23><IMG height=1 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=670 
+      border=0></TD></TR>
+  <TR>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/appserver/0,1419,6,00.html">AppServer</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/csharp/0,1419,13,00.html">C#</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/cpp/0,1419,2,00.html">C++</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/corba/0,1419,5,00.html">CORBA</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/caliberrm/0,1419,11,00.html">CaliberRM</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/delphi/0,1419,1,00.html">Delphi</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/interbase/0,1419,7,00.html">InterBase</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/jdatastore/0,1419,9,00.html">JDataStore</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/java/0,1419,3,00.html">Java</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/starteam/0,1419,10,00.html">StarTeam</A>&nbsp;</TD>
+    <TD bgColor=#cccccc><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD align=middle>&nbsp;<A class=topLinkB 
+      href="http://community.borland.com/together/0,1419,12,00.html">Together</A>&nbsp;</TD>
+    <TD class=divider><IMG height=20 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD>&nbsp; </TD></TR></TBODY></TABLE><!-- Vignette StoryServer 4 Sun Mar 21 09:35:29 2004 --><TR><!-- Vignette StoryServer 4 Sun Mar 21 09:35:29 2004 -->
+<META content="Community Member" name=author>
+<META content=27717 name=id>
+<META content="Oct 19 2001 12:00:00:000AM" name=date>
+<META content="Aug 30 2001 04:51:27:000PM" name=creationdate>
+<META content=GetPublished name=type>
+<META content=Public name=visibility>
+<META content="" name=product>
+<META content="" name=platform>
+<P><BR><SPAN class=title3>What ever happened to Proxies.pas?</SPAN> 
+<BLOCKQUOTE class=abstract><B>Abstract:</B> This article illustrates a scheme 
+  for properly segregating runtime code from design-time code in Delphi. By Jeff 
+  Overcash.</BLOCKQUOTE>
+<P>
+<P>One frequent question since <A title="Delphi 6" 
+href="http://www.borland.com/delphi/">Delphi 6</A> shipped has concerned the 
+disappearance of Proxies.pas from the source.</P>
+<P>This change is part of a larger trend.</P>
+<P>Borland chose not to ship <CODE>DsgnIntf.dcu</CODE> with Delphi 5, apparently 
+to force compliance with the Delphi and C++Builder license agreements. The 
+design-time code had been inadvertently used at runtime by many components. In 
+some ways Borland encouraged this behavior: If you use the new component wizard 
+you will see that this wizard creates only one unit, putting both the component 
+skeleton code (runtime) and the Register procedure (design-time) in the same 
+unit.</P>
+<P>With <A title=Delphi href="http://www.borland.com/delphi/">Delphi</A> 6, 
+Borland has taken the next step. Not only was <CODE>DsgnIntf</CODE> replaced 
+with <CODE>DesignIntf</CODE>, but the property editors were also pulled out into 
+<CODE>DesignEditors</CODE>, <CODE>DesignMenus</CODE>, <CODE>DesignWindows</CODE> 
+and other design-time files. <CODE>DesignEditors</CODE> in particular uses 
+another IDE file named <CODE>Proxies</CODE>. (The <CODE>Proxies</CODE> code 
+resides in <CODE>DesignIDE.bpl</CODE>.) Needless to say, these changes can 
+result in errors at compile time.</P>
+<P>If your code is already segregated in terms of runtime versus design-time 
+then the fix is very simple. Open up your design-time package, select the 
+<I>requires </I>folder and hit the Add button. Type <CODE>designide.dcp</CODE> 
+and hit OK. Recompile your package and the error should go away.</P>
+<P>But how can this problem be fixed when design-time and runtime code has been 
+mixed together? <CODE>DesignIDE.bpl</CODE> is not a redistributable package in 
+<A title=Delphi href="http://www.borland.com/delphi/">Delphi</A>. So even in 
+situations where the "design-time only" package has the component's runtime code 
+and only the component dcu is used, there can still be a problem.</P>
+<P>In 99.99% of the cases this is actually very easy to fix. Your runtime code 
+isn't actually using the design-time code; things just are not properly 
+segregated. The segregation lines are fairly simple, however.</P>
+<P>The design-time package should include:</P>
+<OL>
+  <LI>All registration statements. 
+  <LI>All property editors. 
+  <LI>All Component editors. 
+  <LI>Should require DesignIDE and each runtime package that holds the 
+  components themselves. </LI></OL>
+<P>The runtime package should include:</P>
+<OL>
+  <LI>The components themselves only. 
+  <LI>Optionally, any forms the editors may use <STRONG>IF</STRONG> the 
+  component can call the form itself at runtime </LI></OL>
+<P>The only place where there is a little confusion is if the property/component 
+editor uses a form. If that form is available at runtime to the component, it 
+belongs in the runtime package. If it is only available at design-time, it goes 
+in the design-time package. A very common misperception is that the form itself 
+is the editor, but it is not. It is the component editor that calls the form 
+that is the design-time editor.</P>
+<P>You should get in the habit of always separating your components into two 
+packages even if you only statically link your application, because mixing 
+design-time and runtime code leads to code bloat. Your design-time code can't be 
+executed in the runtime, but the linker doesn't know that so it links it in 
+anyway. (This is why <CODE>DsgnIntf</CODE> is trying to get linked in.)</P>
+<P>Let's walk though a very simple component to see how to break the design-time 
+code from the runtime:</P><PRE class="sourcecode>><b>unit</b>  MixedComponent;&#13;&#10;&#13;&#10;<b>interface</b>&#13;&#10;&#13;&#10;<b>uses</b>&#13;&#10;&#13;&#10;  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,&#13;&#10;  DesignIntf, DesignEditors;&#13;&#10;&#13;&#10;<b>type</b>&#13;&#10;&#13;&#10;  <font color=" #003399?><I>{ TMixedComponent }</I>
+TMixedComponent = <B>class</B>(TComponent)
+  <B>private</B>
+    FFileName: <B>String</B>;
+  <B>published</B>
+    <B>property</B>  FileName : <B>String</B> <B>read</B> FFileName <B>write</B> FFileName;
+    <FONT color=#003399><I>{ Published declarations }</I></FONT>
+  <B>end</B>;
+  <FONT color=#003399><I>{ TMixedFileNameProperty }</I></FONT>
+  TMixedFileNameProperty = <B>class</B>(TPropertyEditor)
+    <B>function</B>    AllEqual: boolean; override;
+    <B>procedure</B>   Edit; override;
+    <B>function</B>    GetAttributes: TPropertyAttributes; override;
+    <B>function</B>    GetValue: <B>string</B>; override;
+    <B>procedure</B>   SetValue (<B>const</B>  Value: <B>string</B>); override;
+  <B>end</B>;
+<B>procedure</B>  Register;
+
+<B>implementation</B>
+
+<B>procedure</B>  Register;
+<B>begin</B>
+  RegisterPropertyEditor(TypeInfo(<B>string</B>), TMixedComponent, <FONT color=#9933cc>'FileName'</FONT>, TMixedFileNameProperty);
+  RegisterComponents(<FONT color=#9933cc>'Samples'</FONT>, [TMixedComponent]);
+<B>end</B>;
+
+<B>function</B>  TMixedFileNameProperty.AllEqual: boolean;
+<B>var</B>
+  FirstVal: <B>string</B>;
+  i: Integer;
+<B>begin</B>
+  FirstVal := GetStrValue;
+  Result := True;
+  i := 1;
+  <B>while</B>  Result <B>and</B>  (i &lt; PropCount) <B>do</B>
+  <B>begin</B>
+    Result := Result <B>and</B>  (GetStrValueAt(i) = FirstVal);
+    Inc(i);
+  <B>end</B>;
+<B>end</B>;
+
+<B>procedure</B>  TMixedFileNameProperty.Edit;
+<B>var</B>
+  Dlg: TOpenDialog;
+<B>begin</B>
+  Dlg := TOpenDialog.Create(Application);
+  <B>try</B>
+    <B>with</B>  Dlg <B>do</B>
+    <B>begin</B>
+      Title := <FONT color=#9933cc>'File for '</FONT> + TComponent(GetComponent(0)).Name;
+      FileName:= Value;
+      <B>if</B>  Execute <B>then</B>  Value := FileName;
+    <B>end</B>;
+  <B>finally</B>
+    FreeAndNil(Dlg);
+  <B>end</B>
+<B>end</B>;
+
+<B>function</B>  TMixedFileNameProperty.GetAttributes: TPropertyAttributes;
+<B>begin</B>
+  Result := [paDialog]
+<B>end</B>;
+
+<B>function</B>  TMixedFileNameProperty.GetValue: <B>string</B>;
+<B>begin</B>
+  Result := GetStrValue;
+<B>end</B>;
+
+<B>procedure</B>  TMixedFileNameProperty.SetValue(<B>const</B>  Value: <B>string</B>);
+<B>begin</B>
+  SetStrValue(Value);
+<B>end</B>;
+
+<B>end</B>.</PRE>
+<P>The easiest way to segregate the design-time code from runtime code is to 
+take all the code that requires DesignIntf and DesignEditors and put it in its 
+own unit. That unit will need to use the component's unit. The component itself 
+does not have need to know about the IDE editors that will work with it. So for 
+a start, remove the design-time units DesignIntf and DesignEditors from the uses 
+clause component unit and let the compiler/linker tell you which classes need to 
+be moved into their own unit:</P>
+<UL>
+  <LI>[Error] MixedComponent.pas(23): Undeclared identifier: 'TPropertyEditor' 
+  <LI>[Error] MixedComponent.pas(23): Class type required 
+  <LI>[Error] MixedComponent.pas(24): Method 'AllEqual' not found in base class 
+  <LI>[Error] MixedComponent.pas(25): Method 'Edit' not found in base class 
+  <LI>[Error] MixedComponent.pas(26): Undeclared identifier: 
+  'TPropertyAttributes' 
+  <LI>[Error] MixedComponent.pas(27): Method 'GetValue' not found in base class 
+  <LI>[Error] MixedComponent.pas(28): Method 'SetValue' not found in base class 
+  <LI>[Error] MixedComponent.pas(35): Undeclared identifier: 
+  'RegisterPropertyEditor' 
+  <LI>[Error] MixedComponent.pas(35): Undeclared identifier: 'TMixedFile' 
+  <LI>[Error] MixedComponent.pas(46): Undeclared identifier: 'GetStrValue' 
+  <LI>[Error] MixedComponent.pas(49): Undeclared identifier: 'PropCount' 
+  <LI>[Error] MixedComponent.pas(51): Undeclared identifier: 'GetStrValueAt' 
+  <LI>[Error] MixedComponent.pas(51): Operator not applicable to this operand 
+  type 
+  <LI>[Error] MixedComponent.pas(64): Undeclared identifier: 'GetComponent' 
+  <LI>[Error] MixedComponent.pas(65): Undeclared identifier: 'Value' 
+  <LI>[Error] MixedComponent.pas(75): Undeclared identifier: 'paDialog' 
+  <LI>[Error] MixedComponent.pas(80): Undeclared identifier: 'GetStrValue' 
+  <LI>[Error] MixedComponent.pas(85): Undeclared identifier: 'SetStrValue' 
+  <LI>[Fatal Error] JOComponents.dpk(33): Could not compile used unit 
+  'MixedComponent.pas' </LI></UL>
+<P>The next step is to create a new unit to hold the design-time code. Name it 
+something like MixedComponentReg. Move the Register procedure over to that unit. 
+Now start going through the error messages and start evaluating them. The first 
+error, <I>[Error] MixedComponent.pas(23): Undeclared identifier: 
+'TPropertyEditor',</I> indicates that the whole class inherits from something in 
+one of the design-time units we removed. This is a clear indication that this is 
+only design-time code and the whole class needs to be moved over to the newly 
+created unit.</P>
+<P>At this point the runtime package now compiles cleanly (if not, keep pulling 
+design-time code out until it compiles cleanly without errors). Now there is no 
+need for Proxies.pas or any other design-time units for the component to work in 
+your application at runtime. The runtime component unit is much simplified. It 
+looks like this:</P><PRE class=sourcecode><B>unit</B> MixedComponent;
+
+<B>interface</B>
+
+<B>uses</B>
+  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs;
+
+<B>type</B>
+  <FONT color=#003399><I>{ TMixedComponent }</I></FONT>
+  TMixedComponent = <B>class</B>(TComponent)
+  <B>private</B>
+    FFileName: <B>String</B>;
+  <B>published</B>
+    <B>property</B> FileName : <B>String</B> <B>read</B> FFileName <B>write</B> FFileName;
+    <FONT color=#003399><I>{ Published declarations }</I></FONT>
+  <B>end</B>;
+
+<B>implementation</B>
+
+<B>end</B>.</PRE>
+<P>The final step is to get the component and its property editors compiled into 
+a design-time package and installed into the IDE.</P>
+<P>Create a new package by doing File | New | Other and select <I>package</I>. 
+Bring up the packages options and select <I>design-time only</I>. Give a 
+descriptive name in the <I>Description </I>field. Select the <I>Requires 
+</I>folder and hit the <I>Add </I>button. In the <I>Requires Package </I>edit 
+box type <I>Designide.dcp </I>and hit <I>OK. </I>Also add the dcp for the 
+runtime package that the component resides in. In this case it was put it in 
+JOComponents.dpk, so JOComponents.dcp is added to the requires section. The 
+requires section has three items: JOComponents, designide and rtl. Finally, 
+select the Contains folder and add MixedComponentReg.pas to the package.</P>
+<P>We're almost done!</P>
+<P>Open up MixedComponentReg.pas to add a couple of units in the uses section. 
+Which section depends on whether your component or property editor uses the 
+component in its declaration (more complicated editors sometimes need knowledge 
+of the component). If it does, then add it to the Interface uses clause. If not, 
+put it in the implementation uses. In our example we don't need the information 
+so MixedComponent goes in the implementation uses clause. DesignIntf and 
+DesignEditors belong in the Interface uses. SysUtils, Forms, Dialogs, and 
+Classes are all used internally in different ways in the property editor, so 
+they belong in the implementation section. The final MixedComponentReg looks 
+like this:</P><PRE class=sourcecode><B>unit</B> MixedComponentReg;
+
+<B>interface</B>
+
+<B>uses</B> DesignIntf, DesignEditors;
+
+<B>type</B>
+  <FONT color=#003399><I>{ TMixedFileNameProperty }</I></FONT>
+  TMixedFileNameProperty = <B>class</B>(TPropertyEditor)
+    <B>function</B>  AllEqual: boolean; override;
+    <B>procedure</B> Edit; override;
+    <B>function</B>  GetAttributes: TPropertyAttributes; override;
+    <B>function</B>  GetValue: <B>string</B>; override;
+    <B>procedure</B> SetValue (<B>const</B> Value: <B>string</B>); override;
+  <B>end</B>;
+
+<B>procedure</B> Register;
+
+<B>implementation</B>
+
+<B>uses</B> MixedComponent, SysUtils, Forms, Dialogs, Classes;
+
+<B>procedure</B> Register;
+<B>begin</B>
+  RegisterPropertyEditor(TypeInfo(<B>string</B>), TMixedComponent, <FONT color=#9933cc>'FileName'</FONT>, TMixedFileNameProperty);
+  RegisterComponents(<FONT color=#9933cc>'Samples'</FONT>, [TMixedComponent]);
+<B>end</B>;
+
+<B>function</B> TMixedFileNameProperty.AllEqual: boolean;
+<B>var</B>
+  FirstVal: <B>string</B>;
+  i: Integer;
+<B>begin</B>
+  FirstVal := GetStrValue;
+  Result := True;
+  i := 1;
+  <B>while</B> Result <B>and</B> (i &lt; PropCount) <B>do</B>
+  <B>begin</B>
+    Result := Result <B>and</B> (GetStrValueAt(i) = FirstVal);
+    Inc(i);
+  <B>end</B>;
+<B>end</B>;
+
+<B>procedure</B> TMixedFileNameProperty.Edit;
+<B>var</B>
+  Dlg: TOpenDialog;
+<B>begin</B>
+  Dlg := TOpenDialog.Create(Application);
+  <B>try</B>
+    <B>with</B> Dlg <B>do</B>
+    <B>begin</B>
+      Title := <FONT color=#9933cc>'File for '</FONT> + TComponent(GetComponent(0)).Name;
+      FileName:= Value;
+      <B>if</B> Execute <B>then</B> Value := FileName;
+    <B>end</B>;
+  <B>finally</B>
+    FreeAndNil(Dlg);
+  <B>end</B>
+<B>end</B>;
+
+<B>function</B> TMixedFileNameProperty.GetAttributes: TPropertyAttributes;
+<B>begin</B>
+  Result := [paDialog]
+<B>end</B>;
+
+<B>function</B> TMixedFileNameProperty.GetValue: <B>string</B>;
+<B>begin</B>
+  Result := GetStrValue;
+<B>end</B>;
+
+<B>procedure</B> TMixedFileNameProperty.SetValue(<B>const</B> Value: <B>string</B>);
+<B>begin</B>
+  SetStrValue(Value);
+<B>end</B>;
+
+<B>end</B>.</PRE>
+<P>All that is left is to compile and install the design-time package.</P>
+<P>The runtime code is now completely segregated from the design-time code.</P>
+<P>While this is a fairly simple example, the only time it gets a little more 
+complicated is when the property editor uses a form to retrieve the data, and 
+that form is also available at runtime. In those cases the form stays in the 
+runtime package, and the design-time property editor will call that form from 
+the runtime package.</P>
+<P>If you get in the habit of always having a runtime package for the components 
+and a design-time package for the registration and editors, you won't have any 
+more problems, even if you only intend to statically link in the DCUs.</P>
+<P>By Jeff Overcash (<A title="TeamB web site" 
+href="http://www.teamb.com/">TeamB</A>).</P>
+<P align=left>
+<P>
+<HR align=left width=400>
+
+<P><SPAN class=body3><A 
+href="http://threads.borland.com/threads/threads.exe/add?&amp;sysid=1&amp;contentid=27717&amp;title=What+ever+happened+to+Proxies%2Epas%3F">Add</A> 
+or <A 
+href="http://threads.borland.com/threads/threads.exe/thread?&amp;sysid=1&amp;contentid=27717&amp;title=What+ever+happened+to+Proxies%2Epas%3F">View</A> 
+comments on this article
+<P></SPAN>
+<P><SPAN class=body3>NOTE: The views and information expressed in this document 
+represent those of its author(s) who are solely responsible for its content. 
+Borland does not make or give any representation or warranty with respect to 
+such content.</SPAN>
+<P>
+<P><SPAN class=body3><I>Article ID: 27717&nbsp;&nbsp; Publish Date: October 19, 
+2001&nbsp;&nbsp;Last Modified: October 19, 2001</I></SPAN> 
+</TD><!--TKL Nov--></TR></TABLE><!-- Vignette StoryServer 4 Thu Mar 18 21:46:44 2004 -->
+<TABLE cellSpacing=0 cellPadding=0 width=670 align=center bgColor=#ffffff 
+border=0>
+  <TBODY>
+  <TR>
+    <TD colSpan=3>
+      <FORM name=seek1 action=http://search.borland.com/query.html 
+      method=get><INPUT type=hidden value=url:http://www.borland.com name=qp> 
+      <INPUT type=hidden CHECKED value=url:http://bdn.borland.com/ name=qp> 
+      <INPUT type=hidden value=nowebdsp name=col> <INPUT type=hidden name=qs> 
+      <INPUT type=hidden name=qc> <INPUT type=hidden value=100% name=pw> <INPUT 
+      type=hidden value=0 name=ws> <INPUT type=hidden name=la> <INPUT 
+      type=hidden value=0 name=qm> <INPUT type=hidden value=1 name=st> <INPUT 
+      type=hidden value=10 name=nh> <INPUT type=hidden value=1 name=lk> <INPUT 
+      type=hidden value=0 name=rf> <INPUT type=hidden name=oq> <INPUT 
+      type=hidden value=0 name=rq> 
+  <TR>
+    <TD class=divider colSpan=11><IMG height=1 
+      src="What ever happened to Proxies_pas_files/transparent.gif" 
+  border=0></TD></TR>
+  <TR vAlign=center align=middle>
+    <TD class=divider width=1><IMG height=17 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD class=topLinkB><A class=topLinkB 
+      href="http://community.borland.com/info/">Help</A>&nbsp;</TD>
+    <TD class=divider width=1><IMG height=17 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD class=topLinkB><A class=topLinkB 
+      href="http://community.borland.com/feedback/">Feedback</A>&nbsp;</TD>
+    <TD class=divider width=1><IMG height=17 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD class=topLinkB><A class=topLinkB 
+      href="http://community.borland.com/homepages/">Home Pages</A>&nbsp;</TD>
+    <TD class=divider width=1><IMG height=17 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD class=topLinkB><A class=topLinkB 
+      href="http://info.borland.com/newsgroups">Newsgroups</A>&nbsp;</TD>
+    <TD class=divider width=1><IMG height=17 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD>
+    <TD class=topLinkB align=right><A class=topLinkB 
+      href="http://search.borland.com/">Search</A>&nbsp; <INPUT class=srchBox 
+      maxLength=2033 size=10 name=qt></TD>
+    <TD class=topLinkB><IMG height=1 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=5 
+      border=0></TD>
+    <TD class=divider width=1><IMG height=17 
+      src="What ever happened to Proxies_pas_files/transparent.gif" width=1 
+      border=0></TD></TR>
+  <TR>
+    <TD class=divider colSpan=11></FORM><IMG height=1 alt="" 
+      src="What ever happened to Proxies_pas_files/dots.gif" width=670 
+    border=0></TD></TR>
+  <TR>
+    <TD class=footer align=middle colSpan=11><BR>Made in Borland® Copyright© 
+      1994-2004 Borland Software Corporation. All rights reserved. <A 
+      href="http://www.borland.com/company/legal.html">Legal Notices</A>, <A 
+      href="http://www.borland.com/company/privacy.html">Privacy 
+  Policy</A></TD></TR></TBODY></TABLE><!-- Vignette StoryServer 4 Wed May 15 11:28:33 2002 --></P></BODY></HTML>

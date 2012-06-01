@@ -1,0 +1,831 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0045)http://support.microsoft.com/kb/170884/EN-US/ -->
+<!-- CPMSFTWBSUP17 ASM: GsfxWeb, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35 - FW: 1.1.4322.985 --><!-- RESG: 1/15/2005 6:05:38 AM - RESX: 1/1/0001 12:00:00 AM --><!-- (c) 2005 Microsoft Corporation. All Rights Reserved --><HTML><HEAD><TITLE>HOWTO: Sort a ListView Control by Date</TITLE><LINK 
+href="HOWTO Sort a ListView Control by Date_files/5622e9cdS.css" type=text/css 
+rel=Stylesheet><LINK 
+href="HOWTO Sort a ListView Control by Date_files/9382ddccS.css" type=text/css 
+rel=stylesheet>
+<SCRIPT language=JavaScript>var doImage=doImage;var TType=TType;function mhHover(tbl,idx,cls){var t,d;if(document.getElementById)t=document.getElementById(tbl);else t=document.all(tbl);if(t==null)return;if(t.getElementsByTagName)d=t.getElementsByTagName("TD");else d=t.all.tags("TD");if(d==null)return;if(d.length<=idx)return;d[idx].className=cls;}function setMSResearch(){var time=new Date();if(document.cookie.indexOf('msresearch=1 ')==-1){document.cookie='msresearch='+time.getTime()+':'+escape(document.location)+':'+escape(document.referrer)+'; path=/; domain=.microsoft.com; ';}}function footerjs(doc){if(doImage==null){var tt=TType==null?"PV":TType;doc.write('<layer visibility="hide"><div style="display:none"><img src="http://c.microsoft.com/trans_pixel.asp?source=localhost&TYPE=' + tt + '&p=MNPGenerator" width=0 height=0 hspace=0 vspace=0 border=0></div></layer>');}if((document.cookie.indexOf('msresearch=1 ')==-1)&&(document.cookie.indexOf('msresearch=')!=-1)){setInterval("setMSResearch()",1000);}}</SCRIPT>
+
+<SCRIPT src="HOWTO Sort a ListView Control by Date_files/common.js" 
+type=text/javascript></SCRIPT>
+
+<META content="5584 5583 5579 5577 5576 5575 5574 2971 2970 1105 " 
+name=KBParents>
+<META content="kbhowto kbapi KB170884" name=Keywords>
+<META 
+content="When using a Listview control, you can set the Sorted property for the control to sort the list alphabetically. However, the Listview control does not expose a property or method for sorting a list by date. This article presents a method that you..." 
+name=Description>
+<META content=en name=MS.LOCALE>
+<META http-equiv=content-type 
+content="text/html; charset=utf-8"><XMLREADER><LINK 
+href="HOWTO Sort a ListView Control by Date_files/default.css" type=text/css 
+rel=stylesheet><LINK 
+href="HOWTO Sort a ListView Control by Date_files/xmlContent.css" type=text/css 
+rel=stylesheet></XMLREADER>
+<SCRIPT>var g_currentContent='kb\x3ben-us\x3b170884';</SCRIPT>
+
+<SCRIPT src="HOWTO Sort a ListView Control by Date_files/survey.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="HOWTO Sort a ListView Control by Date_files/surveytrigger.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT type=text/javascript>setcookieval("gssSITE","gn");var PersonalizationInfo='a2IxNzA4ODQIZW4tdXMISE9XVE86IFNvcnQgYSBMaXN0VmlldyBDb24_';SaveToFavoritesData.savingMsg='Saving Favorites';SaveToFavoritesData.connectionErrorMsg='Cannot Connect';SaveToFavoritesData.savedMsg='Favorites Saved';SaveToFavoritesData.noSaveErrorMsg='Cannot Save';SaveToFavoritesData.surveyUrl='\x2fcommon\x2fsurvey.aspx\x3fscid\x3dsw\x3ben\x3b1076\x26surveystyle\x3dpopup\x26showpage\x3d1\x26site\x3dgn\x26siteregion\x3dpt-br\x26url\x3d%2fdefault.aspx%2fkb%2f170884%2fEN-US%2f\x26p0\x3dkb\x26p1\x3den-us\x26p2\x3d170884';SaveToFavoritesData.noCookieUrl='\x2fgp\x2fnocookies\x2f';var embedSurveyPrompt='nothing';var Exp=90;var Delay=0;var Freq=5;var CookieDef='ST_GN_PT-BR';var SurveyStyle='popup';var DisplayIntroPage=1;var EmailStyle=0;var EmailSurveyID='';var ReferringURL='';var gCookieDomain='';</SCRIPT>
+
+<META content="MSHTML 6.00.3790.1289" name=GENERATOR></HEAD>
+<BODY onload=thisLoad(); onunload=thisUnload();>
+<SCRIPT type=text/javascript>if (self.name == "MNPMainFrame") top.location.href = self.location.href;</SCRIPT>
+
+<DIV id=msviMasthead 
+xmlns:Utility="http://www.microsoft.com/MSCOM/VisualIdentity/Utility">
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD width="100%">
+      <TABLE height=22 cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD id=msviRegionIdGraphic bgColor=#4b92d9><A 
+            href="http://support.microsoft.com/common/international.aspx"><IMG 
+            title="Opções de Idioma" height=22 alt=Brasil 
+            src="HOWTO Sort a ListView Control by Date_files/bb7e5129S.jpg" 
+            border=0></A></TD>
+          <TD id=msviRegionGradient1 
+          style="FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#4B92D9', endColorStr='#CEDFF6', gradientType='1')" 
+          width="50%"></TD>
+          <TD id=msviRegionGradient2 
+          style="FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#CEDFF6', endColorStr='#1E77D3', gradientType='1')" 
+          width="50%"></TD></TR></TBODY></TABLE></TD>
+    <TD id=msviGlobalToolbar dir=ltr noWrap align=left bgColor=#1e77d3 
+height=22>
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD class=gt0 onmouseover="mhHover('msviGlobalToolbar', 0, 'gt1')" 
+          onmouseout="mhHover('msviGlobalToolbar', 0, 'gt0')" noWrap><A 
+            href="http://www.microsoft.com/brasil">Microsoft.com Brasil 
+          Home</A></TD>
+          <TD class=gtsep>|</TD>
+          <TD class=gt0 onmouseover="mhHover('msviGlobalToolbar', 2, 'gt1')" 
+          onmouseout="mhHover('msviGlobalToolbar', 2, 'gt0')" noWrap><A 
+            href="http://support.microsoft.com/library/toolbar/3.0/sitemap/pt-br.mspx">Mapa 
+            do Site</A></TD></TR></TBODY></TABLE></TD></TR>
+  <TR vAlign=top>
+    <TD width="100%">
+      <TABLE height=42 cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR vAlign=top>
+          <TD id=msviBrandBanner bgColor=#0a6cce><A 
+            href="http://www.microsoft.com/brasil/"><IMG title="" height=42 
+            alt=Microsoft 
+            src="HOWTO Sort a ListView Control by Date_files/ms_masthead_ltr.gif" 
+            width=136 border=0></A></TD>
+          <TD 
+          style="FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#0A6CCE', endColorStr='#FFFFFF', gradientType='1')" 
+          width="100%"></TD></TR></TBODY></TABLE></TD>
+    <TD id=msviGlobalSearch bgColor=#ffffff>Procurar no Microsoft.com por:<BR>
+      <FORM id=msviSearchForm action=/library/toolbar/3.0/search.aspx><INPUT 
+      type=hidden value=pt-br name=View><INPUT type=hidden value=iso-8859-1 
+      name=charset><NOBR>
+      <DIV style="HEIGHT: 18px"><INPUT id=msviSearchBox maxLength=255 name=qu><INPUT id=msviGoButton type=submit value=Ir></DIV></NOBR></FORM></TD></TR></TBODY></TABLE>
+<TABLE id=msviSubbanner cellSpacing=0 cellPadding=0 width="100%" bgColor=#003399 
+border=0>
+  <TBODY>
+  <TR>
+    <TD><IMG title="" height=26 alt="Ajuda e Suporte" 
+      src="HOWTO Sort a ListView Control by Date_files/674a36c6S.jpg" width=467 
+      border=0></TD>
+    <TD width="100%">&nbsp;</TD></TR></TBODY></TABLE>
+<DIV id=msviLocalToolbar>
+<TABLE height=19 cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD id=msviHomePageLink noWrap><A 
+      href="http://support.microsoft.com/">Página principal do site de Ajuda e 
+      Suporte</A></TD>
+    <TD><SPAN class=ltsep>|</SPAN></TD>
+    <TD class=lt0 onmouseover="mhHover('msviLocalToolbar', 2, 'lt1')" 
+    onmouseout="mhHover('msviLocalToolbar', 2, 'lt0')" noWrap><A 
+      href="http://support.microsoft.com/select/?target=hub">Selecione um 
+      Produto</A></TD>
+    <TD width="100%"></TD></TR></TBODY></TABLE></DIV></DIV>
+<TABLE dir=ltr cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top>
+    <TD dir=ltr width="100%"><XMLREADER>
+      <DIV id=contentArea>
+      <DIV id=mainRow>
+      <DIV id=thinColumn>
+      <DIV class="wp articleTrans">
+      <H1>Article Translations</H1>
+      <FORM name=frmArticleTrans onsubmit="return SwitchLanguage();" action=/>
+      <DIV>
+      <TABLE cellSpacing=0 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD><SELECT name=scid><OPTION value=kb;fr;170884 
+              selected>French</OPTION><OPTION 
+              value=kb;ja;170884>Japanese</OPTION><OPTION 
+              value=kb;es;170884>Spanish</OPTION></SELECT></TD>
+          <TD class=spacer>&nbsp;</TD>
+          <TD><INPUT 
+            onmouseover="this.src='/library/images/support/EN-US/go_right_02-over.gif';" 
+            onmouseout="this.src='/library/images/support/EN-US/go_right_02.gif';" 
+            type=image alt="Translate the article" 
+            src="HOWTO Sort a ListView Control by Date_files/go_right_02.gif"></TD></TR></TBODY></TABLE></DIV></FORM></DIV>
+      <DIV class=wp id=RelatedSupportCenters>
+      <TABLE cellSpacing=0 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD class=textColumn>
+            <H1>Related Support Centers</H1>
+            <TABLE class=list cellSpacing=0 cellPadding=2>
+              <TBODY>
+              <TR class=evenRow>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=bullet>•</TD>
+                      <TD class=text><A 
+                        href="http://support.microsoft.com/?scid=ph;en-us;2971">Microsoft 
+                        Visual Basic 
+            6.0</A></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV>
+      <DIV class=wp id=AdditionalResources>
+      <TABLE cellSpacing=0 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD class=textColumn>
+            <H1>Other Support Options</H1>
+            <TABLE class=list cellSpacing=0 cellPadding=2>
+              <TBODY>
+              <TR class=evenRow id=L_259_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=bullet>•</TD>
+                      <TD class=text><A id=L_259 title="Contact Microsoft" 
+                        onclick="return MS_HandleClick(this,'AdditionalResources', true);" 
+                        href="http://support.microsoft.com/?scid=gp;[ln];cntactms&amp;style=home">Contact 
+                        Microsoft</A><BR>Phone Numbers, Support Options and 
+                        Pricing, Online Help, and 
+more.</TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=oddRow id=L_260_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=bullet>•</TD>
+                      <TD class=text><A id=L_260 title="Customer Service" 
+                        onclick="return MS_HandleClick(this,'AdditionalResources', true);" 
+                        href="http://support.microsoft.com/?scid=gp;[ln];csshome&amp;style=home">Customer 
+                        Service</A><BR>For non-technical assistance with product 
+                        purchases, subscriptions, online services, events, 
+                        training courses, corporate sales, piracy issues, and 
+                        more.</TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=evenRow id=L_262_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=bullet>•</TD>
+                      <TD class=text><A id=L_262 title=Newsgroups 
+                        onclick="return MS_HandleClick(this,'AdditionalResources', true);" 
+                        href="http://support.microsoft.com/newsgroups/">Newsgroups</A><BR>Pose 
+                        a question to other users. Discussion groups and Forums 
+                        about specific Microsoft products, technologies, and 
+                        services.</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV>
+      <DIV class=wp id=SupportTools>
+      <TABLE cellSpacing=0 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD class=textColumn>
+            <H1>Page Tools</H1>
+            <TABLE class=list cellSpacing=0 cellPadding=2>
+              <TBODY>
+              <TR class=evenRow id=PrintPage_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=image><A id=PrintPage_i 
+                        title="Print this page" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/gp/noscript/"><IMG 
+                        id=bi_PrintPage alt="Print this page" 
+                        src="HOWTO Sort a ListView Control by Date_files/printicon.gif"></A></TD>
+                      <TD class=text><A id=PrintPage title="Print this page" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/gp/noscript/">Print 
+                        this page</A></TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=oddRow id=EmailPage_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=image><A id=EmailPage_i 
+                        title="E-mail this page" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="mailto:?subject=HOWTO: Sort a ListView Control by Date&amp;body=http://support.microsoft.com/default.aspx/kb/170884/EN-US/"><IMG 
+                        id=bi_EmailPage alt="E-mail this page" 
+                        src="HOWTO Sort a ListView Control by Date_files/emailicon.gif"></A></TD>
+                      <TD class=text><A id=EmailPage title="E-mail this page" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="mailto:?subject=HOWTO: Sort a ListView Control by Date&amp;body=http://support.microsoft.com/default.aspx/kb/170884/EN-US/">E-mail 
+                        this page</A></TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=evenRow id=Worldwide_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=image><A id=Worldwide_i 
+                        title="Microsoft Worldwide" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/common/international.aspx?rdPath=0"><IMG 
+                        id=bi_Worldwide alt="Microsoft Worldwide" 
+                        src="HOWTO Sort a ListView Control by Date_files/langicon.gif"></A></TD>
+                      <TD class=text><A id=Worldwide 
+                        title="Microsoft Worldwide" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/common/international.aspx?rdPath=0">Microsoft 
+                        Worldwide</A></TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=oddRow id=SaveToMySupportFavorites_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=image><A id=SaveToMySupportFavorites_i 
+                        title="Save to My Support Favorites" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/gp/noscript/"><IMG 
+                        id=bi_SaveToMySupportFavorites 
+                        alt="Save to My Support Favorites" 
+                        src="HOWTO Sort a ListView Control by Date_files/saveicon.gif"></A></TD>
+                      <TD class=text><A id=SaveToMySupportFavorites 
+                        title="Save to My Support Favorites" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/gp/noscript/">Save to 
+                        My Support Favorites</A></TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=evenRow id=MySupportFavoritesLink_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=image><A id=MySupportFavoritesLink_i 
+                        title="Go to My Support Favorites" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/personalization/mydisplaysettings.aspx"><IMG 
+                        id=bi_MySupportFavoritesLink 
+                        alt="Go to My Support Favorites" 
+                        src="HOWTO Sort a ListView Control by Date_files/gotoicon.gif"></A></TD>
+                      <TD class=text><A id=MySupportFavoritesLink 
+                        title="Go to My Support Favorites" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/personalization/mydisplaysettings.aspx">Go 
+                        to My Support Favorites</A></TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=oddRow id=SendFeedback_tr>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=image><A id=SendFeedback_i 
+                        title="Send Feedback" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/gp/noscript/" 
+                        target=_blank><IMG id=bi_SendFeedback 
+                        alt="Send Feedback" 
+                        src="HOWTO Sort a ListView Control by Date_files/sendicon.gif"></A></TD>
+                      <TD class=text><A id=SendFeedback title="Send Feedback" 
+                        onclick="return MS_HandleClick(this,'SupportTools', false);" 
+                        href="http://support.microsoft.com/gp/noscript/" 
+                        target=_blank>Send 
+Feedback</A></TD></TR></TBODY></TABLE></TD></TR>
+              <TR class=evenRow>
+                <TD class=lc0>
+                  <TABLE class=innerTable cellSpacing=0 cellPadding=0>
+                    <TBODY>
+                    <TR>
+                      <TD class=text>
+                        <DIV class=center><A 
+                        href="https://profile.microsoft.com/RegSysProfileCenter/wizard.aspx?wizid=6182013c-7c1f-40a3-99ae-27651c3668aa&amp;lcid=1033&amp;fu=%2fdefault.aspx%2fkb%2f170884%2fEN-US%2f&amp;brand=Microsoft"><IMG 
+                        class=PassportSignIn 
+                        alt="Sign in with your .NET Passport" 
+                        src="HOWTO Sort a ListView Control by Date_files/signin.gif" 
+                        border=0></A></DIV></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV></DIV>
+      <DIV id=mainColumn>
+      <DIV class=kb id=kb>
+      <DIV class=default id=default><!-- - -KB 3 start- - --><A name=toc></A>
+      <H1 class=title>HOWTO: Sort a ListView Control by Date</H1>
+      <DIV class=articleProperty>
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD class=label>Article ID</TD>
+          <TD class=text>:</TD>
+          <TD class=text>170884</TD></TR>
+        <TR>
+          <TD class=label>Last Review</TD>
+          <TD class=text>:</TD>
+          <TD class=text>July 13, 2004</TD></TR>
+        <TR>
+          <TD class=label>Revision</TD>
+          <TD class=text>:</TD>
+          <TD class=text>1.0</TD></TR></TBODY></TABLE></DIV>
+      <DIV class=notice>This article was previously published under 
+Q170884</DIV>
+      <DIV class=toc>
+      <H5>On this Page</H5>
+      <TABLE class=tallTable cellSpacing=0 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD class=image><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#kb1"><IMG 
+            alt=SUMMARY 
+            src="HOWTO Sort a ListView Control by Date_files/downArrow.gif" 
+            align=middle></A></TD>
+          <TD class=text colSpan=2><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#kb1">SUMMARY</A></TD></TR>
+        <TR>
+          <TD class=image><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#kb2"><IMG 
+            alt="MORE INFORMATION" 
+            src="HOWTO Sort a ListView Control by Date_files/downArrow.gif" 
+            align=middle></A></TD>
+          <TD class=text colSpan=2><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#kb2">MORE 
+            INFORMATION</A></TD></TR></TBODY></TABLE></DIV>
+      <DIV class=section>
+      <H2 class=subTitle><A name=kb1>SUMMARY</A></H2>
+      <DIV class=sbody>When using a Listview control, you can set the Sorted 
+      property for the control to sort the list alphabetically. However, the 
+      Listview control does not expose a property or method for sorting a list 
+      by date. This article presents a method that you can use to sort a 
+      Listview control by date. </DIV>
+      <H2 class=subTitle><A name=kb2>MORE INFORMATION</A></H2>
+      <DIV class=sbody><B>WARNING</B>: One or more of the following functions 
+      are discussed in this article; VarPtr, VarPtrArray, VarPtrStringArray, 
+      StrPtr, ObjPtr. These functions are not supported by Microsoft Technical 
+      Support. They are not documented in the Visual Basic documentation and are 
+      provided in this Knowledge Base article "as is." Microsoft does not 
+      guarantee that they will be available in future releases of Visual 
+      Basic.<BR><BR>To sort data in a ListView control by date, it is necessary 
+      to provide a comparison function to the control via AddressOf. 
+      <BR><BR><B>NOTE</B>: Using this approach, you will sort the data in the 
+      control but not the ListItems collection. Therefore, if you must read the 
+      data from the list in sorted order, it is necessary to step through the 
+      actual list rather than the ListItems collection. 
+      <H3>Step-by-Step Example</H3>
+      <TABLE class=list>
+        <TBODY>
+        <TR>
+          <TD class=number>1.</TD>
+          <TD class=text>Start a new Visual Basic project. Form1 is created by 
+            default.</TD></TR>
+        <TR>
+          <TD class=number>2.</TD>
+          <TD class=text>On the <B>Project</B> menu, click <B>Components</B>, 
+            select the <STRONG class=uiterm>Microsoft Windows Common Controls 
+            5.0</STRONG> check box, and then click 
+            <B>OK</B>.<BR><BR><B>NOTE</B>: You can also use Visual Basic 6.0 and 
+            select the <STRONG class=uiterm>Microsoft Windows Common Controls 
+            6.0</STRONG> check box with only one minor change, as noted 
+        below.</TD></TR>
+        <TR>
+          <TD class=number>3.</TD>
+          <TD class=text>Add a Module to the project.</TD></TR>
+        <TR>
+          <TD class=number>4.</TD>
+          <TD class=text>Draw a ListView control on Form1.</TD></TR>
+        <TR>
+          <TD class=number>5.</TD>
+          <TD class=text>Add the following code to Form1:<CODE><PRE class=code>      Option Explicit
+
+      Private Sub Form_Load()
+
+        Dim clmAdd As ColumnHeader
+        Dim itmAdd As ListItem
+
+        'Add two Column Headers to the ListView control
+        Set clmAdd = ListView1.ColumnHeaders.Add(Text:="Name")
+        Set clmAdd = ListView1.ColumnHeaders.Add(Text:="Date")
+
+        'Set the view property of the Listview control to Report view
+        ListView1.View = lvwReport
+
+        'Add data to the ListView control
+        Set itmAdd = ListView1.ListItems.Add(Text:="Joe")
+        itmAdd.SubItems(1) = "05/07/97"
+
+        Set itmAdd = ListView1.ListItems.Add(Text:="Sally")
+        itmAdd.SubItems(1) = "04/08/97"
+
+        Set itmAdd = ListView1.ListItems.Add(Text:="Bill")
+        itmAdd.SubItems(1) = "05/29/97"
+
+        Set itmAdd = ListView1.ListItems.Add(Text:="Fred")
+        itmAdd.SubItems(1) = "05/17/97"
+
+        Set itmAdd = ListView1.ListItems.Add(Text:="Anne")
+        itmAdd.SubItems(1) = "04/01/97"
+
+      End Sub
+
+      ' Use this line of code for Common Controls 5.0:
+      Private Sub ListView1_ColumnClick(ByVal ColumnHeader As _
+              ComctlLib.ColumnHeader)
+      ' For Common Controls 6.0, uncomment the line below and comment the line above.
+      'Private Sub ListView1_ColumnClick(ByVal ColumnHeader As _
+              MSComctlLib.ColumnHeader)
+
+        Dim strName As String
+        Dim dDate As Date
+        Dim lngItem As Long
+
+        'Handle User click on column header
+        If ColumnHeader.Text = "Name" Then  'User clicked on Name header
+          ListView1.Sorted = True        'Use default sorting to sort the
+          ListView1.SortKey = 0          'items in the list
+        Else
+          ListView1.Sorted = False       'User clicked on the Date header
+                                         'Use our sort routine to sort
+                                         'by date
+          SendMessage ListView1.hWnd, _
+                      LVM_SORTITEMS, _
+                      ListView1.hWnd, _
+                      AddressOf CompareDates
+        End If
+
+        'Refresh the ListView before writing the data
+        ListView1.Refresh
+
+        'Loop through the items in the List to print them out in
+        'sorted order.
+        'NOTE: You are looping through the ListView control because when _
+        'sorting by date the ListItems collection won't be sorted.
+
+        For lngItem = 0 To ListView1.ListItems.Count - 1
+          ListView_GetListItem lngItem, ListView1.hWnd, strName, dDate
+        Next
+
+      End Sub
+					</PRE></CODE></TD></TR>
+        <TR>
+          <TD class=number>6.</TD>
+          <TD class=text>Add the following code to Module1:<CODE><PRE class=code>      Option Explicit
+
+      'Structures
+
+      Public Type POINT
+        x As Long
+        y As Long
+      End Type
+
+      Public Type LV_FINDINFO
+        flags As Long
+        psz As String
+        lParam As Long
+        pt As POINT
+        vkDirection As Long
+      End Type
+
+      Public Type LV_ITEM
+        mask As Long
+        iItem As Long
+        iSubItem As Long
+        State As Long
+        stateMask As Long
+        pszText As Long
+        cchTextMax As Long
+        iImage As Long
+        lParam As Long
+        iIndent As Long
+      End Type
+
+      'Constants
+      Private Const LVFI_PARAM = 1
+      Private Const LVIF_TEXT = &amp;H1
+
+      Private Const LVM_FIRST = &amp;H1000
+      Private Const LVM_FINDITEM = LVM_FIRST + 13
+      Private Const LVM_GETITEMTEXT = LVM_FIRST + 45
+      Public Const LVM_SORTITEMS = LVM_FIRST + 48
+
+      'API declarations
+
+      Declare Function SendMessage Lib "user32" Alias "SendMessageA" ( _
+        ByVal hWnd As Long, _
+        ByVal wMsg As Long, _
+        ByVal wParam As Long, _
+        ByVal lParam As Long) As Long
+
+      'Module Functions and Procedures
+
+      'CompareDates: This is the sorting routine that gets passed to the
+      'ListView control to provide the comparison test for date values.
+
+      Public Function CompareDates(ByVal lngParam1 As Long, _
+                                   ByVal lngParam2 As Long, _
+                                   ByVal hWnd As Long) As Long
+
+        Dim strName1 As String
+        Dim strName2 As String
+        Dim dDate1 As Date
+        Dim dDate2 As Date
+
+        'Obtain the item names and dates corresponding to the
+        'input parameters
+
+        ListView_GetItemData lngParam1, hWnd, strName1, dDate1
+        ListView_GetItemData lngParam2, hWnd, strName2, dDate2
+
+        'Compare the dates
+        'Return 0 ==&gt; Less Than
+        '       1 ==&gt; Equal
+        '       2 ==&gt; Greater Than
+
+        If dDate1 &lt; dDate2 Then
+          CompareDates = 0
+        ElseIf dDate1 = dDate2 Then
+          CompareDates = 1
+        Else
+          CompareDates = 2
+        End If
+
+      End Function
+
+      'GetItemData - Given Retrieves
+
+      Public Sub ListView_GetItemData(lngParam As Long, _
+                                      hWnd As Long, _
+                                      strName As String, _
+                                      dDate As Date)
+        Dim objFind As LV_FINDINFO
+        Dim lngIndex As Long
+        Dim objItem As LV_ITEM
+        Dim baBuffer(32) As Byte
+        Dim lngLength As Long
+
+        '
+        ' Convert the input parameter to an index in the list view
+        '
+        objFind.flags = LVFI_PARAM
+        objFind.lParam = lngParam
+        lngIndex = SendMessage(hWnd, LVM_FINDITEM, -1, VarPtr(objFind))
+
+        '
+        ' Obtain the name of the specified list view item
+        '
+        objItem.mask = LVIF_TEXT
+        objItem.iSubItem = 0
+        objItem.pszText = VarPtr(baBuffer(0))
+        objItem.cchTextMax = UBound(baBuffer)
+        lngLength = SendMessage(hWnd, LVM_GETITEMTEXT, lngIndex, _
+                                VarPtr(objItem))
+        strName = Left$(StrConv(baBuffer, vbUnicode), lngLength)
+
+        '
+        ' Obtain the modification date of the specified list view item
+        '
+        objItem.mask = LVIF_TEXT
+        objItem.iSubItem = 1
+        objItem.pszText = VarPtr(baBuffer(0))
+        objItem.cchTextMax = UBound(baBuffer)
+        lngLength = SendMessage(hWnd, LVM_GETITEMTEXT, lngIndex, _
+                                VarPtr(objItem))
+        If lngLength &gt; 0 Then
+          dDate = CDate(Left$(StrConv(baBuffer, vbUnicode), lngLength))
+        End If
+
+      End Sub
+
+      'GetListItem - This is a modified version of ListView_GetItemData
+      ' It takes an index into the list as a parameter and returns
+      ' the appropriate values in the strName and dDate parameters.
+
+      Public Sub ListView_GetListItem(lngIndex As Long, _
+                                      hWnd As Long, _
+                                      strName As String, _
+                                      dDate As Date)
+        Dim objItem As LV_ITEM
+        Dim baBuffer(32) As Byte
+        Dim lngLength As Long
+
+        '
+        ' Obtain the name of the specified list view item
+        '
+        objItem.mask = LVIF_TEXT
+        objItem.iSubItem = 0
+        objItem.pszText = VarPtr(baBuffer(0))
+        objItem.cchTextMax = UBound(baBuffer)
+        lngLength = SendMessage(hWnd, LVM_GETITEMTEXT, lngIndex, _
+                                VarPtr(objItem))
+        strName = Left$(StrConv(baBuffer, vbUnicode), lngLength)
+
+        '
+        ' Obtain the modification date of the specified list view item
+        '
+        objItem.mask = LVIF_TEXT
+        objItem.iSubItem = 1
+        objItem.pszText = VarPtr(baBuffer(0))
+        objItem.cchTextMax = UBound(baBuffer)
+        lngLength = SendMessage(hWnd, LVM_GETITEMTEXT, lngIndex, _
+                                VarPtr(objItem))
+        If lngLength &gt; 0 Then
+          dDate = CDate(Left$(StrConv(baBuffer, vbUnicode), lngLength))
+        End If
+
+      End Sub
+					</PRE></CODE></TD></TR>
+        <TR>
+          <TD class=number>7.</TD>
+          <TD class=text>Save your project. </TD></TR>
+        <TR>
+          <TD class=number>8.</TD>
+          <TD class=text>Press the F5 key to run the application. Click the 
+            Date column header to sort the items in the list by 
+        date.</TD></TR></TBODY></TABLE></DIV></DIV>
+      <DIV class=appliesTo>
+      <HR>
+
+      <H5>APPLIES TO</H5>
+      <TABLE class=list cellSpacing=0 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 6.0 Learning Edition</TD></TR>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 5.0 Learning Edition</TD></TR>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 6.0 Professional Edition</TD></TR>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 5.0 Professional Edition</TD></TR>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 6.0 Enterprise Edition</TD></TR>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 5.0 Enterprise Edition</TD></TR>
+        <TR>
+          <TD class=bullet>•</TD>
+          <TD class=text>Microsoft Visual Basic 5.0 Control Creation 
+        Edition</TD></TR></TBODY></TABLE></DIV>
+      <DIV class=topOfPage>
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD class=image><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#toc"><IMG 
+            alt="Top of Page" 
+            src="HOWTO Sort a ListView Control by Date_files/upArrow.gif" 
+            align=middle></A></TD>
+          <TD class=text><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#toc">Top of 
+            Page</A></TD></TR></TBODY></TABLE></DIV>
+      <DIV class=keywords>
+      <TABLE cellSpacing=1 cellPadding=0>
+        <TBODY>
+        <TR>
+          <TD class=header>
+            <H5>Keywords:&nbsp;</H5></TD>
+          <TD class=text>kbhowto kbapi KB170884 </TD></TR></TBODY></TABLE>
+      <DIV class=topOfPage>
+      <TABLE>
+        <TBODY>
+        <TR>
+          <TD class=image><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#toc"><IMG 
+            alt="Top of Page" 
+            src="HOWTO Sort a ListView Control by Date_files/upArrow.gif" 
+            align=middle></A></TD>
+          <TD class=text><A 
+            href="http://support.microsoft.com/kb/170884/EN-US/#toc">Top of 
+            Page</A></TD></TR></TBODY></TABLE></DIV></DIV>
+      <DIV class=disclaimer>
+      <DIV 
+class=text></DIV></DIV><!-- - -KB 3 end- - --></DIV></DIV></DIV></DIV>
+      <DIV id=bottomRow>
+      <DIV class=wp id=fmsSurvey>
+      <DIV class=fms>
+      <SCRIPT type=text/javascript>var g_asAnswers = [];var g_iAnswerPtr = 0;var currentsectionid = 1;var navindex = 1;var currentsection;var navpath = new Array();var g_SCID = 'sw;en;1075';var g_SITE = 'gn';var g_REGIONID = 'pt-br';var g_URL = '%252fdefault.aspx%252fkb%252f170884%252fEN-US%252f';var g_BROWSERLANGCODE = 'pt-br';var g_SURVEYLANGCODE = 'en';var g_SURVEYID = '1075';var g_SURVEYNAME = '';var g_asParams = ['kb','en-us','170884','','','','','','',''];var g_showall = 0;var g_surveystyle = 'popup';var bClickCancel = 0;var g_maxKBsInCookie = '10';var g_kbvisited = '';</SCRIPT>
+      <IFRAME id=submitframe style="DISPLAY: none" 
+      src="HOWTO Sort a ListView Control by Date_files/surveysubmit.htm"></IFRAME>
+      <DIV class=DOCUMENT>
+      <FORM name=frmSurveyMain action=/common/survey.aspx method=post 
+      width="100%"><INPUT id=FMSACTION type=hidden value=PERSIST 
+      name=FMSACTION><INPUT id=emailaddress type=hidden name=emailaddress><INPUT 
+      id=emailsurveyurl type=hidden name=emailsurveyurl><INPUT id=sessionid 
+      type=hidden name=sessionid><INPUT id=SURVEYSCID type=hidden 
+      name=SURVEYSCID><INPUT id=SURVEYID type=hidden name=SURVEYID><INPUT 
+      id=REGIONID type=hidden name=REGIONID><INPUT id=SURVEYNAME type=hidden 
+      name=SURVEYNAME><INPUT id=SURVEYLANGCODE type=hidden 
+      name=SURVEYLANGCODE><INPUT id=BROWSERLANGCODE type=hidden 
+      name=BROWSERLANGCODE><INPUT id=SITE type=hidden name=SITE><INPUT id=FMSURL 
+      type=hidden name=FMSURL><INPUT id=PARAMS type=hidden name=PARAMS><INPUT 
+      id=PARAMLENGTH type=hidden name=PARAMLENGTH><INPUT id=SURVEYANSWERS 
+      type=hidden name=SURVEYANSWERS><INPUT id=DATALENGTH type=hidden 
+      name=DATALENGTH><INPUT id=DIRECTION type=hidden value=LTR 
+      name=DIRECTION><INPUT id=PREVIEWLOCATION type=hidden name=PREVIEWLOCATION>
+      <DIV id=DIV_FIRST style="DISPLAY: none">
+      <DIV class=QUESTIONCONTAINER>
+      <DIV class=QUESTIONTEXT>Did this content help you?</DIV>
+      <DIV class=QUESTIONINSTRUCTION></DIV>
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=125 type=radio value=0 
+            name=s1q5811>Yes</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=126 type=radio value=0 
+            name=s1q5811>No</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=1852 type=radio value=1 
+            name=s1q5811>Maybe</TD></TR></TBODY></TABLE></DIV>
+      <DIV class=QUESTIONCONTAINER>
+      <DIV class=QUESTIONTEXT>Please select one option based on your first 
+      choice:</DIV>
+      <DIV class=QUESTIONINSTRUCTION></DIV>
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10057 type=radio value=1 
+            name=s1q5812>I'm very satisfied</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10058 type=radio value=2 
+            name=s1q5812>I think it will help, but I haven't tried it yet</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10059 type=radio value=3 
+            name=s1q5812>It is helpful, but I need more information</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10060 type=radio value=4 
+            name=s1q5812>It is helpful, but hard to understand</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10061 type=radio value=5 
+            name=s1q5812>Seemed relevant in search results, but didn't help 
+        me</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10062 type=radio value=6 
+            name=s1q5812>The information is wrong</TD></TR>
+        <TR>
+          <TD class=ANSWERTEXT vAlign=top><INPUT id=10063 type=radio value=7 
+            name=s1q5812>The page contains one or more broken 
+      links</TD></TR></TBODY></TABLE></DIV>
+      <TABLE class=QUESTIONCONTAINER cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD>
+            <DIV class=QUESTIONTEXT>Suggest new content or let us know how we 
+            can improve this content (optional):</DIV></TD></TR>
+        <TR>
+          <TD>
+            <DIV class=QUESTIONINSTRUCTION></DIV></TD></TR>
+        <TR>
+          <TD><TEXTAREA class=ANSWERBOX onpaste="enforceMaxLength(this, 999)" onkeydown="enforceMaxLength(this, 999)" name=s1q3888 rows=12 cols=80></TEXTAREA></TD></TR></TBODY></TABLE>
+      <DIV class=NAVIGATION>
+      <TABLE width="98%">
+        <TBODY>
+        <TR>
+          <TD noWrap align=right><INPUT class=NAVBUTTON onclick="closesurvey(10);SwitchSection();StatsDotNet.disabled = true;" type=button value=Submit></TD></TR></TBODY></TABLE></DIV></DIV>
+      <SCRIPT type=text/javascript>var firstSection = document.getElementById("DIV_FIRST");</SCRIPT>
+
+      <DIV id=DIV_CLOSE style="DISPLAY: none">
+      <DIV class=SURVEYINTROTEXT>Thank you for your comments.</DIV>
+      <SCRIPT type=text/javascript>var lastSection = document.getElementById("DIV_CLOSE");</SCRIPT>
+      </DIV></FORM></DIV></DIV></DIV></DIV>
+      <DIV id=widthFix></DIV></DIV></XMLREADER></TD></TR></TBODY></TABLE><BR 
+style="OVERFLOW: hidden; LINE-HEIGHT: 1px" clear=all>
+<TABLE id=msviFooter cellSpacing=0 cellPadding=0 width="100%">
+  <TBODY>
+  <TR vAlign=bottom>
+    <TD id=msviFooter2 
+    style="FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#FFFFFF', endColorStr='#3F8CDA', gradientType='1')">
+      <DIV id=msviLocalFooter><NOBR><A 
+      href="http://www.microsoft.com/brasil/atendimento/fale_ms.asp">Fale 
+      Conosco</A> |</NOBR><WBR><NOBR><A 
+      href="http://support.microsoft.com/gp/cntactms" target=_parent>Entre em 
+      contato</A></NOBR></DIV>
+      <DIV id=msviGlobalFooter><SPAN dir=ltr>©2005 Microsoft Corporation. Todos 
+      os direitos reservados.&nbsp;</SPAN><NOBR><A 
+      href="http://support.microsoft.com/tou/" target=_parent>Nota Legal</A> 
+      |</NOBR><WBR><NOBR><A 
+      href="http://support.microsoft.com/library/toolbar/3.0/trademarks/pt-br.mspx">Marcas 
+      comerciais</A> |</NOBR><WBR><NOBR><A 
+      href="http://support.microsoft.com/privacy/">Política de 
+      Privacidade</A></NOBR></DIV></TD></TR></TBODY></TABLE>
+<SCRIPT language=javascript>var msviFooter2;if (document.getElementById){msviFooter2 = document.getElementById("msviFooter2");msviFooter2.style.filter = "";}</SCRIPT>
+
+<TABLE height=58 cellSpacing=0 cellPadding=0 width="100%">
+  <TBODY>
+  <TR vAlign=top>
+    <TD>
+      <DIV style="WIDTH: 200px"></DIV></TD>
+    <TD 
+    style="FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#FFFFFF', endColorStr='#3F8CDA', gradientType='1')" 
+    width="100%"></TD></TR></TBODY></TABLE><IMG id=webmetriximg 
+src="HOWTO Sort a ListView Control by Date_files/onepix.gif">
+<SCRIPT type=text/javascript>function thisLoad(){KBFeedBackShowSurvey();MS_WebMetrix('http\x3a\x2f\x2fc.microsoft.com\x2ftrans_pixel.asp\x3fTYPE\x3dSSPV\x26SOURCE\x3dSUPPORT\x26GUID\x3d1F4FC18C-F71E-47fb-8FC9-612F8EE59C61\x26URI\x3d\x252fgn\x252fpt-br\x252fkb_en-us_170884\x26R\x3dhttp\x253a\x252f\x252fwww.google.com.br');g_reSupportedHostnames = new RegExp(".microsoft.com$|.passport.com$", "i");ForeignLink_Hookup(true);MNPResizeFix();}function thisUnload(){fireTrigger('/common/survey.aspx?scid=sw;pt-br;1035&XSL=','gn','pt-br','\x252fdefault.aspx\x252fkb\x252f170884\x252fEN-US\x252f','kb','en-us','170884','','','','','','','');}</SCRIPT>
+</BODY></HTML>

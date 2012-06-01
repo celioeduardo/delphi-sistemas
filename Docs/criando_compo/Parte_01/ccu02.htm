@@ -1,0 +1,348 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+  
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+2. Um pouco de Teoria</FONT></FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice</A>&nbsp;</TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR><A NAME="Componentes"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O que s&atilde;o componentes? A biblioteca visual de componentes
+(VCL).</FONT></B>
+
+<P>Os componentes s&atilde;o a pedra angular da programa&ccedil;&atilde;o
+em Delphi. Embora a maioria dos componentes representam partes vis&iacute;veis
+da interface de usu&aacute;rio, tamb&eacute;m existem os componentes n&atilde;o-visuais,
+como por o exemplo o objeto Cron&ocirc;metro e Banco de dados.
+
+<P>Um componente, em sua defini&ccedil;&atilde;o mais simples mais &eacute;
+um objeto descendente tipo TComponent. Todos os componentes descendem na
+forma mais primitiva do TComponent, desde que TComponent prov&ecirc; as
+caracter&iacute;sticas b&aacute;sicas que todo o componente deveria ter:
+capacidade de ser mostrado na paleta de componentes como tamb&eacute;m
+de operar em "Design-time" .
+
+<P>Os componentes fazem&nbsp; a programa&ccedil;&atilde;o em Delphi ficar
+mais facil. Em vez de ter que operar a n&iacute;vel de unidades, o usu&aacute;rio
+de um componente tem que preencher as propriedades dele e localizar isto
+na posi&ccedil;&atilde;o querida da forma dele simplesmente. Isso &eacute;
+tudo:O Delphi se encarrega do resto.
+
+<P>Todos os componentes s&atilde;o parte da hierarquia de Biblioteca de
+Componente de objetos denominada Visual (VCL). Quando um componente novo
+&eacute; criado, este &eacute; derivado a partir de um componente existente
+(bem como o TComponent ou algum outro especializado) e &eacute; somado
+ao VCL.
+<BR><A NAME="Anatomía"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Anatomia de um componente. Propriedades, m&eacute;todos
+e eventos.</FONT></B>
+<BR>&nbsp;
+<LI>
+Como j&aacute; foi mencionado, um componente &eacute; um objeto, e como
+tal, consiste em c&oacute;digo e dados. Mas quando se referindo a estes
+n&oacute;s n&atilde;o usaremos estas condi&ccedil;&otilde;es, mas n&oacute;s
+falaremos bastante de propriedades , m&eacute;todos e eventos. Ao longo
+deste curso iremos estudar todos estes aspectos a fundo, mas vamos fazer
+um pequeno resumo:</LI>
+
+<BR><B>Propriedades</B>
+<UL>As propriedades prov&ecirc;em ao usu&aacute;rio do componente um acesso
+f&aacute;cil para o mesmo. Ao mesmo tempo, permite para o programador do
+componente esconder a estrutura subjacente de dados. Entre as vantagens
+de usar propriedades para consentir ao componente pode fazer um compromisso:
+<UL>
+<LI>
+As propriedades est&atilde;o voc&ecirc; pode alterar em design-time. Deste
+modo o usu&aacute;rio do componente pode inicializar os valores das propriedades
+sem necessidade de escritura uma linha de c&oacute;digo.</LI>
+
+<LI>
+As propriedades permitem a valida&ccedil;&atilde;o dos dados para o mesmo
+tempo de ser introduzidos. Podem ser prevenidos erros deste modo causado
+por valores inv&aacute;lidos.</LI>
+
+<LI>
+Eles nos asseguram que o primeiro valor que colocarmos nas propriedades
+ter&atilde;o que ser certas e evitar&atilde;o o erro.</LI>
+</UL>
+&nbsp;
+<LI>
+Eventos</LI>
+
+
+<P>Os eventos s&atilde;o as conex&otilde;es existentes entre um certo evento
+e o c&oacute;digo escrito pelo programador de componentes. Deste modo por
+exemplo, antes do clique de evento do mouse poderia se mostrar uma mensagem
+em tela. Para o c&oacute;digo que &eacute; executado quando um certo evento
+o leva a um lugar &eacute; denominado Gerenciador de Eventos (o Gerenciador
+de Eventos) &eacute; normalmente escrito pelo usuario do componente. Os
+eventos mais comuns j&aacute; s&atilde;o parte dos pr&oacute;prios componentes
+de Delphi (eventos do mouse, teclado...), mas tamb&eacute;m &eacute; poss&iacute;vel
+definir eventos novos.
+<LI>
+M&eacute;todos</LI>
+
+
+<P>Os m&eacute;todos s&atilde;o as fun&ccedil;&otilde;es de E/S de procedimentos
+que eles s&atilde;o parte do componente. O usu&aacute;rio do componente
+os usa para obter uma certa a&ccedil;&atilde;o ou obter um certo valor
+para o qual voc&ecirc; n&atilde;o pode conseguir por meio de uma propriedade.
+Considerando que eles requerem execu&ccedil;&atilde;o de c&oacute;digo,
+os m&eacute;todos est&atilde;o dispon&iacute;veis s&oacute; em run-time.</UL>
+<A NAME="Acceso"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Controle de acesso para um componente. Declara&ccedil;&otilde;es:
+Private, Protected, Public e Pubished.</FONT></B>
+
+<P>O Object Pascal tem quatro n&iacute;veis de controle de acesso para
+os campos, propriedades e m&eacute;todos de um componente. Este controle
+de acesso permite o programador de componentes em que partes do c&oacute;digo
+especificar as declara&ccedil;&otilde;es do objeto. Deste modo &eacute;
+definido a interface do componente. &Eacute; importante planejar bem esta
+interface, deste modo nossos componentes ser&atilde;o facilmente program&aacute;veis
+e reutilizaveis.
+
+<P>A menos que o oposto seja especificado, os campos, propriedades e m&eacute;todos
+que s&atilde;o somados a um objeto s&atilde;o de tipo published. Todos
+os n&iacute;veis de controle de acesso operam a n&iacute;vel de unidades,
+quer dizer, se uma parte de um objeto &eacute; acess&iacute;vel (ou inacess&iacute;vel)
+em uma parte de uma unidade, &eacute; tamb&eacute;m acess&iacute;vel (ou
+inacess&iacute;vel) em qualquer outra parte da unidade.
+<BR>Logo os tipos de controles de acesso s&atilde;o detalhados:
+<DL>
+<DL>
+<DT>
+<A NAME="Privado"></A><IMG SRC="Bamar.gif" ALT="Bamar.gif - .326 K" HEIGHT=14 WIDTH=14>
+<I><FONT SIZE=+2>Private: escondendo os detalhes de implementa&ccedil;&atilde;o.</FONT></I></DT>
+
+
+<P>Declarando uma parte de um componente (bem &eacute; um campo, propriedade
+ou m&eacute;todo) private (voc&ecirc; <B>se priva</B>). Aquela parte do
+objeto &eacute; invis&iacute;vel ao c&oacute;digo externo para a unidade
+no o qual o objeto &eacute; declarado. Dentro da unidade que cont&eacute;m
+a declara&ccedil;&atilde;o, o c&oacute;digo como o que pode consentir &agrave;quela
+parte do objeto se fosse p&uacute;blico.
+
+<P>A utilidade principal das declara&ccedil;&otilde;es privadas &eacute;
+que eles permitem esconder os detalhes de implementa&ccedil;&atilde;o do
+componente para o usu&aacute;rio final do mesmo, desde estes eles n&atilde;o
+podem consentir &agrave; parte privada de um objeto. Deste modo voc&ecirc;
+pode mudar o implementa&ccedil;&atilde;o interno do objeto sem afetar ao
+c&oacute;digo que o usu&aacute;rio escreveu.
+<DT>
+<A NAME="Protegido"></A><IMG SRC="Bamar.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><I><FONT SIZE=+2>
+Protected: definindo a interface do programador.</FONT></I></DT>
+
+
+<P>Declarar uma parte de um componente como sendo protegido &eacute; o
+mesmo que declarar&nbsp; isto em privado. (&eacute; escondido ao c&oacute;digo
+externo &agrave; unidade). A diferen&ccedil;a principal entre declarar
+uma parte de um objeto protegido ou fazer isto privado s&atilde;o que os
+descendentes do componente poder&atilde;o fazer refer&ecirc;ncia &agrave;quela
+parte.
+
+<P>Este parte &eacute; especialmente &uacute;til para o cria&ccedil;&atilde;o
+de componentes.
+<BR>&nbsp;
+<DT>
+<A NAME="Público"></A><IMG SRC="Bamar.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><I><FONT SIZE=+2>
+Public: definindo a interface a tempo de execu&ccedil;&atilde;o.</FONT></I></DT>
+
+
+<P>As partes inteiras de um objeto que n&oacute;s declaramos&nbsp; p&uacute;blico,
+eles poder&atilde;o ser indexado por qualquer c&oacute;digo interno ou
+externo para a pr&oacute;pria unidade. Deste modo, a parte p&uacute;blica
+identifica a interface a tempo de execu&ccedil;&atilde;o de nosso componente.
+Os m&eacute;todos que o usu&aacute;rio do componente deveria chamar os
+p&uacute;blicos deveria ser declarado, como tamb&eacute;m as propriedades
+de read-only, para ser s&oacute; v&aacute;lido a tempo de execu&ccedil;&atilde;o.
+
+<P>O p&uacute;blico declara as propriedades que n&atilde;o aparecer&atilde;o
+no Object Inspector.
+
+<P>Esta se&ccedil;&atilde;o &eacute; talvez mais importante considerar
+quando estamos projetando um componente. Quando s&atilde;o projetados componentes,
+deveriam ser considerados cuidadosamente que m&eacute;todos e propriedades
+deveriam ser p&uacute;blicas. Se o c&oacute;digo est&aacute; correto, isto
+permitir&aacute; a altera&ccedil;&atilde;o as estruturas de dados e m&eacute;todos
+internos do componente sem ter que jogar o p&uacute;blico da interface
+que continuar&aacute; sendo o mesmo para o usu&aacute;rio do componente.
+
+<P><A NAME="Publicado"></A><IMG SRC="Bamar.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><I><FONT SIZE=+2>
+Published: definindo a interface a design-time:</FONT></I>
+
+<P>Quando declarando parte de um objeto publicado &eacute; o mesmo que
+a p&uacute;blica e tamb&eacute;m gera a&nbsp; informa&ccedil;&atilde;o
+em run-time.
+
+<P>As propriedades declaradas publicadas aparecem no Object Inspector.
+Estas partes definem a interface a design-time de nosso componente.</DL>
+</DL>
+<A NAME="Pasos"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Passos necess&aacute;rios para criar um componente. O
+expert em componentes.</FONT></B>
+
+<P>As grandes caracter&iacute;sticas, os passos necess&aacute;rios para
+criar um componente novo s&atilde;o o seguinte:
+<OL>
+<LI>
+Criar uma unidade para o componente novo.</LI>
+
+<LI>
+Derivar o componente novo a partir de outro existente, o o qual servir&aacute;
+como base para somar as caracter&iacute;sticas do novo componente.</LI>
+
+<LI>
+Somar as propriedades, eventos e m&eacute;todos necess&aacute;rios para
+o componente novo.</LI>
+
+<LI>
+Registrar o componente, inclusive o bitmaps adicional, arquivos de ajuda,
+etc.</LI>
+
+<LI>
+Instalar o componente novo na paleta de componentes.</LI>
+</OL>
+De todos os passos mencionados, h&aacute; um que especialmente &eacute;
+que voc&ecirc; tem que se preocupar: a escolha do componente ao qual vai
+se derivar. Este passo &eacute; crucial, com uma boa escolha do ascendente
+n&oacute;s podemos economizar muito c&oacute;digo e chegar facilmente ao
+nosso objetivo.
+<BR>Como base para a escolha do objeto ascendente, ele serve para fazer
+para advert&ecirc;ncia as normas seguintes:
+<UL>
+<LI>
+TComponent - O ponto de partida para componentes n&atilde;o visuais.</LI>
+
+<LI>
+TWinControl - O ponto de partida se &eacute; necess&aacute;rio que o componente
+tenha "handles".</LI>
+
+<LI>
+TGraphicControl - Um ponto de partida bom para componentes visuais que
+n&atilde;o tenham "handles". Esta classe tem os metodos Paint e Canvas.</LI>
+
+<LI>
+TCustomControl - O ponto de partida mais comum. Esta classe tem "handle"
+de janela, eventos e propriedades comuns e, principalmente, os metodos
+Canvas e Paint.</LI>
+</UL>
+Bem, n&oacute;s j&aacute; sabemos como determinar o ponto de partida. Deixe
+nos ver agora como criar a unidade que abrigar&aacute; o componente. H&aacute;
+duas op&ccedil;&otilde;es, criar a unidade manualmente ou deixar que o
+Delphi fa&ccedil;a o trabalho sujo. (Use o Expert de componentes). Se n&oacute;s
+escolhermos para a primeira op&ccedil;&atilde;o, teriamos que fazer tudo
+na m&atilde;o, mas &eacute; aconselhavel utilizar o expert do Delphi.
+
+<P><I>Abrir o&nbsp; expert de componentes no menu Component e New Component...</I>
+<BR><I>Aparecer&aacute; uma caixa de di&aacute;logo na qual n&oacute;s
+devemos preencher os campos:</I>
+<UL>
+<LI>
+<I>Class Name: Aqui n&oacute;s dever&iacute;amos especificar o nome do
+componente novo.</I></LI>
+
+<LI>
+<I>Ancestor Type: N&oacute;s introduziremos o ascendente aqui a partir
+do o qual n&oacute;s derivaremos nosso componente.</I></LI>
+
+<LI>
+<I>Pallete page: N&oacute;s indicaremos a p&aacute;gina da paleta aqui
+no o qual n&oacute;s queremos que o componente novo apare&ccedil;a.</I></LI>
+</UL>
+<I>Uma vez introduzido estes campos, quando pressionamos OK voc&ecirc;
+ver&aacute; o c&oacute;digo de nossa unidade. Se por exemplo n&oacute;s
+introduzimos os dados seguintes no expert de componentes:</I>
+<BR><I>Class Name: TMiComponente</I>
+<BR><I>Ancestor Type: TComponent</I>
+<BR><I>Pallete Page: Curso</I>
+
+<P><I>Quando clicamos aceitando,O Delphi nos geraria a unidade seguinte,
+listada abaixo para introduzir as propriedades e m&eacute;todos de nosso
+componente:</I>
+<PRE><I>&nbsp;&nbsp;&nbsp;&nbsp;
+unit Unit1;
+
+interface
+
+uses
+&nbsp; SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
+&nbsp; Forms, Dialogs;
+
+type
+&nbsp; TMiComponente = class(TComponent)
+&nbsp; private
+&nbsp;&nbsp;&nbsp; { Private declarations }
+&nbsp; protected
+&nbsp;&nbsp;&nbsp; { Protected declarations }
+&nbsp; public
+&nbsp;&nbsp;&nbsp; { Public declarations }
+&nbsp; published
+&nbsp;&nbsp;&nbsp; { Published declarations }
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+procedure Register;
+begin
+&nbsp; RegisterComponents('Curso', [TMiComponente]);
+end;
+
+end.</I></PRE>
+<I>A partir daqui tudo o que consiste em introduzir as propriedades e m&eacute;todos
+necess&aacute;rios para a opera&ccedil;&atilde;o de nosso componente. Mas
+antes de qualquer coisa deve se fazer algumas advrt&ecirc;ncias em alguns
+aspectos:</I>
+
+<P><I>Na cl&aacute;usula uses, o Delphi soma por padr&atilde;o as unidades
+standards. Se nosso componente n&atilde;o usa alguns deles que n&oacute;s
+podemos eliminar isto desta cl&aacute;usula. Da mesma maneira, se n&oacute;s
+usamos algum procedimento ou fun&ccedil;&atilde;o localizada em outra unidade,
+n&oacute;s dever&iacute;amos adicionar esta unidade para a cl&aacute;usula
+que uses.</I>
+
+<P><I>As declara&ccedil;&otilde;es das propriedades, campos e m&eacute;todos
+que n&oacute;s vamos definir, os localizar&aacute; na se&ccedil;&atilde;o
+apropriada da interface como corresponde, quer dizer n&oacute;s os declararemos
+private, protected, public ou published.</I>
+
+<P><I>O Delphi declara e define o registro de procedimento automaticamente
+para registrar o componente na paleta.</I>
+<BR>
+<HR>
+<ADDRESS>
+<I>Luis Roche </I><A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 7.12.1996
+</BODY>
+</HTML>

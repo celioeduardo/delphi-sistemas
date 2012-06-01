@@ -1,0 +1,783 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+
+  
+
+
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+9. Editores de Propriedades (II).</FONT></FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice</A>&nbsp;</TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR><A NAME="PropEdII-Introduccion"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Introdu&ccedil;&atilde;o</FONT></B>
+
+<P>Na unidade anterior n&oacute;s aprendemos a opera&ccedil;&atilde;o b&aacute;sica
+de editor de propriedades e n&oacute;s desenvolvemos um exemplo de editor
+de propriedades que trabalhava no Object Inspector (BinaryPropEd).
+
+<P>Nesta unidade n&oacute;s desenvolveremos quatro editores de propriedades
+e um componente que ser&aacute; respons&aacute;vel por eles.
+<UL><B>TArqProperty &eacute;&nbsp;</B> um editor de propriedades do tipo
+di&aacute;logo. Em alguma ocasi&atilde;o n&oacute;s desenvolveremos um
+componente em qual das propriedades deles deveria armazenar o nome de um
+arquivo. N&oacute;s obrigaremos o usu&aacute;rio sofrer fazendo uma rotina
+para escrever um nome de arquivo correspondente? Claro que n&atilde;o!
+TArqProperty mostrar&aacute; para o usu&aacute;rio o di&aacute;logo t&iacute;pico
+OpenDialog&nbsp; de forma que por meio do editor de propriedades que simplificar&aacute;
+o processo de pegar o nome de um arquivo: N&atilde;o esque&ccedil;a que
+a principal tarefa de um editor de propriedades &eacute; facilitar a vida
+do programador.
+<BR><IMG SRC="EdPropFichero.gif" VSPACE=10 BORDER=0 HEIGHT=281 WIDTH=422 ALIGN=CENTER>
+<LI>
+<B>TAliasProperty &eacute; </B>editor de propriedades inteligente de valores
+da propriedade identicos ao valor da propriedade DatabaseName do componente
+TTable: permite a escolha de um alias de banco de dados por meio de uma
+lista drop-down no pr&oacute;prio Object Inspector.</LI>
+
+
+<P><IMG SRC="EdPropAlias.gif" VSPACE=10 BORDER=0 HEIGHT=167 WIDTH=180 ALIGN=CENTER>
+<LI>
+Aprofundando um pouco mais no t&oacute;pico dos editores de propriedades
+tipo caixas de di&aacute;logo&nbsp; n&oacute;s criaremos um partindo do
+zero, quer dizer, sem usar uma caixa de di&aacute;logo predefinida&nbsp;
+como no caso do TArqProperty publicado. Concretamente, n&oacute;s criaremos
+um editor que nos permite a introdu&ccedil;&atilde;o de contra-senhas.
+Imagine isso em uma propriedade de um componente que n&oacute;s precisamos
+manter um valor de string do tipo (password). Se n&oacute;s n&atilde;o
+cri&aacute;ssemos qualquer editor de propriedades, o usu&aacute;rio do
+componente escrever&aacute; o valor diretamente no Object Inspector , mas
+o que se escreve ser&aacute; completamente vis&iacute;vel (n&atilde;o aparecer&atilde;o
+como acontece com o componente TEdit). N&atilde;o muito elegante, verdade?
+Assim n&oacute;s criaremos uma caixa de di&aacute;logo que nos permitir&aacute;
+escrever e verificar a contra-senha para validar &agrave; propriedade.
+Este ser&aacute; nosso <B>TPasswordProperty </B>.</LI>
+
+
+<P><IMG SRC="EdPropPassword.gif" VSPACE=10 BORDER=0 HEIGHT=152 WIDTH=271 ALIGN=CENTER>
+<LI>
+<B>Por ultimo criaremos um editor de propriedades, TDateTimeProperty,para
+a introdu&ccedil;&atilde;o de datas. Deste modo n&oacute;s poderemos introduzir
+datas em uma propriedade de tipo TDateTime (n&oacute;s nos lembramos que
+as datas s&atilde;o do tipo Ponto Flutuante) em vez de ter que introduzir
+o n&uacute;mero equivalente.</B></LI>
+
+
+<P><IMG SRC="EdPropFecha.gif" VSPACE=10 BORDER=0 HEIGHT=68 WIDTH=178 ALIGN=CENTER></UL>
+<B>Parece interessante, verdade? M&atilde;os para o trabalho:)</B>
+<BR><A NAME="PropEdII-ComponentePrueba"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Um componente de teste</FONT></B>
+
+<P>Antes de come&ccedil;ar a desenvolver os editores de propriedades n&oacute;s
+criaremos um componente que nos permitir&aacute; os provar de acordo como
+quisermos. Este componente se chamara TPrueba e seu c&oacute;digo &eacute;:
+<PRE>unit Unidad9;
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+&nbsp; DsgnIntf, DB, PasswordForm;
+
+type
+&nbsp; TPrueba = class(TComponent)
+&nbsp; private
+&nbsp;&nbsp;&nbsp; FArquivo : string;
+&nbsp;&nbsp;&nbsp; FAlias : string;
+&nbsp;&nbsp;&nbsp; FData : TDateTime;
+&nbsp;&nbsp;&nbsp; FPassword : string;
+&nbsp; protected
+&nbsp; public
+&nbsp;&nbsp;&nbsp; constructor Create(AOwner : TComponent); override;
+&nbsp; published
+&nbsp;&nbsp;&nbsp; property Arquivo : string read FFichero write FFichero;
+&nbsp;&nbsp;&nbsp; property Alias : string read FAlias write FAlias;
+&nbsp;&nbsp;&nbsp; property Data : TDateTime read FFecha write FFecha;
+&nbsp;&nbsp;&nbsp; property Password : string read FPassword write FPassword;
+&nbsp; end;
+
+...
+
+implementation
+
+...
+constructor TPrueba.Create(AOwner : TComponent);
+begin
+&nbsp; inherited Create(AOwner);
+&nbsp; FDAta:=Now;
+end;
+
+...</PRE>
+Qualquer coisa do outro mundo. Quatro propriedades de cada um dos editores
+de propriedades para testarr e um contrutor comum para colocar o valor
+padr&atilde;o de data.
+
+<P>Serve como aviso que pela simplicidade&nbsp; do componente n&oacute;s
+desenvolveremos o componente e os quatro editores de propriedades em uma
+&uacute;nica unidade (h&aacute; uma unidade adicional necess&aacute;ria
+para o TPasswordProperty). Como eu digo, n&oacute;s faremos isto desta
+forma pela simplicidade, mas n&atilde;o &eacute; a forma mais correta.
+Em geral, cada editor de propriedades deveria entrar em uma unidade independente
+do pr&oacute;prio componente, como n&oacute;s j&aacute; vimos na unidade
+8.
+<BR><A NAME="PropEdII-TFicheroProperty"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O editor de propriedades TArqProperty</FONT></B>
+
+<P>Eu fixei na propriedade tal Arquivo e como n&oacute;s implementamos
+isto no componente TPrueba. Claro que, &eacute; do tipo string. N&oacute;s
+tamb&eacute;m n&atilde;o definimos nenhum m&eacute;todos Set Get, pois
+o read/write de valores nesta propriedade &eacute; feito diretamente no
+campo associado (FArquivo). Tal como &eacute;, quando um usu&aacute;rio
+do componente quer introduzir um valor nesta propriedade, ele ter&aacute;
+que escrever isto &agrave; m&atilde;o, o que pode acabar sendo uma tarefa
+tediosa se o arquivo em quest&atilde;o esta em um caminho longo. De forma
+que, por generosidade nossa, n&oacute;s decidimos o dar uma m&atilde;o:
+n&oacute;s construiremos um editor de propriedades para ele.
+
+<P>O Delphi j&aacute; incorpor&aacute; um componente que administra isso
+muito bem para a de arquivos: TOpenDialog, de forma que n&oacute;s veremos
+como usar isto melhor em nosso editor.
+
+<P>O primeiro passo &eacute; decidir de quem nosso editor se derivar&aacute;.
+Em nosso caso, desde que a propriedade arquivo &eacute; do tipo string,
+n&oacute;s decidimos herdar de TStringProperty. Logo n&oacute;s deveremos
+decidir se a propriedade ser&aacute; editavel no pr&oacute;prio editor
+de objetos ou usar&aacute; uma caixa de di&aacute;logo. Neste caso, sem
+d&uacute;vida n&oacute;s deveremos escolher a segunda op&ccedil;&atilde;o.
+Claro que isto n&atilde;o tira a chance do escrever o valor da propriedade
+diretamente no Object Inspector.
+
+<P>Agora ent&atilde;o, como indicar ao Delphi que se trata de um editor
+de propriedades do tipo caixa de dialogos? Para&nbsp; isto, n&oacute;s
+devemos usar outro m&eacute;todo da classe base de todos os editores de
+propriedades (TPropertyEditor): o m&eacute;todo <B>GetAttributes </B>Este
+m&eacute;todo &eacute; uma fun&ccedil;&atilde;o que determina que caracter&iacute;sticas
+ter&aacute; o editor de propriedades. As caracter&iacute;sticas queridas
+deveriam os devolver como resultado desta fun&ccedil;&atilde;o; este resultado
+&eacute; do tipo <B>TPropertyAttributes </B>O tipo TPropertyAttributes
+&eacute; um grupo (Set) isso pode levar os valores seguintes:
+<BR>&nbsp;
+<TABLE BORDER >
+<TR>
+<TD><B>Atributo</B>&nbsp;</TD>
+
+<TD><B>Descri&ccedil;&atilde;o</B>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paValueList&nbsp;</TD>
+
+<TD>Especifica que o editor devera mostrar uma lista com os poss&iacute;veis
+valores pela propriedade. Para encher a lista o m&eacute;todo GetValues
+&eacute; usado&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paSortList&nbsp;</TD>
+
+<TD>S&oacute; v&aacute;lido se paValueList &eacute; selecionado. Especifica
+que a lista de valores ser&aacute; mostrada ordenada.&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paSubProperties&nbsp;</TD>
+
+<TD>Indica que o editor define subpropiedades para mostrar &agrave; direita
+(p.e. a propridade fonte do TForm usa isto). Para gerar a lista de propriedades
+o m&eacute;todo GetProperties &eacute; usado.&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paDialog&nbsp;</TD>
+
+<TD>Indica que o editor de propriedades devera mostrar uma caixa de di&aacute;logo
+em resposta para ao m&eacute;todo Edit. (p.e. a propriedade glyph de um
+TSpeddButton). Deste modo quando selecionando a propriedade aparecer&aacute;
+um bot&atilde;o com '... '.&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paMultiSelect&nbsp;</TD>
+
+<TD>Possibilita a multi-sele&ccedil;&atilde;o de op&ccedil;&otilde;es</TD>
+</TR>
+
+<TR>
+<TD>paAutoUpdate&nbsp;</TD>
+
+<TD>O Object Inspecto o m&eacute;todo SetValue toda vez que o valor da
+propriedade &eacute; mudado.&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paReadOnly&nbsp;</TD>
+
+<TD>O usu&aacute;rio n&atilde;o pode modificar o valor da propriedade&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>paRevertable&nbsp;</TD>
+
+<TD>Especifica se a propriedade pode recuperar seu valor original&nbsp;</TD>
+</TR>
+</TABLE>
+Devido a este quadro, &eacute; f&aacute;cil de implementar o m&eacute;todo
+GetAtributes em nosso editor de propriedades:
+<BR>&nbsp; interface
+<BR>&nbsp; ...
+<BR>&nbsp; TArqProperty = class(TStringProperty)
+<BR>&nbsp; public
+<BR>&nbsp;&nbsp;&nbsp; function GetAttributes : TPropertyAttributes; override;
+<BR>&nbsp;&nbsp;&nbsp; procedure Edit; override;
+<BR>&nbsp; end;
+<BR>&nbsp; ...
+
+<P>function TArqProperty.GetAttributes : TPropertyAttributes;
+<BR>begin
+<BR>&nbsp; Result:=[paDialog];
+<BR>end;
+
+<P>Novamente por causa da simplicidade n&oacute;s s&oacute; ativamos o
+atributo paDialog, &eacute; claro que n&oacute;s poder&iacute;amos ativar
+outro atributo como paMultiSelect, etc. Neste caso, escreveriamos [paDialog,
+paMultiSelect]
+
+<P>N&oacute;s s&oacute; saberemos que o Delphi ativar&aacute; a caixa de
+di&aacute;logo, quando o usu&aacute;rio clica no bot&atilde;o '... ' ou
+da um duplo clique na propriedade,o Delphi invocar&aacute; o m&eacute;todo
+Edit de nosso editor de propriedades. Neste m&eacute;todo n&oacute;s deveremos
+colocar o codigo necessario para mostrar a caixa de dialogo de abertura
+de arquivos e colocar o nome do arquivo na propriedade se o usu&aacute;rio
+clicar no OK.. Este m&eacute;todo que n&oacute;s devemos reimplementar
+(overridee, ver a se&ccedil;&atilde;o de interface), &eacute; deste modo:
+<PRE>...
+
+procedure TArqProperty.Edit;
+var
+&nbsp; OpenDialog : TOpenDialog;&nbsp;&nbsp; {TOpenDialog est&aacute; na unidade Dialogs, que esta na clausula uses}
+begin
+&nbsp; OpenDialog:=TOpenDialog.Create(Application);&nbsp;&nbsp; {Criamos a caixa de di&aacute;logo}
+&nbsp; try
+&nbsp;&nbsp;&nbsp; OpenDialog.Filter:='All files|*.*';&nbsp;&nbsp;&nbsp; {Colocamos suas propriedades iniciais}
+&nbsp;&nbsp;&nbsp; if OpenDialog.Execute then&nbsp;&nbsp; {Se o usu&aacute;rio clica OK...}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetStrValue(OpenDialog.FileName);&nbsp;&nbsp; {Colocamos o novo valor na propriedade}
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; OpenDialog.Free;&nbsp;&nbsp; {Liberamos a caixa de di&aacute;logo}
+&nbsp; end;
+end;
+
+...</PRE>
+Mais f&aacute;cil imposs&iacute;vel. S&oacute; temos que comentar que para
+termos certeza da libera&ccedil;&atilde;o de recursos (neste caso da caixa
+de di&aacute;logo) usamos o bloco try... finally<B> .</B>
+
+<P>&Eacute; s&oacute;! Com 10 ou 15 linhas de c&oacute;digo n&oacute;s
+aliviamos o pobre usu&aacute;rio de ficar sofrendo com isso tudo. N&oacute;s
+agora registraremos o editor:
+<PRE>procedure Register;
+begin
+&nbsp;&nbsp; ...
+&nbsp; RegisterPropertyEditor(TypeInfo(string),TPrueba,'Arquivo',TArqProperty);
+&nbsp; ...
+end;</PRE>
+<A NAME="PropEdII-TAliasProperty"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O editor de propriedades TAliasProperty</FONT></B>
+
+<P>Vamos contruir agora um editor de propriedades para a propriedade Alias.
+Como n&oacute;s j&aacute; sabemos, o componente TTable tem uma propriedade
+denominada DatabaseName que especifica o alias que conecta ao banco de
+dados. Selecionar um valor por esta propriedade &eacute; muito facil, basta
+escolhermos um na lista. Este &eacute; o comportamento que n&oacute;s queremos
+para a nossa propriedade Alias. N&oacute;s poder&iacute;amos procurar no
+codigo fonte do VCL e tentar tamb&eacute;m registrar o editor de propriedades
+da propriedade DatabaseName de forma que isto incluiria nossa nova propriedade,
+mas como a constru&ccedil;&atilde;o de um editor deste tipo &eacute; muito
+simples, n&oacute;s mesmos desenvolveremos isto.
+
+<P>A se&ccedil;&atilde;o de interface de nosso editor &eacute; o seguinte:
+<PRE>...
+TAliasProperty = class (TStringProperty)
+&nbsp; public
+&nbsp;&nbsp;&nbsp; function GetAttributes : TPropertyAttributes; override;
+&nbsp;&nbsp;&nbsp; procedure GetValues(Proc : TGetStrProc); override;
+&nbsp; end;
+...</PRE>
+O m&eacute;todo GetAttributes conhecido na se&ccedil;&atilde;o anterior.
+Basta colocar o atributo paValueList (indica a lista de op&ccedil;&otilde;es)
+e o paSortList (indica que as op&ccedil;&otilde;es estar&atilde;o ordenadas
+alfabeticamente).
+<PRE>function TAliasProperty.GetAttributes : TPropertyAttributes;
+begin
+&nbsp;&nbsp;&nbsp; Result:=[paValueList, paSortList];
+end;</PRE>
+Agora n&oacute;s preencheremos a lista de aliases. Para isto, reimplementaremos
+(override) no m&eacute;todo <B>GetValues. Este m&eacute;todo recebe um
+&uacute;nico par&acirc;metro: um ponteiro para m&eacute;todo. Realmente
+este ponteiro realmente da refer&ecirc;ncia ao metodo interno Add, que
+adiciona uma string na lista. Os diversos elementos inseridos na lista
+pelo m&eacute;todo GetValues que invoca o m&eacute;todo refereciado pelo
+ponteiro&nbsp; e&nbsp; transforma isto em um valor do tipo string. Soa
+complicado, n&atilde;o? N&atilde;o se preocupe com isso, pois n&atilde;o
+&eacute; t&atilde;o dificil; so significa que temos que usar a sente&ccedil;a
+Proc(string) para cada elemento a adicionar &agrave; lista. Em nosso caso,
+como n&oacute;s queremos adicionar os nomes dos aliases existentes, n&oacute;s
+faremos uma liga&ccedil;&atilde;o a Proc(nome do alias) e adiciona todos
+os valores. Previamente, n&oacute;s teremos obtido esses aliases existente
+por meio do m&eacute;todo GetAliasList </B>do objeto TSession:
+<PRE>procedure TAliasProperty.GetValues(Proc : TGetStrProc);
+Var
+&nbsp; AliasList : TStringList;&nbsp;&nbsp; {lista com os alias existentes}
+&nbsp; i : integer;
+begin
+&nbsp; try
+&nbsp;&nbsp;&nbsp; AliasList := TStringList.Create;&nbsp;&nbsp; {Criamos a lista}
+&nbsp;&nbsp;&nbsp; Session.GetAliasNames(AliasList);&nbsp;&nbsp; {Obtemos os alias existentes}
+&nbsp;&nbsp;&nbsp; for i:=0 to AliasList.Count - 1 do&nbsp;&nbsp;&nbsp;&nbsp; {Para cada alias...}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Proc(AliasList[i]);&nbsp;&nbsp; {...fazemos a chamada ao m&eacute;todo Proc}
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; AliasList.Free;&nbsp;&nbsp; {Liberamos a lista}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; end;
+end;</PRE>
+Com isto n&oacute;s j&aacute; constru&iacute;mos j&aacute; nosso novo editor
+de propriedades. S&oacute; falta registr&aacute;-lo:
+<PRE>procedure Register;
+begin
+&nbsp;&nbsp; ...
+&nbsp; RegisterPropertyEditor(TypeInfo(String),TPrueba,'Alias',TAliasProperty);
+&nbsp; ...
+end;</PRE>
+<A NAME="PropEdII-TPasswordProperty"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O editor de propriedades TPasswordProperty</FONT></B>
+
+<P>Vamos construir um outro editor de propriedades de caixa de dialogos.
+A opera&ccedil;&atilde;o dela ser&aacute; semelhante ao TArqProperty. N&oacute;s
+colocaremos paDialog para indicar que &eacute; editor de caixa de di&aacute;logo
+e no m&eacute;todo Edit estara todo o codigo do componente.
+
+<P>A diferen&ccedil;a principal &eacute; que nosso componente n&atilde;o
+usar&aacute; uma caixa de dialogo existente, n&oacute;s criaremos tambem
+uma caixa de dialogos, com dois labels e dois edit boxes:
+
+<P><IMG SRC="EdPropPassword.gif" VSPACE=10 BORDER=0 HEIGHT=152 WIDTH=271 ALIGN=CENTER>
+
+<P>A coisa mais importante &eacute; nomear &agrave; propriedade PasswordChar
+do dois TEdit, para o car&aacute;ctere ' * ' de forma que este car&aacute;ter
+aparece quando um usu&aacute;rio digita uma contra-senha. Tamb&eacute;m,
+no evento OnCloseQuery conferir&aacute; a validade da contra-senha introduzida.
+
+<P>Os Edits foram nomeados de PW1 e PW2
+
+<P>O c&oacute;digo da unidade PasswordForm:
+<PRE>unit PasswordForm;
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+&nbsp; StdCtrls, Buttons;
+
+type
+&nbsp; TfrmPassword = class(TForm)
+&nbsp;&nbsp;&nbsp; lpwd: TLabel;
+&nbsp;&nbsp;&nbsp; lVpwd: TLabel;
+&nbsp;&nbsp;&nbsp; PW1: TEdit;
+&nbsp;&nbsp;&nbsp; PW2: TEdit;
+&nbsp;&nbsp;&nbsp; bOK: TBitBtn;
+&nbsp;&nbsp;&nbsp; bCancel: TBitBtn;
+&nbsp;&nbsp;&nbsp; procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+&nbsp; private
+&nbsp; public
+&nbsp; end;
+
+var
+&nbsp; frmPassword: TfrmPassword;
+
+implementation
+
+{$R *.DFM}
+
+procedure TfrmPassword.FormCloseQuery(Sender: TObject;
+&nbsp; var CanClose: Boolean);
+begin
+&nbsp; if (ModalResult=mrOK) then
+&nbsp;&nbsp;&nbsp; if (PW1.Text = '') then
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ShowMessage('Deve se inserir a contra-senha');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CanClose:=False;
+&nbsp;&nbsp;&nbsp;&nbsp; end
+&nbsp; else if (ModalResult=mrOK) and (PW1.Text &lt;> PW2.Text) then
+&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp; ShowMessage('Verifica&ccedil;&atilde;o inv&aacute;lida. Por favor retente');
+&nbsp;&nbsp;&nbsp; CanClose:=False;
+&nbsp;&nbsp; end;
+end;
+
+end.
+
+Ya hemos construido el cuadro de di&aacute;logo, ahora s&oacute;lo nos resta "engancharlo" al editor de
+propiedades. Para ello, efectuamos la llamada al form en el m&eacute;todo Edit del editor de propiedades.
+Veamos como queda el c&oacute;digo del editor:
+
+function TPasswordProperty.GetAttributes : TPropertyAttributes;
+begin
+&nbsp; Result:=[paDialog];
+end;
+
+function TPasswordProperty.GetValue : string;
+begin
+&nbsp; Result:=Format('(%s)',[GetPropType^.Name]);
+end;
+
+procedure TPasswordProperty.Edit;
+begin
+&nbsp; frmPassword := TfrmPassword.Create(Application);
+&nbsp; try
+&nbsp;&nbsp;&nbsp; frmPassword.Caption:=GetComponent(0).Owner.Name+'.'+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetComponent(0).Name+'.'+GetName+' - '+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frmPassword.Caption;
+&nbsp;&nbsp;&nbsp; frmPassword.PW1.Text:=GetStrValue;
+&nbsp;&nbsp;&nbsp; frmPassword.PW2.Text:=frmPassword.PW1.Text;
+&nbsp;&nbsp;&nbsp; if frmPassword.ShowModal = mrOK then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetStrValue(frmPassword.PW1.Text)
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; frmPassword.Free;
+&nbsp; end;
+end;</PRE>
+N&oacute;s j&aacute; constru&iacute;mos a caixa de di&aacute;logo, agora
+s&oacute; nos falta encaixa-lo no editor de propriedades. Para isto, n&oacute;s
+fazemos a liga&ccedil;&atilde;o &agrave; forma com o m&eacute;todo Edit
+do editor de propriedades. Vamos ver como &eacute; o codigo:
+<PRE>function TPasswordProperty.GetAttributes : TPropertyAttributes;
+begin
+&nbsp; Result:=[paDialog];
+end;
+
+function TPasswordProperty.GetValue : string;
+begin
+&nbsp; Result:=Format('(%s)',[GetPropType^.Name]);
+end;
+
+procedure TPasswordProperty.Edit;
+begin
+&nbsp; frmPassword := TfrmPassword.Create(Application);
+&nbsp; try
+&nbsp;&nbsp;&nbsp; frmPassword.Caption:=GetComponent(0).Owner.Name+'.'+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetComponent(0).Name+'.'+GetName+' - '+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frmPassword.Caption;
+&nbsp;&nbsp;&nbsp; frmPassword.PW1.Text:=GetStrValue;
+&nbsp;&nbsp;&nbsp; frmPassword.PW2.Text:=frmPassword.PW1.Text;
+&nbsp;&nbsp;&nbsp; if frmPassword.ShowModal = mrOK then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetStrValue(frmPassword.PW1.Text)
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; frmPassword.Free;
+&nbsp; end;
+end;</PRE>
+
+<PRE>S&oacute; h&aacute; uma coisa nova: no m&eacute;todo GetValue n&oacute;s n&atilde;o queremos que seja mostrado</PRE>
+
+<PRE>o valor da contra-senha, ent&atilde;o n&oacute;s poder&iacute;amos mostrar outra coisa. Poderia</PRE>
+
+<PRE>ser uma cadeia de asteriscos...&nbsp;&nbsp;&nbsp;&nbsp;
+
+procedure Register;
+begin
+&nbsp; ...
+&nbsp; RegisterPropertyEditor(TypeInfo(String),TPrueba,'Password',TPasswordProperty);
+end;</PRE>
+<A NAME="PropEdII-TDateTimeProperty"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O editor de propriedades TDateTimeProperty</FONT></B>
+
+<P>Para terminar esta unidade n&oacute;s desenvolveremos um editor de tipo
+de propriedades TDateTime.
+
+<P>Como n&oacute;s j&aacute; sabemos o tipo TDateTime do Delphi &eacute;
+do tipo ponto flutuante, de forma que se n&oacute;s temos em um componente
+com uma propriedade de tipo DateTime, e n&oacute;s n&atilde;o registramos
+qualquer editor de propriedades para esta propriedade, o usu&aacute;rio
+ter&aacute; que escrever a data querida em formato decimal. Que ruim! Principalmente
+se n&oacute;s pensamos que com seis linhas de c&oacute;digo &eacute; resolvido
+o problema:
+<PRE>function TDateTimeProperty.GetValue : string;
+begin
+&nbsp; Result:=DateTimeToStr(GetFloatValue);
+end;
+
+procedure TDateTimeProperty.SetValue(const Value : string);
+begin
+&nbsp; SetFloatValue(StrToDateTime(Value));
+end;
+
+procedure Register;
+begin
+&nbsp; ...
+&nbsp; RegisterPropertyEditor(TypeInfo(TDateTime),TPrueba,'Fecha',TDateTimeProperty);
+end;</PRE>
+Nada novo at&eacute; aqui. N&oacute;s s&oacute; nos limitamos para chamar
+os m&eacute;todos GetFloatValue e SetFloatValue.
+
+<P><A NAME="PropEdII-Conclusiones"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Conclus&otilde;es</FONT></B>
+
+<P>Com isto que n&oacute;s terminamos o t&oacute;pico dos editores de propriedades.
+N&oacute;s aprendemos a criar e&nbsp; publicar editores editaveis no Object
+Inspector, que pode ser preenchido diretamente na propriedade ou por uma
+caixa de dialogo. O poder de editor de propriedades &eacute; imenso: por
+meio do m&eacute;todos SetValue e GetValue podemos fazer uma verifica&ccedil;&atilde;o
+do valor da propriedade e agir depois. Tamb&eacute;m, nosso editor pode
+fazer mil coisas: consultar um arquivo ini, fazer c&aacute;lculos complexos
+ou at&eacute; mesmo operar com um banco de dados!
+
+<P>Mas os editores de propriedades t&ecirc;m duas limita&ccedil;&otilde;es:
+<UL>
+<LI>
+Eles s&oacute; operam em design-time, aspecto que n&oacute;s dever&iacute;amos
+nos lembrar que tem coisas que o usu&aacute;rio pode querer fazer em run-time.
+Um exemplo claro &eacute; as propriedades de tipo Lista p.e. os artigos
+de propriedade de um TListBox. Em design-tmie o editor de propriedades
+especifico permite o usu&aacute;rio de um modo intuitivo adicionar e eliminar
+elementos. Em troca, em run-time, ele tem os m&eacute;todos Add e Delete
+para operar com a lista.</LI>
+
+<BR>Editor de propriedades <B>s&oacute; </B>opera com o valor de <B>uma
+</B>propriedade. Quer dizer, n&oacute;s n&atilde;o podemos alterar o valor
+de propriedades diferentes ao mesmo tempo, desde os m&eacute;todos GetValue
+e SetValue fazem&nbsp; refer&ecirc;ncia &agrave; propriedade que est&aacute;
+publicada, e n&atilde;o para o resto deles. Ent&atilde;o, quando n&oacute;s
+queremos alterar v&aacute;rias propriedades de um componente ao mesmo tempo,
+n&oacute;s usaremos <B>Editor de componentes</B>, t&oacute;pico isto que
+ser&aacute; objeto de nossa pr&oacute;xima unidade.
+
+<P><A NAME="PropEdII-Codigo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Codigo fonte dos editores de propriedades.</FONT></B></UL>
+
+<PRE>&nbsp;unit Unidad9;
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+&nbsp; DsgnIntf, DB, PasswordForm;
+
+type
+&nbsp; TPrueba = class(TComponent)
+&nbsp; private
+&nbsp;&nbsp;&nbsp; FArquivo : string;
+&nbsp;&nbsp;&nbsp; FAlias : string;
+&nbsp;&nbsp;&nbsp; FData : TDateTime;
+&nbsp;&nbsp;&nbsp; FPassword : string;
+&nbsp; protected
+&nbsp; public
+&nbsp;&nbsp;&nbsp; constructor Create(AOwner : TComponent); override;
+&nbsp; published
+&nbsp;&nbsp;&nbsp; property Arquivo : string read FFichero write FFichero;
+&nbsp;&nbsp;&nbsp; property Alias : string read FAlias write FAlias;
+&nbsp;&nbsp;&nbsp; property Data : TDateTime read FFecha write FFecha;
+&nbsp;&nbsp;&nbsp; property Password : string read FPassword write FPassword;
+&nbsp; end;
+
+&nbsp; TArqProperty = class(TStringProperty)
+&nbsp; public
+&nbsp;&nbsp;&nbsp; function GetAttributes : TPropertyAttributes; override;
+&nbsp;&nbsp;&nbsp; procedure Edit; override;
+&nbsp; end;
+
+&nbsp; TAliasProperty = class (TStringProperty)
+&nbsp; public
+&nbsp;&nbsp;&nbsp; function GetAttributes : TPropertyAttributes; override;
+&nbsp;&nbsp;&nbsp; procedure GetValues(Proc : TGetStrProc); override;
+&nbsp; end;
+
+&nbsp; TDateTimeProperty = class(TFloatProperty)
+&nbsp;&nbsp;&nbsp; function GetValue : string; override;
+&nbsp;&nbsp;&nbsp; procedure SetValue(const Value&nbsp; : string); override;
+&nbsp; end;
+
+&nbsp; TPasswordProperty = class(TPropertyEditor)
+&nbsp;&nbsp;&nbsp; function GetAttributes : TPropertyAttributes; override;
+&nbsp;&nbsp;&nbsp; function GetValue : string; override;
+&nbsp;&nbsp;&nbsp; procedure Edit; override;
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+constructor TPrueba.Create(AOwner : TComponent);
+begin
+&nbsp; inherited Create(AOwner);
+&nbsp; FFecha:=Now;
+end;
+
+function TFicheroProperty.GetAttributes : TPropertyAttributes;
+begin
+&nbsp; Result:=[paDialog];
+end;
+
+procedure TArqProperty.Edit;
+var
+&nbsp; OpenDialog : TOpenDialog;
+begin
+&nbsp; OpenDialog:=TOpenDialog.Create(Application);
+&nbsp; try
+&nbsp;&nbsp;&nbsp; OpenDialog.Filter:='All files|*.*';
+&nbsp;&nbsp;&nbsp; if OpenDialog.Execute then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetStrValue(OpenDialog.FileName);
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; OpenDialog.Free;
+&nbsp; end;
+end;
+
+
+function TAliasProperty.GetAttributes : TPropertyAttributes;
+begin
+&nbsp;&nbsp;&nbsp; Result:=[paValueList, paSortList];
+end;
+
+procedure TAliasProperty.GetValues(Proc : TGetStrProc);
+Var
+&nbsp; AliasList : TStringList;
+&nbsp; i : integer;
+begin
+&nbsp; try
+&nbsp;&nbsp;&nbsp; AliasList := TStringList.Create;
+&nbsp;&nbsp;&nbsp; Session.GetAliasNames(AliasList);
+&nbsp;&nbsp;&nbsp; for i:=0 to AliasList.Count - 1 do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Proc(AliasList[i]);
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; AliasList.Free;
+&nbsp; end;
+end;
+
+function TDateTimeProperty.GetValue : string;
+begin
+&nbsp; Result:=DateTimeToStr(GetFloatValue);
+end;
+
+procedure TDateTimeProperty.SetValue(const Value : string);
+begin
+&nbsp; SetFloatValue(StrToDateTime(Value));
+end;
+
+function TPasswordProperty.GetAttributes : TPropertyAttributes;
+begin
+&nbsp; Result:=[paDialog];
+end;
+
+function TPasswordProperty.GetValue : string;
+begin
+&nbsp; Result:=Format('(%s)',[GetPropType^.Name]);
+end;
+
+procedure TPasswordProperty.Edit;
+begin
+&nbsp; frmPassword := TfrmPassword.Create(Application);
+&nbsp; try
+&nbsp;&nbsp;&nbsp; frmPassword.Caption:=GetComponent(0).Owner.Name+'.'+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetComponent(0).Name+'.'+GetName+' - '+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frmPassword.Caption;
+&nbsp;&nbsp;&nbsp; frmPassword.PW1.Text:=GetStrValue;
+&nbsp;&nbsp;&nbsp; frmPassword.PW2.Text:=frmPassword.PW1.Text;
+&nbsp;&nbsp;&nbsp; if frmPassword.ShowModal = mrOK then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetStrValue(frmPassword.PW1.Text)
+&nbsp; finally
+&nbsp;&nbsp;&nbsp; frmPassword.Free;
+&nbsp; end;
+end;
+
+procedure Register;
+begin
+&nbsp; RegisterComponents('Pruebas', [TPrueba]);
+&nbsp; RegisterPropertyEditor(TypeInfo(string),TPrueba,'Arquivo,TArqProperty);
+&nbsp; RegisterPropertyEditor(TypeInfo(String),TPrueba,'Alias',TAliasProperty);
+&nbsp; RegisterPropertyEditor(TypeInfo(TDateTime),TPrueba,'Data',TDateTimeProperty);
+&nbsp; RegisterPropertyEditor(TypeInfo(String),TPrueba,'Password',TPasswordProperty);
+end;
+
+end.
+
+
+
+
+unit PasswordForm;
+
+interface
+
+uses
+&nbsp; Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+&nbsp; StdCtrls, Buttons;
+
+type
+&nbsp; TfrmPassword = class(TForm)
+&nbsp;&nbsp;&nbsp; lpwd: TLabel;
+&nbsp;&nbsp;&nbsp; lVpwd: TLabel;
+&nbsp;&nbsp;&nbsp; PW1: TEdit;
+&nbsp;&nbsp;&nbsp; PW2: TEdit;
+&nbsp;&nbsp;&nbsp; bOK: TBitBtn;
+&nbsp;&nbsp;&nbsp; bCancel: TBitBtn;
+&nbsp;&nbsp;&nbsp; procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+&nbsp; private
+&nbsp; public
+&nbsp; end;
+
+var
+&nbsp; frmPassword: TfrmPassword;
+
+implementation
+
+{$R *.DFM}
+
+procedure TfrmPassword.FormCloseQuery(Sender: TObject;
+&nbsp; var CanClose: Boolean);
+begin
+&nbsp; if (ModalResult=mrOK) then
+&nbsp;&nbsp;&nbsp; if (PW1.Text = '') then
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ShowMessage('Debe introducir una contrase&ntilde;a');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CanClose:=False;
+&nbsp;&nbsp;&nbsp;&nbsp; end
+&nbsp; else if (ModalResult=mrOK) and (PW1.Text &lt;> PW2.Text) then
+&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp; ShowMessage('Verificaci&oacute;n fallida. Por favor reintente');
+&nbsp;&nbsp;&nbsp; CanClose:=False;
+&nbsp;&nbsp; end;
+end;
+
+end.</PRE>
+
+<HR>
+<ADDRESS>
+Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 06.09.1997
+</BODY>
+</HTML>

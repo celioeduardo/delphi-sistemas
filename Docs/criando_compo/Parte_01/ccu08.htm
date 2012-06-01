@@ -1,0 +1,559 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+
+  
+
+
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+8. Editores de Propriedades (I).</FONT></FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice</A>&nbsp;</TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<P>Nesta unidade n&oacute;s aprenderemos a criar nossos pr&oacute;prios
+editores de propriedades. Os editores de propriedades s&atilde;o uma ferramenta
+poderosa que fazem diferen&ccedil;a entre um componente simplesmente aceit&aacute;vel
+e um realmente bom. Por eles n&oacute;s poderemos dotar a nossos componentes
+de caracter&iacute;sticas novas que v&atilde;o al&eacute;m da valida&ccedil;&atilde;o
+do valor das propriedades. Gra&ccedil;as a eles n&oacute;s faremos a vida
+mais f&aacute;cil para os programadores que usam nossos componentes, e
+isso sempre &eacute; bom n&atilde;o &eacute;?
+<BR><A NAME="PropEdI-Introduccion"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Introdu&ccedil;&atilde;o aos editores de propriedades</FONT></B>
+
+<P>At&eacute; agora n&oacute;s se criamos os componentes sem se preocupar
+como foram introduzidos os valores das diferentes propriedades definidas
+neles. Chegou o momento de estudarmos este aspecto. Como j&aacute; sabemos,
+para inserir e ler o valor das propriedades em design-time n&oacute;s usamos
+o Object Inspector. O Object Inspector se divide em duas colunas: no da
+direita est&atilde;o os nomes das propriedades e no da esquerda seus valores.
+Introduzimos um valor novo e ele aparece. Mas isto &eacute; s&oacute; apar&ecirc;ncia.
+Os componentes se interagem com o Object inspector atrav&eacute;s dos editores
+de propriedades. Do ponto de vista do usu&aacute;rio, o Object Inspector
+&eacute; o respons&aacute;vel de publicar as propriedades, mas por tr&aacute;s&nbsp;
+h&aacute; uma s&eacute;rie de objetos, os editores de propriedades que
+se encarregam de definir as capacidades de edi&ccedil;&atilde;o das diversas
+propriedades de um componente.
+
+<P>Em design-time, quando voc&ecirc; seleciona um componente, o Object
+Inspector cria inst&acirc;ncias dos editores de propriedades necess&aacute;rios
+para publicar as propriedades definidas no componente selecionado. Quando
+termina a edi&ccedil;&atilde;o, o mesmo Object Inspector destroi os editores
+de propriedades criados.
+
+<P>O Delphi tem uma s&eacute;rie de editores de propriedades padr&otilde;es
+que s&atilde;o o bastante para a maioria das propriedades com que n&oacute;s
+habitualmente trabalhamos. Mas como sempre, o Delphi &eacute; t&atilde;o
+potente que permite que n&oacute;s criemos nossos pr&oacute;prios editores
+que podem substituir certas propriedades que est&atilde;o por padr&atilde;o.
+Pobre VB! ;)
+<BR><A NAME="PropEdI-Deberes"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Os deveres do Editor de Propriedades</FONT></B>
+
+<P>O Editor de propriedades deve dar resposta a dois aspectos principais:
+<UL>
+<LI>
+Definir como a propriedade devera ser publicada. Aqui h&aacute; duas possibilidades:
+pode ser modificado o valor da propriedade no pr&oacute;prio Object Inspector&nbsp;
+ou voc&ecirc; pode usar uma caixa de di&aacute;logo para adicionar mais
+flexibilidade &agrave; edi&ccedil;&atilde;o (p.e. propriedade cor)</LI>
+
+<LI>
+Converter o valor da propriedade para um valor tipo string. O Object Inspector
+<B>sempre trabalha com Strings. </B>Embora a propriedade seja do tipo inteiro
+ou Ponto Flutuante, o&nbsp; Object Inspetor s&oacute; usa o tipo String
+em suas propriedades. &Eacute; o editor de propriedades que faz todo trabalho
+na representa&ccedil;&atilde;o desta propriedade. Traduzindo:&nbsp; pode
+ir da coisa mais simples (usar a fun&ccedil;&atilde;o IntToStr) at&eacute;
+a uma mais complexa (programar uma rotina para a convers&otilde;es). Tudo
+depender&aacute; do tipo de propriedade com que n&oacute;s estamos trabalhando.</LI>
+</UL>
+<A NAME="PropEdI-Pasos"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Passos necess&aacute;rios para escrever um editor de propriedades</FONT></B>
+
+<P>Os passos necess&aacute;rios para escrever um editor de propriedades
+s&atilde;o o seguinte:
+<UL>
+<LI>
+Criar uma nova unidade na qual n&oacute;s definiremos o editor de propriedades.
+Mais tarde n&oacute;s falaremos mais amplamente sobre este ponto, desde
+que n&atilde;o &eacute; t&atilde;o trivial quanto pode parecer em princ&iacute;pio;)</LI>
+
+<LI>
+Colocar a unidade <B>DsgnIntf </B>para a clausula uses do editor de propriedades.
+Nesta unidade est&atilde;o definidos os editores de propriedades padr&otilde;es
+que o Delphi usa, al&eacute;m da importante classe TPropertyEditor,que
+&eacute; a base de todos os editores de propriedades.</LI>
+
+<LI>
+Criar uma classe nova que descende de TPropertyEditor ou de algum do descendentes
+deles. Por conven&ccedil;&atilde;o, o nome dos editores de propriedades
+terminam com a palavra Property. P.e. TIntegerProperty, TStringProperty...
+Para os editores principais de propriedades logo s&atilde;o mostrados por
+padr&atilde;o no Delphi.</LI>
+
+<TABLE BORDER >
+<TR>
+<TD><B>Editor de propriedades</B>&nbsp;</TD>
+
+<TD><B>Tipo</B>&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TPropertyEditor&nbsp;</TD>
+
+<TD>Bases de classe para todos os editores de propriedades&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TIntegerProperty&nbsp;</TD>
+
+<TD>Byte, word, integer, Longint,&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TCharProperty&nbsp;</TD>
+
+<TD>Char&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TEnumProperty&nbsp;</TD>
+
+<TD>Tipos enumerados&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TSetProperty&nbsp;</TD>
+
+<TD>Sets&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TFloatProperty</TD>
+
+<TD>Single, Doble, Extended, Comp, Currency,&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TStringProperty&nbsp;</TD>
+
+<TD>Strings</TD>
+</TR>
+
+<TR>
+<TD>TClassProperty&nbsp;</TD>
+
+<TD>Qualquer objeto&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TMethodProperty&nbsp;</TD>
+
+<TD>Qualquer m&eacute;todo (eventos)&nbsp;</TD>
+</TR>
+
+<TR>
+<TD>TComponentProperty&nbsp;</TD>
+
+<TD>Para propriedades que fazem refer&ecirc;ncia a componentes&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<LI>
+Implementar os m&eacute;todos necess&aacute;rios para adicionar ao editor
+de propriedades as funcionalidades queridas.</LI>
+
+<LI>
+Registrar o editor de propriedades na VCL</LI>
+</UL>
+Mais tarde n&oacute;s nos aprofundaremos em todos os aspectos dos outros
+editores de propriedades, vamos criar agora o nosso primeiro editor de
+propriedades.
+
+<P><A NAME="PropEdI-BinIntegerProperty"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Editor de propriedades para n&uacute;meros bin&aacute;rios</FONT></B>
+
+<P><IMG SRC="PropEd1.gif" HSPACE=10 BORDER=0 HEIGHT=333 WIDTH=233 ALIGN=LEFT>
+
+<P>N&oacute;s desenvolveremos nosso primeiro editor de propriedades que
+ser&aacute; editavel no pr&oacute;prio Object Inspector. Imagine que n&oacute;s
+criamos um componente com uma propriedade do tipo inteiro que tenha um
+valor para ser visualizado em base bin&aacute;ria e n&atilde;o em base
+decimal.. Se n&oacute;s n&atilde;o cri&aacute;ssemos editor de propriedades
+e deix&aacute;ssemos que o editor de propriedades padr&atilde;o do Delphi
+(TIntegerProperty no caso) fizesse o trabalho a visualiza&ccedil;&atilde;o
+seria em base decimal e n&atilde;o em base bin&aacute;ria como n&oacute;s
+queremos.. Isto &eacute; t&iacute;pico caso no qual desenvolvendo um editor
+de propriedades simples se economiza muito trabalho para o futuro usu&aacute;rio
+do nosso componente e evita que ele tenha que fazer a convers&atilde;o
+entre decimal e bin&aacute;rio.
+
+<P>Como n&oacute;s j&aacute; comentamos, n&oacute;s temos que decidir que
+de classe se derivar&aacute; o nosso editor. Em nosso caso &eacute; f&aacute;cil,
+a propriedade armazenar&aacute; um valor do tipo inteiro, assim n&oacute;s
+usaremos IntegerProperty
+
+<P>Muito bem, nossa propriedade armazena um inteiro, mas n&oacute;s n&atilde;o
+queremos que o Object Inspector nos mostre diretamente o valor decimal
+dele, n&oacute;s queremos fazer uma convers&atilde;o deste valor de decimal
+a base bin&aacute;ria e que s&oacute; ent&atilde;o o Object Inspetor nos
+mostrar&aacute; o valor. Para fazer isto n&oacute;s implementaremos&nbsp;
+(override) na fun&ccedil;&atilde;o <B>GetValue. Esta fun&ccedil;&atilde;o,
+definida em TPropertyEditor,&nbsp; &eacute; chamada pelo Object Inspector
+para obter a representa&ccedil;&atilde;o do valor da propriedade em forma
+de string. Dentro desta fun&ccedil;&atilde;o n&oacute;s deveremos converter
+o valor da propriedade decimal para bin&aacute;rio e depois&nbsp; transformar
+este valor em String, pois o Object Inspector s&oacute; mostra Strings.
+Deste modo a fun&ccedil;&atilde;o GetValue fica assim:</B>
+<PRE><B>&nbsp;&nbsp;&nbsp;&nbsp;
+
+unit BinaryPropEd;
+
+interface
+
+uses DsgnIntf;
+
+type
+&nbsp; TBinIntegerProperty = class(TIntegerProperty)
+&nbsp; public
+&nbsp;&nbsp;&nbsp; function GetValue : string; override;
+&nbsp;&nbsp;&nbsp; procedure SetValue(const Value : String); override;
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+Const
+&nbsp; Bits16 : Array [1..16] of Integer = (32768,16384,8192,4096,2048,1024,512,256,128,64,32,16,8,4,2,1);
+
+function TBinIntegerProperty.GetValue : string;
+Var
+&nbsp; Num, i : integer;
+begin
+&nbsp; Num:=GetOrdValue;
+&nbsp; Result := '0000000000000000';
+&nbsp; for i := 1 to 16 Do
+&nbsp;&nbsp;&nbsp; if ( Num >= Bits16[i] ) Then
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Num := Num - Bits16[i];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Result[i] := '1';
+&nbsp;&nbsp;&nbsp; end;
+&nbsp; if ( Num > 0 ) Then
+&nbsp;&nbsp;&nbsp; raise EPropertyError.Create('Error converting '+IntToStr(GetOrdValue) + ' to binary');
+&nbsp; Insert('B',Result,1);&nbsp;&nbsp;
+end;
+
+...
+
+end.</B></PRE>
+<B>Da implementa&ccedil;&atilde;o desta fun&ccedil;&atilde;o a parte mais
+importante &eacute; a primeira linha:</B>
+<PRE><B>Num:=GetOrdValue</B></PRE>
+<B>N&oacute;s precisamos obter o valor que est&aacute; naquele momento
+na propriedade para trabalhar nele. Porque n&oacute;s usamos isto o m&eacute;todo
+GetOrdValue, definido novamente em TPropertyEditor, o qual&nbsp; se encarrega
+de devolver o valor da propriedade em forma de ordinal (inteiro). De um
+modo semelhante, existem os m&eacute;todos GetFloatValue, GetMethodValue,
+GetVarValue, etc. Para usar com o tipo de propriedade correspondente.</B>
+
+<P><B>Uma vez armazenado o valor da propriedade na vari&aacute;vel&nbsp;
+Num , a convers&atilde;o come&ccedil;a do valor decimal para bin&aacute;rio,
+o qual &eacute; f&aacute;cil de entender. &Eacute; bom saber que o n&uacute;mero
+m&aacute;ximo de d&iacute;gitos bin&aacute;rios &eacute; 16, margem mais
+do que suficiente para a maioria das aplica&ccedil;&otilde;es.</B>
+
+<P><B>Por Ultimo n&oacute;s temos que devolver um valor do tipo String
+como resultado da fun&ccedil;&atilde;o. Porque n&oacute;s vamos armazenar
+isto em uma propriedade que aceita somente String.</B>
+<BR><B>Para concluir, n&oacute;s colocamos antes da cadeia de string uma
+letra ' B' para indicar que &eacute; base bin&aacute;ria.</B>
+
+<P><B>E isso &eacute; tudo&nbsp; que esta fun&ccedil;&atilde;o faz. Deste
+modo, quando o Object Inspetor , ele chamar&aacute; o m&eacute;todo GetValue
+o&nbsp; qual lhe devolver&aacute; o string correspondente. Mas n&oacute;s
+partimos para outro problema: seria bom se pudessemos introduzir o valor
+da propriedade tanto em decimal como em bin&aacute;rio, n&atilde;o &eacute;
+mesmo?</B>
+
+<P><B>Para adquirir esta funcionalidade n&oacute;s devemos implementar
+(override) do m&eacute;todo SetValue, definido na classe TPropertyEditor.
+Quando o usu&aacute;rio entra um valor novo no&nbsp; Object Inspetor, ele
+chama o m&eacute;todo SetValue, o qual devera fazer a tradu&ccedil;&atilde;o
+inversa ao feito pelo m&eacute;todo GetValue. Quer dizer, deveria converter
+o string que cont&eacute;m o valor novo da propriedade para o tipo de dados
+desta propriedade. Em nosso caso, o string entrar&aacute; em base decimal
+ou bin&aacute;rio (neste &uacute;ltimo caso, estar&aacute; a primeira letra
+da cadeia ' B') e converter isto para um decimal. Porque n&oacute;s implementaremos
+isto o m&eacute;todo SetValue do modo seguinte:</B>
+<PRE><B>...
+
+type
+&nbsp; TBinIntegerProperty = class(TIntegerProperty)
+&nbsp; public
+&nbsp;&nbsp;&nbsp; function GetValue : string; override;
+&nbsp;&nbsp;&nbsp; procedure SetValue(const Value : String); override;
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+...
+
+procedure TBinIntegerProperty.SetValue(const Value : String);
+Var
+&nbsp; i, Total, Longitud : integer;
+&nbsp; NumText : string;
+begin
+&nbsp; if UpperCase(Value[1])='B' then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; NumText:=Copy(Trim(Value),2,Length(Trim(Value))-1);
+&nbsp;&nbsp;&nbsp; NumText:=Copy('0000000000000000',1,16-Length(NumText)) + NumText;
+&nbsp;&nbsp;&nbsp; Total:=0;
+&nbsp;&nbsp;&nbsp; for i:=1 to Length(NumText) do
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if not (NumText[i] in ['0','1']) then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raise EPropertyError.Create(NumText[i] + ' is not a valid binary digit')
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if NumText[i]='1' then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total:=Total+Bits16[i];
+&nbsp;&nbsp;&nbsp; end;
+&nbsp;&nbsp;&nbsp; SetOrdValue(Total);
+&nbsp; end
+&nbsp; else
+&nbsp;&nbsp;&nbsp; SetOrdValue(StrToInt(Value));
+end;
+
+...
+
+end.</B></PRE>
+<B>Na implementa&ccedil;&atilde;o deste primeiro m&eacute;todo conferimos
+n&oacute;s se o usu&aacute;rio introduziu o valor novo da propriedade em
+base decimal ou em base bin&aacute;ria. No primeiro caso, &eacute; s&oacute;
+necess&aacute;rio converter o string para inteiro por meio da fun&ccedil;&atilde;o
+StrToInt(Value) e, depois, usar o m&eacute;todo SetOrdValue para armazenar
+o valor correspondente. De um modo semelhante, de acordo com o tipo da
+propriedade, existem os m&eacute;todos SetFloatValue, etc.</B>
+
+<P><B>No caso de a primeira letra da cadeia for um ' B', a cadeia se torna
+um valor bin&aacute;rio para ser convertido em uma valor decimal, e usa
+o m&eacute;todo SetOrdValue para armazenar o valor novamente na propriedade.</B>
+
+<P><B>Uma vez implementado estes dois m&eacute;todos (GetValue e SetValue)
+n&oacute;s j&aacute; temos nosso editor de propriedades acabado; n&oacute;s
+s&oacute; temos que registra-lo na VCL.</B>
+
+<P><A NAME="PropEdI-Registro"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Inscri&ccedil;&atilde;o de editor de propriedades</FONT></B>
+
+<P>De mesmo modo que n&oacute;s devemos registrar no VCL os componentes,
+n&oacute;s temos que registrar os editores de propriedades tambem. Para
+isto temos o m&eacute;todo RegisterPropertyEditor (definida na unidade
+DsgnIntf):
+<PRE>procedure RegisterPropertyEditor(PropertyType : PTypeInfo; ComponentClass : TClass;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; const PropertyName : string; EditorClass : TPropertyEditorClass);</PRE>
+<I>PropertyType </I>faz refer&ecirc;ncia ao tipo da propriedade para a
+qual o editor de propriedades ser&aacute; aplicado. Para dar um valor a
+este par&acirc;metro n&oacute;s normalmente usaremos a fun&ccedil;&atilde;o
+TypeInfo, por exemplo, TypeInfo(integer).
+
+<P><I>ComponentClass </I>permite restringir o uso do editor de propriedades
+para a classe espec&iacute;fica. Um valor nulo registra o editor para todos
+os componentes.
+
+<P><I>PropertyName </I>especifica o nome da propriedade. Um valor diferente
+de nulo s&oacute; registra o editor para a propriedade especificada, enquanto
+um valor ' ' registra isto para todas as propriedades
+
+<P><I>EditorClass </I>especifica o editor de propriedades que registram
+(a classe).
+
+<P>Usando estes par&acirc;metros, n&oacute;s temos a nossa disposi&ccedil;&atilde;o
+um leque largo de possibilidades para registrar nosso editor de propriedades.
+Abaixo temos alguns exemplos com nosso editor recentemente criado:
+<UL>
+<LI>
+RegisterPropertyEditor(TypeInfo(integer), nil, '', TBinIntegerProperty)
+o editor de registros de propriedades para todos os componentes que t&ecirc;m
+uma propriedade de tipo inteiro. E &eacute; a forma mais global de registrar
+um componente e afeta a <B>todos </B>os componentes registrados no VCL.
+Se n&oacute;s registramos nosso editor deste modo, n&oacute;s veremos que
+todas as propriedades do tipo inteiro aparecem em bin&aacute;rio! N&oacute;s
+tamb&eacute;m podemos introduzir um valor novo em decimal ou em bin&aacute;rio
+(colocando a letra B). N&oacute;s estamos substituindo o editor de propriedades
+que Delphi usa para o nosso! :) Esta &eacute; a forma mais global de registrar
+editor de propriedades.</LI>
+
+<LI>
+RegisterPropertyEditor(TypeInfo(integer),TMiComponente,'PropriedadeBinaria',TBinIntegerProperty)
+o editor s&oacute; registra e exclusivamente para a propriedade ' PropriedadeBinaria'
+do componente ' TMiComponente'. Esta &eacute; a forma restringida de registrar
+editor de propriedades.</LI>
+</UL>
+Eu o aconselho que voc&ecirc; registre o editor da forma mais&nbsp; global
+possivel para&nbsp; voc&ecirc; experimentar-lo. Ent&atilde;o, uma vez voc&ecirc;
+viu todas as propriedades... voc&ecirc; o desinstala.
+
+<P>Voc&ecirc; tamb&eacute;m pode se criar um " componente de mentirinha
+" e registrar s&oacute; o editor para o mesmo. Algo assim:
+<PRE>...
+
+Type
+&nbsp; TMiComponente = class(TComponent)
+&nbsp;&nbsp; ...
+&nbsp;&nbsp;&nbsp;&nbsp; property PropriedadeBinaria : integer read FPropBin write FPropBin;
+&nbsp; ...
+&nbsp; end;
+...</PRE>
+<A NAME="PropEdI-Ubicacion"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Localiza&ccedil;&atilde;o de editor de propriedades</FONT></B>
+
+<P>Como n&oacute;s j&aacute; mencionamos quando mostramos os passos que
+deveriam ser continuados criando editor de propriedades, o primeiro deles
+&eacute; criar uma unidade onde localizar o editor. Naquele momento dissemos
+n&oacute;s que n&atilde;o uma escolha t&atilde;o trivial como pudesse parecer
+em um pricincipio. Naquela unidade deveria se localizar o editor? na mesma
+unidade onde o componente que tem a propriedade que ser&aacute; publicada
+?, em uma unidade separada? N&oacute;s temos tr&ecirc;s poss&iacute;veis
+localiza&ccedil;&otilde;es:
+<UL>A primeira op&ccedil;&atilde;o &eacute; localizar o editor de propriedades
+na mesma unidade em que o componente. Esta &eacute; a op&ccedil;&atilde;o
+mais intuitiva; por&eacute;m n&atilde;o &eacute; o mais aconselh&aacute;vel,
+principalmente se o editor usa uma caixa di&aacute;logo.
+
+<P>A raz&atilde;o &eacute; que o&nbsp; Delphi&nbsp; s&oacute; usa o editor
+de propriedades em design - time. De fato, a forma que cont&eacute;m a
+caixa de di&aacute;logo n&atilde;o &eacute; conectada com a aplica&ccedil;&atilde;o,
+nem o editor de classe de propriedades. Por&eacute;m, se os recursos da
+caixa de dialogo s&atilde;o a unica coisa associados a unidade do componente
+ent&atilde;o s&oacute; estariamos aumentando o tamanho do execut&aacute;vel.
+Ent&atilde;o, n&oacute;s estariamos aumentando o tamanho do execut&aacute;vel
+para nada : (por outro lado, se o editor de propriedades n&atilde;o usa
+caixas de dialogo, continua ser aconselhavel.
+
+<P>A segunda op&ccedil;&atilde;o &eacute; localizar o editor de propriedades
+(se usa uma forma ou uma caixa de di&aacute;logo) na mesma unidade da caixa
+di&aacute;logo. Deste modo, a aplica&ccedil;&atilde;o que usa o componente
+n&atilde;o conecta ao editor de propriedades seus recursos associados.
+
+<P>A terceira op&ccedil;&atilde;o &eacute; localizar o editor de propriedades
+em uma <I>unidade de registro. Uma unidade de registro &eacute; uma unidade
+normal e corrente que cont&eacute;m v&aacute;rios registros condenados
+correspondendo a componentes diferentes e editores de propriedades que
+residem em unidades diferentes. Esta &eacute; a op&ccedil;&atilde;o mais
+aconselh&aacute;vel se o editor de propriedades &eacute; usado atrav&eacute;s
+de v&aacute;rios componentes.</I></UL>
+<I>Ent&atilde;o, as &uacute;ltimas duas op&ccedil;&otilde;es s&atilde;o
+dependendo do caso, as mais aconselh&aacute;veis.</I>
+
+<P><I>Nas pr&oacute;ximas unidades n&oacute;s veremos exemplos de localiza&ccedil;&otilde;es
+diferentes dos editores de propriedades que n&oacute;s iremos construir.</I>
+
+<P><A NAME="PropEdI-Codigo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Codigo Fonte do editor de propriedades.</FONT></B>
+<PRE>unit BinaryPropEd;
+
+interface
+
+uses DsgnIntf;
+
+type
+&nbsp; TBinIntegerProperty = class(TIntegerProperty)
+&nbsp; public
+&nbsp;&nbsp;&nbsp; function GetValue : string; override;
+&nbsp;&nbsp;&nbsp; procedure SetValue(const Value : String); override;
+&nbsp; end;
+
+procedure Register;
+
+implementation
+
+Const
+&nbsp; Bits16 : Array [1..16] of Integer = (32768,16384,8192,4096,2048,1024,512,256,128,64,32,16,8,4,2,1);
+
+function TBinIntegerProperty.GetValue : string;
+Var
+&nbsp; Num, i : integer;
+begin
+&nbsp; Num:=GetOrdValue;
+&nbsp; Result := '0000000000000000';
+&nbsp; for i := 1 to 16 Do
+&nbsp;&nbsp;&nbsp; if ( Num >= Bits16[i] ) Then
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Num := Num - Bits16[i];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Result[i] := '1';
+&nbsp;&nbsp;&nbsp; end;
+&nbsp; if ( Num > 0 ) Then
+&nbsp;&nbsp;&nbsp; raise EPropertyError.Create('Error converting '+IntToStr(GetOrdValue) + ' to binary');
+&nbsp; Insert('B',Result,1);&nbsp;&nbsp;
+end;
+
+procedure TBinIntegerProperty.SetValue(const Value : String);
+Var
+&nbsp; i, Total, Longitud : integer;
+&nbsp; NumText : string;
+begin
+&nbsp; if UpperCase(Value[1])='B' then
+&nbsp; begin
+&nbsp;&nbsp;&nbsp; NumText:=Copy(Trim(Value),2,Length(Trim(Value))-1);
+&nbsp;&nbsp;&nbsp; NumText:=Copy('0000000000000000',1,16-Length(NumText)) + NumText;
+&nbsp;&nbsp;&nbsp; Total:=0;
+&nbsp;&nbsp;&nbsp; for i:=1 to Length(NumText) do
+&nbsp;&nbsp;&nbsp; begin
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if not (NumText[i] in ['0','1']) then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; raise EPropertyError.Create(NumText[i] + ' is not a valid binary digit')
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else if NumText[i]='1' then
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Total:=Total+Bits16[i];
+&nbsp;&nbsp;&nbsp; end;
+&nbsp;&nbsp;&nbsp; SetOrdValue(Total);
+&nbsp; end
+&nbsp; else
+&nbsp;&nbsp;&nbsp; SetOrdValue(StrToInt(Value));
+end;
+
+procedure Register;
+begin
+&nbsp; RegisterPropertyEditor(TypeInfo(Integer),nil,'',TBinIntegerProperty);
+end;
+
+end.</PRE>
+
+<HR>
+<ADDRESS>
+Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 24.08.1997
+</BODY>
+</HTML>

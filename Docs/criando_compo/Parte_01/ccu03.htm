@@ -1,0 +1,241 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>    
+Curso de Cria&ccedil;&atilde;o de Componentes em Delphi    
+  
+
+</TITLE>
+</HEAD>
+<BODY BACKGROUND="delphi2.gif">
+&nbsp;
+<TABLE>
+<TR>
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+
+<TD>
+<CENTER><FONT FACE="ARIAL"><FONT COLOR="#008000"><FONT SIZE=+4>Curso de
+cria&ccedil;&atilde;o de componentes em Delphi</FONT></FONT></FONT></CENTER>
+&nbsp;
+<CENTER><B><FONT FACE="ARIAL"><FONT COLOR="#FF0000"><FONT SIZE=+2>Unidade
+3. Um&nbsp; componente n&atilde;o-visual: TNif</FONT></FONT></FONT></B>&nbsp;</CENTER>
+</TD>
+
+<TD><IMG SRC="delphi.gif" ALT="delphi.gif - 582,0 K" HEIGHT=116 WIDTH=126>&nbsp;</TD>
+</TR>
+</TABLE>
+&nbsp;
+<TABLE>
+<TR>
+<TD WIDTH="300"><A HREF="ccind.htm">Voltar ao &iacute;ndice</A>&nbsp;</TD>
+
+<TD><I><FONT FACE="Times New Roman"><FONT COLOR="#008040"><FONT SIZE=+2>Por
+Luis Roche</FONT></FONT></FONT></I>&nbsp;<A HREF="mailto:revueltaroche@redestb.es"><IMG SRC="emailed.gif" ALT="emailed.gif - 15503,0 K" HSPACE=10 VSPACE=10 BORDER=0 HEIGHT=51 WIDTH=44 ALIGN=ABSCENTER></A><A HREF="mailto:revueltaroche@redestb.es">&nbsp;</A></TD>
+</TR>
+</TABLE>
+
+<HR>
+
+<P><IMG SRC="nif.gif" ALT="nif.gif - .933 K" HEIGHT=26 WIDTH=26 ALIGN=ABSBOTTOM>
+Chegou o momento de entrar em a&ccedil;&atilde;o. N&oacute;s criaremos
+nosso primeiro componente: TNif. Mas antes de come&ccedil;ar a escrever
+c&oacute;digo isto serve para analisar o prop&oacute;sito do componente
+e como n&oacute;s implementaremos isto.
+<BR><A NAME="TNif-Objetivo"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14><B><FONT SIZE=+2>
+Objetivo do componente</FONT></B>
+
+<P>O prop&oacute;sito do componente &eacute; muito simples: a partir de
+um dado de entrada, o n&uacute;mero de DNI, nosso componente dever&aacute;
+calcular a letra do NIF correspondente. O m&eacute;todo de calcular esta
+letra &eacute; por meio de uma opera&ccedil;&atilde;o matem&aacute;tica
+muito simples. Esta opera&ccedil;&atilde;o &eacute;: DNI - ((DNI div 23)
+* 23). O resultado desta opera&ccedil;&atilde;o ser&aacute; um n&uacute;mero
+entendido entre 1 e 23. Por meio de um quadro n&oacute;s nomearemos uma
+certa letra a cada n&uacute;mero, a letra que corresponde o NIF pedido.
+Os detalhes completos desta letra eu tenho no c&oacute;digo fonte.
+<BR><A NAME="TNif-Diseño"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>O projeto do componente</FONT></B>
+
+<P>Baseado em nosso objetivo, est&aacute; claro que nosso componente ser&aacute;
+do tipo n&atilde;o-visual e, ent&atilde;o, n&oacute;s derivaremos isto
+a partir de TComponent que eu como j&aacute; foi visto; (unidade 2), &eacute;
+a base para a cria&ccedil;&atilde;o de componentes n&atilde;o-visuais.
+<BR>A forma de introduzir o n&uacute;mero de DNI ser&aacute; por meio de
+uma propriedade (propriedade DNI) de leitura. O valor desta propriedade
+ser&aacute; armazenada em um campo (FDNI) do tipoLongInt . Esta propriedade
+ser&aacute; publicada (published) de forma que ela aparece deste modo no
+Object Inspector . A leitura e escrita de valores nesta propriedade ser&atilde;o
+diretamente no campo FDNI, quer dizer, n&oacute;s deixaremos que o&nbsp;
+pr&oacute;prio Object Inspector se encarrega de verificar se o valor introduzido
+orresponde ao tipo LongInt.
+
+<P>N&oacute;s teremos outra propriedade (NIF) no que a letra calculada
+ser&aacute; armazenada (de tipo Char). Mas esta propriedade ser&aacute;
+somente leitura ja que o usu&aacute;rio do componente n&atilde;o poder&aacute;
+inserir a letra manualmente, pois o proprio componente que calcula isto.
+Esta propriedade deveria ser p&uacute;blica (Public) desde que seja somente
+leitura. Este aspecto serve para se salientar isto: <I>as propriedades
+somente-leitura deveri&atilde;o ser declaradas na parte p&uacute;blica.</I>
+A fun&ccedil;&atilde;o que se encarrega de calcular a letra do NIF se chamar&aacute;
+GetNIF.
+
+<P>Sempre ser&atilde;o declarados os campos que armazenam o valor de propriedades
+na parte privada (Private) desde que n&oacute;s tenhamos certeza de que
+todos tenham acesso a ele, mas o usu&aacute;rio do componente, desde que
+se conscientize pela propriedade e n&atilde;o pelo&nbsp; campo (isso representa
+o armazenamento interno da propriedade).
+
+<P>Relativo aos nomes usados, s&atilde;o continuadas as conven&ccedil;&otilde;es
+seguintes:
+<UL>
+<LI>
+Os tipos que n&oacute;s definimos T come&ccedil;ar&aacute; com a letra
+(de tipo). P.e. TNif</LI>
+
+<LI>
+Os campos que armazenam os valores de propriedades come&ccedil;am com a
+carta F seguido pelo nome da propriedade que armazena. Deste modo o campo
+FDNI est&aacute; claro que armazena o valor da propriedade DNI.</LI>
+
+<LI>
+Os nomes dos m&eacute;todos de leitura e dos valores de uma propriedade,
+eles ser&atilde;o denominados pelo prefixo Get (para ler) ou Set (para
+escrever) seguido pelo nome da propriedade. P.e. o m&eacute;todo GetNIF.</LI>
+</UL>
+Uma vez o m&eacute;todo de empregado de des&iacute;gnio de acordo &eacute;
+hora de come&ccedil;o para digitar.
+<BR><A NAME="TNif-Código"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Codifique fonte do componente</FONT></B>
+<PRE>&nbsp;&nbsp;&nbsp;&nbsp;
+unit Nif;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { (c)1996 by Luis Roche }
+
+interface
+
+uses
+&nbsp; Classes;
+
+type
+&nbsp; TNif = class(TComponent)&nbsp;&nbsp;&nbsp;
+&nbsp; private
+&nbsp;&nbsp;&nbsp; FDNI : LongInt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; function GetNIF : char;&nbsp;&nbsp;
+&nbsp; protected
+&nbsp; public
+&nbsp;&nbsp;&nbsp; property NIF: char read GetNIF;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; published
+&nbsp;&nbsp;&nbsp;&nbsp; property DNI: LongInt read FDNI write FDNI;&nbsp;&nbsp;
+&nbsp; end;
+
+procedure Register;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+implementation
+
+function TNIF.GetNIF : char;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Var aux1 : integer;
+Const letras : string = 'TRWAGMYFPDXBNJZSQVHLCKE';
+begin
+&nbsp; aux1:=FDNI - ((FDNI div 23) * 23);
+&nbsp; result:=letras[aux1+1];
+end;
+
+procedure register;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+begin
+&nbsp; registercomponents('curso', [tnif]);
+end;
+
+end.</PRE>
+<A NAME="TNif-Comentarios"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Coment&aacute;rios para o c&oacute;digo fonte</FONT></B>
+
+<P>O c&oacute;digo fonte tem que ser criado atrav&eacute;s dos seguintes
+passos:
+<UL>N&oacute;s usamos o Expert de componentes de forma que n&oacute;s geramos
+a unidade na qual n&oacute;s escrevemos nosso componente. Na Caixa de di&aacute;logo
+que o expert nos mostrou, n&oacute;s introduzimos TNif como Nome da Classe
+Name, TComponent como Tipo de Ascendente e Curso como Nome da Paleta. Quando
+clicamos OK, o expert de componentes cria todo o esqueleto b&aacute;sico
+de nosso componente, inclusive o Registro de procedimento.
+
+<P>De todas as unidades que aparecem na cl&aacute;usula uses n&oacute;s
+s&oacute; deixaremos a unidade Classes, pois n&oacute;s n&atilde;o usaremos
+qualquer procedimento dos outros.
+
+<P>N&oacute;s declaramos o campo FDNI (longInt) na se&ccedil;&atilde;o
+privada. Neste campo, como j&aacute; foi dito, n&oacute;s armazenaremos
+o DNI. Na se&ccedil;&atilde;o published n&oacute;s escrevemos a linha seguinte:
+<BR><B>propriedade DNI: LongInt read FDNI write FDNI</B>
+<BR>Deste modo n&oacute;s declaramos a propriedade DNI e n&oacute;s especificamos
+que a leitura e escrita de valores no mesmo s&atilde;o feitos diretamente
+com o campo FDNI que usa o Object Inspector.
+
+<P>N&oacute;s declaramos a propriedade NIF somente-leitura na parte publica.
+Ele serve para se lembrar que as propriedades de leitura s&oacute; deveriam
+ir declaradas na parte p&uacute;blica e n&atilde;o no published. N&oacute;s
+especificamos isso para ler o valor da propriedade: n&oacute;s usaremos
+a fun&ccedil;&atilde;o GetNIF, o qual n&oacute;s declaramos na se&ccedil;&atilde;o
+privada.
+
+<P>N&oacute;s escrevemos a fun&ccedil;&atilde;o que calcula a letra do
+NIF na parte de implementa&ccedil;&atilde;o da unidade.
+
+<P>N&oacute;s mantemos a unidade com o nome nif.pas. Veste que todos os
+componentes que n&oacute;s vamos criar durante o curso separados em diret&oacute;rio
+(delphi\componen)</UL>
+<A NAME="TNif-Bitmap"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>Criando um bitmap para o componente</FONT></B>
+
+<P>Cada componente precisa de um bitmap para representar ao componente
+na paleta de componentes. Se nenhum for especificado, o Delphi usar&aacute;
+um como padr&atilde;o.
+
+<P>O bitmap n&atilde;o &eacute; inclu&iacute;do no c&oacute;digo fonte
+do componente, mas &eacute; inclu&iacute;do separado em um arquivo com
+a extens&atilde;o .DCR (Dynamic Component Resource). Este arquivo pode
+ser criado com o pr&oacute;prio editor de imagens que vem com o Delphi.
+
+<P>O nome do arquivo que .DCR deveria coincidir com o nome da unidade do
+seu componente. O nome do bitmap de imagem (em letra mai&uacute;scula)
+devera coincidir com o nome do componente. Os dois arquivos (o da unidade
+* .pas e que do bitmap * .dcr) devem residir no mesmo diret&oacute;rio.
+
+<P>Em nosso componente, se n&oacute;s salvamos a unidade com o nome nif.pas&nbsp;
+o arquivo de recursos se chamar&aacute; nif.dcr. Dentro deste arquivo estar&atilde;o
+o bitmap para os quais n&oacute;s colocaremos o nome TNIF. O bitmap que
+n&oacute;s criamos:&nbsp;<IMG SRC="nif.gif" ALT="nif.gif - .933 K" HEIGHT=26 WIDTH=26 ALIGN=ABSCENTER>
+O tamanho do bitmap devera ser de 24x24 pixels.
+
+<P>Como &uacute;ltimo detalhe, se voc&ecirc; quer usar este mesmo bitmap,
+voc&ecirc; pode usar um programa de tratamento de imagens para recortar
+isto e colar no editor de imagens do Delphi.
+<BR><A NAME="TNif-Instalando"></A><IMG SRC="Bverde.gif" ALT="Bverde.gif - .325 K" HEIGHT=14 WIDTH=14>
+<B><FONT SIZE=+2>TNif instalando na paleta de componentes.</FONT></B>
+
+<P>Para instalar nosso componente na paleta de componentes &eacute; muito
+simples. Siga os passos:
+<UL>
+<LI>
+Escolher o menu Componentes de Options|Install .</LI>
+
+<LI>
+Clicar no bot&atilde;o Add, selecionar o local que cont&eacute;m o c&oacute;digo
+fonte do componente. Em nosso caso, nif.pas. Uma vez selecionado a unidade,
+clicar OK.</LI>
+
+<LI>
+O Delphi compilar&aacute; a unidade e reconstruir&aacute; o arquivo COMPLIB.DCL.
+Se ele gerar erros durante a compila&ccedil;&atilde;o, n&oacute;s seremos
+informados disto.</LI>
+
+<LI>
+Se a compila&ccedil;&atilde;o tem &ecirc;xito, nosso componente fara parte
+da paleta de componentes.</LI>
+</UL>
+
+<HR>
+<ADDRESS>
+Luis Roche <A HREF="mailto:revueltaroche@redestb.es">revueltaroche@redestb.es</A></ADDRESS>
+
+<BR>Ultima modificaci&oacute;n 5.12.1996
+</BODY>
+</HTML>

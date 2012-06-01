@@ -1,0 +1,66 @@
+DsgnIntf x DesignInfo 
+Postado por spetson em 15/4/2003 - 03:34 AM  Selecione uma Categoria Assuntos Gerais Programação e Tutoriais Humor e Piadas Frases e Poemas 
+ 
+Total votos:(33 votos) 100% 0% (lido 682 vezes) Enviar para um Amigo  
+ 
+Problemas com o arquivo dsgnIntf.dcu
+Um problema muito comum, é quando você vai instalar um componente, e o compilador te manda um erro dizendo não ter encontrado o arquivo dsgnIntf.dcu
+Existem dois problemas que podem causar isso:
+
+Caso 1 - Para Delphi até versão 5
+O primeiro caso, é que se você estiver rodando o Delphi até versão 5, então o problema é que o arquivo não está sendo mensionado no seu diretório de Library's.
+Resolva isso da seguinte forma:
+Clique no Menu Tools, depois siga Environment Options->Selecione a guia Library e depois clique no botão para adicionar um novo Library Path.
+Escreva $(DELPHI)SourceToolsAPI na caixa abaixo e depois clique am Add
+Dê Ok, e tente compilar o package novamente.
+
+Caso2 - Delphi 6 e Delphi 7
+Ok, esse é o caso mais comum que existe.
+Se você está usando uma versão mais nova do Delphi, provavelmente está tentando compilar um pacote que foi desenvolvido em uma versão antiga do Delphi.
+Acontece, que a Borland deu uma "mancada" e mudou o nome do arquivo dsgnIntf.pas para Designintf.pas alegando ter motivos relacionados com a mudança na estrutura do próprio Delphi, e devido ao novo tipo de implementação da biblioteca de componentes inter-plataforma da Borland.
+Assim sendo, se o seu pacote refere-se ao arquivo antigo (veja abaixo):
+
+Uses
+   Windows, dsgnIntf, Forms etc
+
+Nota: Você localizará facilmente qual arquivo se refere a ele, pois será o arquivo *.pas que vai dar o erro ... doohh!
+E não adianta ir até este local e mudar só o nome do arquivo para algo do tipo:
+Uses
+   Windows, Designintf, Forms etc
+
+O problema é um pouco mais extenso, pois algumas funções foram movidas para outros lugares também.
+O editor de propriedades por exemplo, foi parar numa unidade de nome DesignEditors.pas a as constantes foram parar juntamente com os menus em DesignMenus.pas e também as variantes foram de System.pas para a unidade de variantes Variants.pas
+Se olharmos bem, veremos que foi uma forma da Borland dar uma "organizada na casa" emboras tenha sido omissa, na hora que deveria ter divulgado isso bem claro para os usuários, ou ainda na hora em que o Delphi afirma que está convertendo um package de uma versão antiga, para uma versão mais nova, deveria arrumar isso também automaticamente.
+Mas bugs e mancadas à parte, vamos ao que interessa, A solução: 
+
+Vá até o arquivo que registra os componentes (O arquivo que está dando o erro). 
+Localize neste arquivo o local onde ele chama o arquivo dsgnIntf
+Ex: Uses
+   Windows, Designintf, Forms etc 
+Agora, apague a entrada dsgnIntf e substitua por essas outras entradas:
+-Designintf, DesignEditors, DesignMenus, Variants 
+Desta forma o nosso exemplo acima ficaria assim agora:
+-Ex: Uses
+   Windows, Designintf, DesignEditors, DesignMenus, Variants, Forms etc 
+Nota: Cuidado pra não duplicar as entradas, verifique se o arquivo que você já está editando não contém por exemplo Variants na entrada Uses
+
+NOTA ADICIONAL:
+Caso você tente instalar algum pacote, e encontre um erro na unidade DesignEditors e receba o erro file not found proxies.dcu, a solução será incluir uma nova unit com o seguinte código:
+
+unit Proxies;
+interface
+Function IsProxyClass(ComponentClass: TClass): Boolean;
+
+implementation
+Function IsProxyClass(ComponentClass: TClass): Boolean;
+begin 
+Result := True;
+end; 
+end. 
+
+Agradecimentos ao membro cacique pela solução de mais este problema, no nosso fórum de discussão.
+
+Qualquer coisa, procure-me no fórum do site para maiores detalhes.
+.::Spetson::. 
+
+ 

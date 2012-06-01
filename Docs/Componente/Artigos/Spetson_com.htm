@@ -1,0 +1,463 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0051)http://hgkzip1z11king.kir.jp/main.php?url=ler&sid=1 -->
+<HTML><HEAD><TITLE>Spetson.com</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1"><LINK 
+href="Spetson_com_files/main.css" type=text/css rel=stylesheet><LINK 
+href="w3c/p3p.xml" rel=P3Pv1>
+<SCRIPT language=JavaScript src="Spetson_com_files/scripts.js"></SCRIPT>
+
+<SCRIPT language=JavaScrip type=text/JavaScript>
+//variaveis...
+var cookies = document.cookie;
+var total_tracks = 10;
+var counter=Math.floor(Math.random()*total_tracks+1);
+var pagina;
+var newCookie="QUxMOkFMTDpub3JtYWw6c2hvdzpub25lOnJhbmRvbQ==";
+
+
+a = parent.location.href;
+b = self.location.href;
+if (a == b){
+window.location="index.php";
+}function CreateCookie(name, value, hours)
+{
+  var expire = "";
+  if(hours != null)
+  {
+    expire = new Date((new Date()).getTime() + hours * 3600000);
+    expire = "; expires=" + expire.toGMTString();
+  }
+  document.cookie = name + "=" + escape(value) + expire;
+}
+
+function getCookie(name) {
+    name += "="; 
+    var i = 0;
+    while (i < cookies.length) {
+      var offset = i + name.length; 
+      if (cookies.substring(i, offset) == name) { 
+        var endstr = cookies.indexOf(";", offset); 
+        if (endstr == -1) endstr = cookies.length;
+        return unescape(cookies.substring(offset, endstr));
+      }
+      i = cookies.indexOf(" ", i) + 1; 
+      if (i == 0) break; 
+    }
+    return null;
+  }
+
+function player(action){
+if (counter == 'mute'){
+counter = 0;
+}
+
+switch (action){
+//caso de parar o som
+case 'stop':
+counter = 'mute';
+break
+
+
+//caso de tocar o som
+case 'play':
+counter=Math.floor(Math.random()*total_tracks+1);
+break
+
+
+//caso de voltar uma trilha
+case 'back':
+counter = parseInt(counter)-1;
+break
+
+
+//caso de adiantar uma trilha
+case 'next':
+counter = parseInt(counter)+1;
+break
+}
+
+/*********************************************************************/
+//valida o track
+if (counter < 1){
+counter=total_tracks;
+}
+else if (counter > total_tracks){
+counter = 1;
+}
+else {
+counter = counter;
+}
+
+//Se o Áudio não estiver desativado, forma a página que vai tocar a música no Frame.
+pagina='track'+counter+'.html';
+parent.player.location='audio/'+pagina;
+CreateCookie('counter',counter,48);
+
+}
+</SCRIPT>
+
+<STYLE type=text/css>A:link {
+	COLOR: #6b91bf; FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A:hover {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #6b91bf; TEXT-DECORATION: underline
+}
+A:hover {
+	COLOR: #ffffff; TEXT-DECORATION: none
+}
+</STYLE>
+
+<SCRIPT language=JavaScript>
+<!--
+var Text = ".:: S P E T S O N    N E T W O R K  ::.";
+var Geschwindigkeit = 100; 
+var Breite = 100; 
+var TextLaenge = Text.length; 
+var Position = 1 - Breite; 
+
+function amado(){
+top.player.location='audio/track8.html';
+CreateCookie('counter','8',24);
+}
+
+function StatusLauftext()
+{
+Text = top.nome;
+Position++;
+var Textzustand="";
+if (Position == TextLaenge)
+{
+Position = 1 - Breite;
+}
+if (Position < 0)
+{
+for (var Zaehler=1; Zaehler <= Math.abs(Position); Zaehler++)
+{
+Textzustand = Textzustand + " ";
+};
+Textzustand = Textzustand + Text.substring(0, Breite - Zaehler + 1);
+}
+else
+{
+Textzustand = Textzustand + Text.substring(Position, Breite + Position);
+}
+window.status = Textzustand;
+
+setTimeout("StatusLauftext()",Geschwindigkeit);
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.3790.0" name=GENERATOR></HEAD>
+<BODY text=#ffffff bgColor=#000000 topMargin=0 onload=StatusLauftext(); 
+marginheight="0">
+<TABLE height=1031 cellSpacing=0 cellPadding=0 width=901 align=center 
+  border=0><TBODY>
+  <TR>
+    <TD vAlign=top colSpan=6>
+      <OBJECT 
+      codeBase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0 
+      height=115 width=901 classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000><PARAM NAME="movie" VALUE="header.swf?scope=yes"><PARAM NAME="quality" VALUE="high">
+                                    <embed src="header.swf?scope=yes" 
+      quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" 
+      type="application/x-shockwave-flash" width="901" height="115"></embed>		  
+      </OBJECT></TD></TR>
+  <TR>
+    <TD vAlign=top width=9 background=Spetson_com_files/main-left.gif 
+    bgColor=#253548>&nbsp;</TD>
+    <TD vAlign=top width=16 background=Spetson_com_files/lateral.gif><IMG 
+      height=1050 src="Spetson_com_files/pix.gif" width=16> </TD>
+    <TD vAlign=top width=129>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD vAlign=top>
+            <OBJECT 
+            codeBase=http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0 
+            height=400 width=129 
+            classid=clsid:D27CDB6E-AE6D-11cf-96B8-444553540000><PARAM NAME="movie" VALUE="menu.swf"><PARAM NAME="quality" VALUE="high">
+                                                            <embed 
+            src="menu.swf" quality="high" 
+            pluginspage="http://www.macromedia.com/go/getflashplayer" 
+            type="application/x-shockwave-flash" width="129" 
+            height="400"></embed>               </OBJECT></TD></TR>
+        <TR>
+          <TD vAlign=top><IMG height=316 src="Spetson_com_files/fundo.gif" 
+            width=129></TD></TR>
+        <TR>
+          <TD><A 
+            onclick='javascript:window.open("http://www.estadao.com.br/raulseixas/","raul","scrollbars=no,location=no,directories=no,status=no,menubar=no,resizable=no,maxbutton=no,toolbar=no,top=30,left=12,width=771,height=456");' 
+            href="javascript:void(0);"><IMG height=51 
+            src="Spetson_com_files/bann_raul.gif" width=130 border=0></A></TD></TR>
+        <TR>
+          <TD vAlign=top align=middle><A 
+            href="http://www.topbrasil.net/votar.php?siteid=349"></A><IMG 
+            height=4 src="Spetson_com_files/menu-brake.gif" width=130></TD></TR>
+        <TR>
+          <TD align=middle><IMG height=37 src="Spetson_com_files/pagode.gif" 
+            width=82 vspace=4></TD></TR>
+        <TR>
+          <TD align=middle><IMG height=4 
+            src="Spetson_com_files/menu-brake.gif" width=130></TD></TR>
+        <TR>
+          <TD align=middle>&nbsp;</TD></TR></TBODY></TABLE></TD>
+    <TD vAlign=top width=2 bgColor=#253548><IMG height=1031 
+      src="Spetson_com_files/pix.gif" width=2></TD>
+    <TD vAlign=top width=745>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD><LINK href="Spetson_com_files/main.css" type=text/css 
+            rel=stylesheet>
+            <SCRIPT language=JavaScript type=text/JavaScript>
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</SCRIPT>
+            <LINK href="Spetson_com_files/forum.css" type=text/css 
+            rel=stylesheet>
+            <TABLE cellSpacing=4 cellPadding=4 width=720 align=center 
+              border=0><TBODY>
+              <TR>
+                <TD vAlign=top>
+                  <TABLE class=table1 cellSpacing=0 cellPadding=0 width=700 
+                  align=center border=0>
+                    <TBODY>
+                    <TR>
+                      <TD vAlign=top bgColor=#0f1a25>
+                        <TABLE cellSpacing=0 cellPadding=0 width="100%" 
+border=0>
+                          <TBODY>
+                          <TR>
+                            <TD bgColor=#0f1a25><IMG height=27 
+                              src="Spetson_com_files/artigos.gif" 
+                          width=700></TD></TR>
+                          <TR>
+                            <TD vAlign=top bgColor=#0f1a25>
+                              <TABLE cellSpacing=4 cellPadding=4 width="100%" 
+                              align=center border=0>
+                                <TBODY>
+                                <TR>
+                                <TD vAlign=top bgColor=#28384b>
+                                <TABLE cellSpacing=2 cellPadding=2 width="100%" 
+                                border=0>
+                                <FORM>
+                                <TBODY>
+                                <TR>
+                                <TD vAlign=top width="70%"><STRONG>DsgnIntf x 
+                                DesignInfo</STRONG> <BR>Postado por <A 
+                                href="mailto:admin@spetson.com?subject=Artigo no Spetson.com">spetson</A> 
+                                em 15/4/2003 - 03:34 AM</TD>
+                                <TD width="30%"><SELECT 
+                                onchange="MM_jumpMenu('self',this,0)" 
+                                name=menu1> <OPTION selected>Selecione uma 
+                                Categoria</OPTION> <OPTION 
+                                value=main.php?url=artigos_thread&amp;tid=5>Assuntos 
+                                Gerais</OPTION> <OPTION 
+                                value=main.php?url=artigos_thread&amp;tid=1>Programação 
+                                e Tutoriais</OPTION> <OPTION 
+                                value=main.php?url=artigos_thread&amp;tid=3>Humor 
+                                e Piadas</OPTION> <OPTION 
+                                value=main.php?url=artigos_thread&amp;tid=2>Frases 
+                                e 
+                                Poemas</OPTION></SELECT></TD></TR></FORM></TBODY></TABLE></TD></TR>
+                                <TR>
+                                <TD vAlign=top bgColor=#1a2a3e>
+                                <TABLE cellSpacing=2 cellPadding=2 width="100%" 
+                                border=0>
+                                <TBODY>
+                                <TR>
+                                <TD width="20%">Total votos:(33 votos)</TD>
+                                <TD align=middle width="11%"><IMG height=15 
+                                src="Spetson_com_files/smilie9.gif" width=15 
+                                align=absMiddle>100%</TD>
+                                <TD align=middle width="11%"><IMG height=15 
+                                src="Spetson_com_files/smilie8.gif" width=15 
+                                align=absMiddle>0%</TD>
+                                <TD 
+                                width="29%">(lido&nbsp;<STRONG>679</STRONG>&nbsp;vezes)</TD>
+                                <TD width="29%">Enviar para um Amigo 
+                                </TD></TR></TBODY></TABLE></TD></TR>
+                                <TR>
+                                <TD vAlign=top>
+                                <P><STRONG>Problemas com o arquivo 
+                                dsgnIntf.dcu</STRONG><BR>Um problema muito 
+                                comum, é quando você vai instalar um componente, 
+                                e o compilador te manda um erro dizendo não ter 
+                                encontrado o arquivo 
+                                <STRONG>dsgnIntf.dcu</STRONG><BR>Existem dois 
+                                problemas que podem causar 
+                                isso:<BR><BR><STRONG>Caso 1 - Para Delphi até 
+                                versão 5</STRONG><BR>O primeiro caso, é que se 
+                                você estiver rodando o Delphi até versão 5, 
+                                então o problema é que o arquivo não está sendo 
+                                mensionado no seu diretório de 
+                                Library's.<BR>Resolva isso da seguinte 
+                                forma:<BR>Clique no Menu Tools, depois siga 
+                                Environment Options-&gt;Selecione a guia Library 
+                                e depois clique no botão para adicionar um novo 
+                                Library Path.<BR>Escreva $(DELPHI)SourceToolsAPI 
+                                na caixa abaixo e depois clique am Add<BR>Dê Ok, 
+                                e tente compilar o package 
+                                novamente.<B><BR><BR>Caso2 - Delphi 6 e Delphi 
+                                7<BR></B>Ok, esse é o caso mais comum que 
+                                existe.<BR>Se você está usando uma versão mais 
+                                nova do Delphi, provavelmente está tentando 
+                                compilar um pacote que foi desenvolvido em uma 
+                                versão antiga do Delphi.<BR>Acontece, que a 
+                                Borland deu uma "mancada" e mudou o nome do 
+                                arquivo <STRONG>dsgnIntf.pas</STRONG> para 
+                                <STRONG>Designintf.pas</STRONG> alegando ter 
+                                motivos relacionados com a mudança na estrutura 
+                                do próprio Delphi, e devido ao novo tipo de 
+                                implementação da biblioteca de componentes 
+                                inter-plataforma da Borland.<B><BR></B>Assim 
+                                sendo, se o seu pacote refere-se ao arquivo 
+                                antigo (veja 
+                                abaixo):<B><BR><BR></B>Uses<BR>&nbsp;&nbsp; 
+                                Windows, <B>dsgnIntf</B>, Forms 
+                                etc<B><BR><BR>Nota: </B>Você localizará 
+                                facilmente qual arquivo se refere a ele, pois 
+                                será o arquivo *.pas que vai dar o erro ... 
+                                doohh!<B><BR></B>E não adianta ir até este local 
+                                e mudar só o nome do arquivo para algo do 
+                                tipo:<B><BR></B>Uses<BR>&nbsp;&nbsp; Windows, 
+                                <STRONG>Designintf</STRONG>, Forms 
+                                etc<B><BR><BR></B>O problema é um pouco mais 
+                                extenso, pois algumas funções foram movidas para 
+                                outros lugares também.<BR>O editor de 
+                                propriedades por exemplo, foi parar numa unidade 
+                                de nome <B>DesignEditors.pas</B> a as constantes 
+                                foram parar juntamente com os menus em 
+                                <B>DesignMenus.pas</B> e também as variantes 
+                                foram de System.pas para a unidade de variantes 
+                                Variants.pas<BR>Se olharmos bem, veremos que foi 
+                                uma forma da Borland dar uma "organizada na 
+                                casa" emboras tenha sido omissa, na hora que 
+                                deveria ter divulgado isso bem claro para os 
+                                usuários, ou ainda na hora em que o Delphi 
+                                afirma que está convertendo um package de uma 
+                                versão antiga, para uma versão mais nova, 
+                                deveria arrumar isso também 
+                                automaticamente.<BR>Mas bugs e mancadas à parte, 
+                                vamos ao que interessa, A solução: </P>
+                                <OL>
+                                <LI>Vá até o arquivo que registra os componentes 
+                                (O arquivo que está dando o erro). 
+                                <LI>Localize neste arquivo o local onde ele 
+                                chama o arquivo <B>dsgnIntf</B><BR>Ex: 
+                                Uses<BR>&nbsp;&nbsp; Windows, 
+                                <STRONG>Designintf</STRONG>, Forms etc<B></B> 
+                                <LI>Agora, apague a entrada <B>dsgnIntf</B> e 
+                                substitua por essas outras 
+                                entradas:<BR>-<B>Designintf</B>, 
+                                <B>DesignEditors, DesignMenus, Variants</B> 
+                                <LI>Desta forma o nosso exemplo acima ficaria 
+                                assim agora:<BR>-Ex: Uses<BR>&nbsp;&nbsp; 
+                                Windows, <B>Designintf</B>, <B>DesignEditors, 
+                                DesignMenus, Variants</B>, Forms etc<B></B> 
+                                <LI>Nota: Cuidado pra não duplicar as entradas, 
+                                verifique se o arquivo que você já está editando 
+                                não contém por exemplo <STRONG>Variants</STRONG> 
+                                na entrada <STRONG>Uses</STRONG><BR></LI></OL>
+                                <P><STRONG>NOTA ADICIONAL:</STRONG><BR>Caso você 
+                                tente instalar algum pacote, e encontre um erro 
+                                na unidade <STRONG>DesignEditors</STRONG> e 
+                                receba o erro <STRONG>file not found 
+                                proxies.dcu</STRONG>, a solução será incluir uma 
+                                nova unit com o seguinte código:<BR><BR><FONT 
+                                color=#0000ff>unit 
+                                Proxies;<BR>interface<BR>Function 
+                                IsProxyClass(ComponentClass: TClass): 
+                                Boolean;<BR><BR>implementation<BR>Function 
+                                IsProxyClass(ComponentClass: TClass): 
+                                Boolean;<BR>begin <BR>Result := True;<BR>end; 
+                                <BR>end. </FONT><BR><BR><FONT 
+                                color=#ff0000><STRONG>Agradecimentos ao membro 
+                                cacique pela solução de mais este problema, no 
+                                nosso fórum de 
+                                discussão.</STRONG></FONT><BR><BR>Qualquer 
+                                coisa, procure-me no fórum do site para maiores 
+                                detalhes.<BR>.::Spetson::. </P><BR><BR>
+                                <CENTER></CENTER><BR></TD></TR>
+                                <TR>
+                                <TD vAlign=top bgColor=#1a2a3e><STRONG><FONT 
+                                color=#ffffff>Gostou desse Artigo? Então vote 
+                                nele! </FONT></STRONG></TD></TR>
+                                <TR>
+                                <TD vAlign=top bgColor=#28384b>
+                                <TABLE width="100%" align=center>
+                                <FORM action=rate.php method=post>
+                                <TBODY>
+                                <TR>
+                                <TD width="100%"><LABEL><INPUT class=normal 
+                                type=radio value=1 name=opinion> <IMG height=15 
+                                src="Spetson_com_files/smilie9.gif" width=15 
+                                align=absMiddle>Muito Bom! Esse artigo vale a 
+                                pena ser lido.</LABEL></TD></TR>
+                                <TR>
+                                <TD><LABEL><INPUT class=normal type=radio 
+                                value=2 name=opinion> <IMG height=15 
+                                src="Spetson_com_files/smilie8.gif" width=15 
+                                align=absMiddle> Ruim! Eu não indico este artigo 
+                                para ninguém. </LABEL></TD></TR>
+                                <TR>
+                                <TD align=right><INPUT id=sid type=hidden 
+                                value=1 name=sid> <INPUT type=submit value=Votar name=Submit5></TD></TR></FORM></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR></TD></TR>
+        <TR>
+          <TD><BR>
+            <TABLE class=table1 cellSpacing=0 cellPadding=0 align=center 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD align=middle bgColor=#333333>
+                  <TABLE cellSpacing=3 cellPadding=3 border=0>
+                    <TBODY>
+                    <TR>
+                      <TD><STRONG>"O silêncio é a arma dos sábios. 
+                        Principalmente se você só fala merda."</STRONG><IMG 
+                        height=15 src="Spetson_com_files/smilie5.gif" width=15 
+                        align=absMiddle></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+            <TABLE cellSpacing=5 cellPadding=5 width=449 align=center 
+              border=0><TBODY>
+              <TR>
+                <TD><STRONG>Olá você gostou de alguma coisa neste site? 
+                  </STRONG><BR><FONT color=#999999><EM>Então por favor, vote no 
+                  site!<BR>É rápido de graça e significa muito para nós! 
+                  </EM></FONT></TD></TR>
+              <TR>
+                <TD align=middle><A 
+                  href="http://www.topbrasil.net/votar.php?siteid=349" 
+                  target=_blank><IMG height=60 src="Spetson_com_files/selo.gif" 
+                  width=120 
+      border=0></A></TD></TR></TBODY></TABLE><BR></TD></TR></TBODY></TABLE></TD>
+    <TD vAlign=top width=9 background=Spetson_com_files/main-right.gif 
+    bgColor=#253548>&nbsp; </TD></TR>
+  <TR>
+    <TD vAlign=top bgColor=#253548 colSpan=6><IMG height=6 
+      src="Spetson_com_files/main-bottom.gif" width=901></TD></TR>
+  <TR align=middle>
+    <TD vAlign=top bgColor=#253548 colSpan=6><IMG height=23 
+      src="Spetson_com_files/copyrights.gif" width=901></TD></TR>
+  <TR vAlign=center align=middle>
+    <TD bgColor=#000000 colSpan=6 height=23><A 
+      href="http://hgkzip1z11king.kir.jp/main.php?url=privacidade"><BR>Política 
+      de Privacidade</A> | <A 
+      href="http://hgkzip1z11king.kir.jp/main.php?url=termos">Termos de 
+      Serviço</A> | <A 
+      href="http://hgkzip1z11king.kir.jp/main.php?url=legal">Legal Info</A> | <A 
+      href="http://hgkzip1z11king.kir.jp/main.php?url=mapa">Mapa do 
+      Site</A><BR><A 
+      href="http://hgkzip1z11king.kir.jp/main.php?url=requerim">Site 
+      Compatibilidade</A> | <A 
+      href="http://hgkzip1z11king.kir.jp/main.php?url=prefe">Preferências</A> | 
+      <A href="http://hgkzip1z11king.kir.jp/main.php?url=staff">Staff</A> | <A 
+      href="http://hgkzip1z11king.kir.jp/admin/" target=_blank>Control 
+    Panel</A></TD></TR></TBODY></TABLE>
+<P>&nbsp;</P></BODY></HTML>

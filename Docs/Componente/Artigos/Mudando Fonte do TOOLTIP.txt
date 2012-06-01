@@ -1,0 +1,18 @@
+Type
+  TMyHintWindow = Class (THintWindow) 
+   Constructor Create (AOwner: TComponent) ; override ;
+  end;
+
+Constructor TMyHintWindow.Create(AOwner:TComponent) ; 
+begin
+  Inherited Create (AOwner) ;
+  Canvas.Font.Name := 'Courier New' ;
+  Canvas.Font.Size := 72;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject) ;
+begin
+  Application.ShowHint := false;
+  HintWindowClass := TMyHintWindow;
+  Application.ShowHint := True;
+end;
