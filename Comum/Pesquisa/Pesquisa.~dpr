@@ -1,0 +1,18 @@
+program Pesquisa;
+
+uses
+  Forms,
+  UPesquisa in 'UPesquisa.pas' {frmPesquisa},
+  UConexao in '..\Conexao\UConexao.pas',
+  UFirebird in '..\Firebird\UFirebird.pas',
+  UTeste in 'UTeste.pas' {frmTeste},
+  Functions in '..\Generico\Functions.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.CreateForm(TfrmTeste, frmTeste);
+  Application.CreateForm(TfrmPesquisa, frmPesquisa);
+  Application.Run;
+end.

@@ -1,0 +1,8 @@
+- Tela de Pesquisa para NF com Número da Nota e visualização dos produtos
+- Relatórios
+1) Imprimir resposta de Licitação/Pedido
+2) Contagem
+3) Movimentação (Entrada e Saída de NF)
+4) Produtos com Maior Solicitação (em Licitação/Pedido)
+4.1) Produtos com Maior Solicitação (em Licitação/Pedido) X Qtd. Atendida
+5) Desempenho de atendimento de Licitação/Pedido

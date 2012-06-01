@@ -1,0 +1,62 @@
+inherited frmCAD_ESPEC: TfrmCAD_ESPEC
+  Left = 177
+  Top = 195
+  Caption = 'Especialidade'
+  ClientHeight = 189
+  PixelsPerInch = 120
+  TextHeight = 17
+  inherited pnl3: TPanel
+    Top = 116
+  end
+  inherited tab: TPageControl
+    Height = 116
+    inherited tabCadastro: TTabSheet
+      inherited pnl1: TPanel
+        Height = 33
+        object txtCodEspec: TEditLabel
+          Left = 146
+          Top = 4
+          Width = 159
+          Height = 25
+          _LabelCaption = 'C'#243'digo'
+          _Campo = 'COD_ESPEC'
+          LabelComponent.Width = 49
+          LabelComponent.Height = 17
+          LabelComponent.Caption = 'C'#243'digo'
+          _NotNull = True
+          _Chave = True
+          _Tipo = Pesquisa
+          _FormatoNumerico = 4.000000000000000000
+          CharCase = ecUpperCase
+          TabOrder = 0
+          OnChange = txtCodEspecChange
+          OnClickButton = txtCodEspecClickButton
+          OnEnter = txtCodEspecEnter
+          OnExit = txtCodEspecExit
+        end
+      end
+      inherited pnl2: TPanel
+        Top = 33
+        Height = 51
+        object txtNOM_ESPEC: TEditLabel
+          Left = 146
+          Top = 10
+          Width = 745
+          Height = 25
+          _LabelCaption = 'Nome'
+          _Campo = 'NOM_ESPEC'
+          LabelComponent.Width = 40
+          LabelComponent.Height = 17
+          LabelComponent.Caption = 'Nome'
+          _NotNull = True
+          _IsChar = True
+          MaxLength = 60
+          TabOrder = 0
+        end
+      end
+      inherited txtHabilitaEdicao: TEdit
+        Height = 25
+      end
+    end
+  end
+end

@@ -1,0 +1,68 @@
+unit UfrmPesqLanc;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, Buttons, UComponentTag, Mask, EditLabel, ExtCtrls,
+  ComCtrls, Grids, DBGrids, UConexao, UGlobal;
+
+type
+  TfrmPesqLanc = class(TForm)
+    tab: TPageControl;
+    tabCadastro: TTabSheet;
+    pnl1: TPanel;
+    txtHabilitaEdicao: TEdit;
+    pnl3: TPanel;
+    btnLocaliza: TBitBtn;
+    btnSair: TBitBtn;
+    grd: TDBGrid;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    procedure PesquisaLancamentos;
+  end;
+
+var
+  frmPesqLanc: TfrmPesqLanc;
+  cnn: TConexao;
+
+implementation
+
+{$R *.dfm}
+
+uses UPrincipal;
+
+procedure TfrmPesqLanc.PesquisaLancamentos;
+var str: string;
+begin
+  str := 'Select '+
+  'A.DAT_LANCAMENTO,'+
+  'A.DSC_LANCAMENTO,'+
+  'A.VAL_LANCAMENTO,'+
+  'A.COD_CONTA_DEB,'+
+  'B.NOM_CONTA NOM_CONTA_DEB,'+
+  'A.COD_CONTA_CRE,'+
+  'C.NOM_CONTA NOM_CONTA_CRE,'+
+  'A.COD_CT'+
+  ' From '+
+  'MOV_LANCAMENTO A,'+
+  'VW_CAD_CONTA B'+
+  ' Where '+
+  'A.COD_CONTA_DEB = B.COD_CONTA And '+
+  'A.COD_CONTA_CRE = C.COD_CONTA And '+
+  'A.DAT_LANCAMENTO Containing '+ cnn.Aspas(frmPrincipal.edtAno.Text+'-'+
+                                   IntToStr(frmPrincipal.cboMes.ItemIndex+1));
+
+  cnn.ExecuteQuery(str,grd);
+
+end;
+
+procedure TfrmPesqLanc.FormCreate(Sender: TObject);
+begin
+  cnn := TConexao.Create(GloStrUser,GloStrPassword,GloStrDatabase, GloStrServer, GloBlnEmbedded);
+  cnn.Open;
+end;
+
+end.

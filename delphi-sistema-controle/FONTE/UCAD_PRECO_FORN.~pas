@@ -1,0 +1,36 @@
+unit UCAD_PRECO_FORN;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Ufrm, UComponentTag, Mask, EditLabel, StdCtrls, ComCtrls,
+  Buttons, ExtCtrls;
+
+type
+  TfrmCAD_PRECO_FORN = class(Tfrm)
+    edtCOD_PRODUTO: TEditLabel;
+    edtNOM_PRODUTO: TEditTag;
+    edtDAT_PRECO: TEditLabel;
+    edtVAL_PRECO: TEditLabel;
+    procedure FormCreate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmCAD_PRECO_FORN: TfrmCAD_PRECO_FORN;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmCAD_PRECO_FORN.FormCreate(Sender: TObject);
+begin
+  inherited;
+  Tabela := 'CAD_PRECO';
+end;
+
+end.
