@@ -1,7 +1,7 @@
 unit EditLabel;
 
 interface
-
+// Teste
 uses
   SysUtils, Classes, Controls, ComCtrls, StdCtrls, Mask, ExtCtrls, Messages,
   Types, Graphics, Dialogs,Functions;
