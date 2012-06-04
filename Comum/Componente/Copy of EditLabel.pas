@@ -2,6 +2,8 @@ unit EditLabel;
 
 interface
 
+// Inclus‹o do coment‡rio: Teste
+
 uses
   SysUtils, Classes, Controls, ComCtrls, StdCtrls, Mask, ExtCtrls, Messages,
   Types, Graphics, Dialogs,Functions;
