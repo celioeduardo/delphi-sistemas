@@ -52,7 +52,7 @@ begin
   cnn := TConexao.Create(GloStrUser,GloStrPassword,GloStrDatabase, GloStrServer, GloBlnEmbedded);
   cnn.Open;
 
-  // SALDO INICIAL - OBTENDO SALDO INICIAL
+  // SALDO INICIAL
   str :=
     'Select '+
     'VAL_SALDO_INI,'+
